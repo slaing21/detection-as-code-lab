@@ -1,0 +1,3 @@
+run_id,run_type,timestamp_utc,technique_id,atomic_test_guid,atomic_status,run_index,telemetry_present,expected_sysmon_events,observed_sysmon_events,detected,rule_id,alert_count,latency_s,coverage_score,tuning_pass,notes
+2026-11-03T18-22-05Z_T1059.001_r1,malicious,2026-11-03T18:22:05Z,T1059.001,86a43bad-12e3-4e85-b97c-4d5cf25b95c3,success,1,true,[1],[1],true,100200,1,4.2,3,0,EXAMPLE ROW - encoded command fired rule 100200
+2026-11-03T18-31-10Z_baseline_r1,baseline,2026-11-03T18:31:10Z,baseline,,na,1,true,[],[1 13 11],false,100200,0,,,0,EXAMPLE ROW - rule 100200 did not fire during benign admin baseline
