@@ -1,0 +1,185 @@
+# Machine-readable technique matrix. Fields marked TBD will be filled in Week 8 for Milestone 3.
+attack_version: "20"
+attack_domain: enterprise-attack
+runs_per_technique: 3
+techniques:
+  - seq: 1
+    technique_id: T1059.001
+    name: "PowerShell"
+    primary_tactic: execution
+    expected_sysmon_events: [1]
+    fp_risk: high
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100200
+    status: planned
+  - seq: 2
+    technique_id: T1053.005
+    name: "Scheduled Task"
+    primary_tactic: persistence
+    expected_sysmon_events: [1, 11, 13]
+    fp_risk: high
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100210
+    status: planned
+  - seq: 3
+    technique_id: T1547.001
+    name: "Registry Run Keys / Startup Folder"
+    primary_tactic: persistence
+    expected_sysmon_events: [13, 11]
+    fp_risk: medium
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100220
+    status: planned
+  - seq: 4
+    technique_id: T1546.003
+    name: "WMI Event Subscription"
+    primary_tactic: persistence
+    expected_sysmon_events: [19, 20, 21]
+    fp_risk: low
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100230
+    status: planned
+  - seq: 5
+    technique_id: T1543.003
+    name: "Windows Service"
+    primary_tactic: persistence
+    expected_sysmon_events: [1, 13]
+    fp_risk: high
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100240
+    status: planned
+  - seq: 6
+    technique_id: T1548.002
+    name: "Bypass User Account Control"
+    primary_tactic: privilege-escalation
+    expected_sysmon_events: [1, 13]
+    fp_risk: low
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100250
+    status: planned
+  - seq: 7
+    technique_id: T1036.003
+    name: "Rename System Utilities"
+    primary_tactic: stealth
+    expected_sysmon_events: [1]
+    fp_risk: low
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100260
+    status: planned
+  - seq: 8
+    technique_id: T1218.010
+    name: "Regsvr32"
+    primary_tactic: stealth
+    expected_sysmon_events: [1, 7, 3]
+    fp_risk: low-medium
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100270
+    status: planned
+  - seq: 9
+    technique_id: T1112
+    name: "Modify Registry"
+    primary_tactic: stealth
+    expected_sysmon_events: [12, 13]
+    fp_risk: high
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100280
+    status: planned
+  - seq: 10
+    technique_id: T1087.001
+    name: "Local Account"
+    primary_tactic: discovery
+    expected_sysmon_events: [1]
+    fp_risk: high
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100290
+    status: planned
+  - seq: 11
+    technique_id: T1082
+    name: "System Information Discovery"
+    primary_tactic: discovery
+    expected_sysmon_events: [1]
+    fp_risk: high
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100300
+    status: planned
+  - seq: 12
+    technique_id: T1021.002
+    name: "SMB/Windows Admin Shares"
+    primary_tactic: lateral-movement
+    expected_sysmon_events: [1, 3]
+    fp_risk: medium
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100310
+    status: planned
+  - seq: 13
+    technique_id: T1105
+    name: "Ingress Tool Transfer"
+    primary_tactic: command-and-control
+    expected_sysmon_events: [1, 3, 11, 22]
+    fp_risk: medium
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100320
+    status: planned
+  - seq: 14
+    technique_id: T1560
+    name: "Archive Collected Data"
+    primary_tactic: collection
+    expected_sysmon_events: [1, 11]
+    fp_risk: medium
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100330
+    status: planned
+  - seq: 15
+    technique_id: T1490
+    name: "Inhibit System Recovery"
+    primary_tactic: impact
+    expected_sysmon_events: [1]
+    fp_risk: low
+    atomic_test_guid: TBD
+    atomic_test_name: TBD
+    reference_sigma_rule: TBD
+    sigma_rule_id: TBD
+    wazuh_rule_id: 100340
+    status: planned

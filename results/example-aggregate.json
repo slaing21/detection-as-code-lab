@@ -1,0 +1,21 @@
+{
+    "_comment": "EXAMPLE of the per-technique rollup the dashboard reads, produced by aggregating results/runs.csv. NOT REAL DATA.",
+    "attack_version": "20",
+    "generated_utc": "2026-11-03T20:00:00Z",
+    "techniques": [
+        {
+            "technique_id": "T1059.001",
+            "name": "PowerShell",
+            "primary_tactic": "execution",
+            "runs_malicious": 3,
+            "telemetry_present": true,
+            "detected_runs": 3,
+            "rule_id": "100200",
+            "mean_latency_s": 4.3,
+            "fp_cost_5runs": 0,
+            "precision": 1.0,
+            "coverage_score": 3,
+            "status": "detected-clean"
+        }
+    ]
+}

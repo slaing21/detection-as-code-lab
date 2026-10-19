@@ -1,0 +1,21 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install checkers
+        run: pip install jsonschema
+      - name: Validate repo (schema, matrix, rules, sigma)
+        run: python3 -I harness/validate.py
+      - name: Rebuild dashboard data from results
+        run: python3 -I harness/aggregate.py

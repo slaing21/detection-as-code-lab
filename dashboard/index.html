@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <title>Detection Coverage</title>
+            <style>
+                :root {
+                    color-scheme: light;
+                    --plane: #f9f9f7;
+                    --surface: #fcfcfb;
+                    --ink: #0b0b0b;
+                    --ink-2: #52514e;
+                    --muted: #898781;
+                    --grid: #e1e0d9;
+                    --border: rgba(11,11,11,0.10);
+                    --accent: #2a78d6;
+                    --s0: #d03b3b;
+                    --s1: #ec835a;
+                    --s2: #fab219;
+                    --s3: #0ca30c;
+                    --s0-ink: #fff;
+                    --s1-ink: #3a1a0c;
+                    --s2-ink: #3a2a00;
+                    --s3-ink: #fff;
+                    --planned: #eceae4;
+                    --planned-ink: #898781;
+                }
+                @media (prefers-color-scheme: dark) {
+                    :root:not([data-theme="light"]) {
+                        color-scheme: dark;
+                        --plane: #0d0d0d;
+                        --surface: #1a1a19;
+                        --ink: #f0efec;
+                        --ink-2: #c3c2b7;
+                        --muted: #898781;
+                        --grid: #2c2c2a;
+                        --border: rgba(255,255,255,0.10);
+                        --accent: #3987e5;
+                        --planned: #232321;
+                        --planned-ink: #898781;
+                    }
+                }
+                :root[data-theme="dark"] {
+                    color-scheme: dark;
+                    --plane: #0d0d0d;
+                    --surface: #1a1a19;
+                    --ink: #f0efec;
+                    --ink-2: #c3c2b7;
+                    --muted: #898781;
+                    --grid: #2c2c2a;
+                    --border: rgba(255,255,255,0.10);
+                    --accent: #3987e5;
+                    --planned: #232321;
+                    --planned-ink: #898781;
+                }
+                * { box-sizing: border-box; }
+                body {
+                    margin: 0;
+                    background: var(--plane);
+                    color: var(--ink);
+                    font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+                    -webkit-font-smoothing: antialiased;
+                }
+                .wrap {
+                    max-width: 960px;
+                    margin: 0 auto;
+                    padding: 32px 16px 64px;
+                }
+                header.top {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 12px 24px;
+                    align-items: baseline; 
+                    justify-content: space-between;
+                }
+                h1 {
+                    font-size:21px;
+                    font-weight:650; 
+                    letter-spacing:-0.01em;
+                    margin:0;
+                }
+                .sub {
+                    color:var(--ink-2);
+                    font-size:13px;
+                    margin-top:4px;
+                }
+                .toggle {
+                    font-size:12px;
+                    color:var(--ink-2);
+                    background:var(--surface);
+                    border:1px solid var(--border);
+                    border-radius:999px; 
+                    padding:6px 12px;
+                    cursor:pointer;
+                }
+                .tiles {
+                    display:grid;
+                    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+                    gap:12px; margin:24px 0 8px; 
+                }
+                .tile {
+                    background:var(--surface);
+                    border:1px solid var(--border);
+                    border-radius:12px;
+                    padding:16px;
+                }
+                .tile .n {
+                    font-size:30px; 
+                    font-weight:650;
+                    letter-spacing:-0.02em;
+                    font-variant-numeric:tabular-nums;
+                }
+                .tile .k {
+                    font-size:12px;
+                    color:var(--muted);
+                    margin-top:2px;
+                    text-transform:uppercase;
+                    letter-spacing:0.04em;
+                }
+                section {
+                    margin-top:32px; 
+                }
+                h2 {
+                    font-size:14px;
+                    font-weight:600; 
+                    text-transform:uppercase;
+                    letter-spacing:0.06em;
+                    color:var(--ink-2);
+                    margin:0 0 14px;
+                }
+                .legend {
+                    display:flex;
+                    flex-wrap:wrap;
+                    gap:14px;
+                    margin:0 0 16px;
+                    font-size:12px;
+                    color:var(--ink-2);
+                }
+                .legend .sw {
+                    display:inline-flex;
+                    align-items:center;
+                    gap:6px;
+                }
+                .legend .chip {
+                    width:14px;
+                    height:14px;
+                    border-radius:4px;
+                    border:1px solid var(--border);
+                }
+                .board {
+                    display:grid;
+                    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+                    gap:12px;
+                    align-items:start;
+                }
+                .col {
+                    background:var(--surface);
+                    border:1px solid var(--border);
+                    border-radius:10px;
+                    padding:8px;
+                }
+                .col h3 {
+                    font-size:11px;
+                    font-weight:600;
+                    text-transform:uppercase;
+                    letter-spacing:0.04em;
+                    color:var(--muted);
+                    margin:4px 6px 8px;
+                }
+                .cell {
+                    border-radius:7px;
+                    padding:8px 9px;
+                    margin-bottom:6px;
+                    border:1px solid var(--border);
+                    background:var(--planned);
+                    color:var(--planned-ink);
+                }
+                .cell .tid {
+                    font-size:11px;
+                    font-variant-numeric:tabular-nums;
+                    font-weight:600;
+                    opacity:.9;
+                }
+                .cell .tname {
+                    font-size:12px;
+                    line-height:1.25;
+                    margin-top:1px;
+                }
+                .cell .tag {
+                    display:inline-block;
+                    font-size:10px;
+                    font-weight:600;
+                    margin-top:6px;
+                    padding:1px 6px;
+                    border-radius:999px;
+                    background:rgba(0,0,0,.14);
+                }
+                .cell.s0 {
+                    background:var(--s0);
+                    color:var(--s0-ink);
+                    border-color:transparent;
+                }
+                .cell.s1 {
+                    background:var(--s1);
+                    color:var(--s1-ink);
+                    border-color:transparent;
+                }
+                .cell.s2 {
+                    background:var(--s2);
+                    color:var(--s2-ink);
+                    border-color:transparent;
+                }
+                .cell.s3 {
+                    background:var(--s3);
+                    color:var(--s3-ink);
+                    border-color:transparent;
+                }
+                table {
+                    width:100%;
+                    border-collapse:collapse;
+                    font-size:13px;
+                }
+                th,td { 
+                    text-align:left;
+                    padding:8px 10px;
+                    border-bottom:1px solid var(--grid);
+                }
+                th {
+                    font-size:11px;
+                    text-transform:uppercase;
+                    letter-spacing:0.04em;
+                    color:var(--muted);
+                    font-weight:600;
+                }
+                td.num {
+                    text-align:right;
+                    font-variant-numeric:tabular-nums;
+                }
+                .scoredot {
+                    display:inline-block;
+                    width:9px;
+                    height:9px;
+                    border-radius:3px;
+                    margin-right:6px;
+                    vertical-align:middle;
+                }
+                footer {
+                    margin-top:32px;
+                    color:var(--muted);
+                    font-size:12px;
+                }
+                code {
+                    font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="wrap">
+                <header class="top">
+                    <div>
+                        <h1>Wazuh Lab MITRE ATT&CK Detection Coverage</h1>
+                        <div class="sub" id="subline"></div>
+                    </div>
+                    <button class="toggle" id="themeBtn" type="button">Toggle theme</button>
+                </header>
+
+                <div class="tiles" id="tiles"></div>
+
+                <section>
+                    <h2>Coverage Board</h2>
+                    <div class="legend" id="legend"></div>
+                    <div class="board" id="board"></div>
+                </section>
+
+                <section>
+                    <h2>Per-technique results</h2>
+                    <table id="tbl">
+                        <thead><tr>
+                            <th>Technique</th><th>Name</th><th>Score</th>
+                            <th class="num">FP cost /5</th><th class="num">Latency s</th>
+                        </tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+
+                <footer id="foot"></footer>
+            </div>
+
+            <script src="data.js"></script>
+            <script>
+                (function () {
+                    var D = window.LAB_DATA || {summary:{}, techniques:[]};
+                    var S = D.summary || {};
+                    var T = D.techniques || [];
+
+                    try {
+                        var saved = localStorage.getItem("lab-theme");
+                        if (saved)
+                            document.documentElement.setAttribute("data-theme", saved);
+                    } catch (e) {}
+                    document.getElementById("themeBtn").addEventListener("click", function () {
+                        var cur = document.documentElement.getAttribute("data-theme");
+                        var next = cur === "dark" ? "light" : "dark";
+                        document.documentElement.setAttribute("data-theme", next);
+                        try {
+                            localStorage.setItem("lab-theme", next);
+                        } catch (e) {}
+                    });
+
+                    var SCORE = {
+                        0:{label:"No telemetry", cls:"s0"},
+                        1:{label:"Telemetry, no rule", cls:"s1"},
+                        2:{label:"Detected, noisy", cls:"s2"},
+                        3:{label:"Detected, clean", cls:"s3"}
+                    };
+
+                    var TACTIC_ORDER = ["execution", "persistence", "privilege-escalation", "stealth", "defense-impairment", "credential-access", "discovery", "lateral-movement", "collection", "command-and-control", "exfiltration", "impact"];
+                    
+                    function tLabel(t) {
+                        return t.replace(/-/g," ").replace(/\b\w/g,function(c){return c.toUpperCase();});
+                    }
+
+                    // tiles
+                    var sc = S.score_counts||{"0":0, "1":0, "2":0, "3":0};
+                    var tiles = document.getElementById("tiles");
+                    function tile(n, k) {
+                        var d = document.createElement("div");
+                        d.className = "tile";
+                        d.innerHTML = '<div class="n">' + n + '</div><div class="k">' + k + '</div>';
+                        tiles.appendChild(d);
+                    }
+                    tile((S.techniques_measured || 0) + '<span style="font-size:16px;color:var(--muted)">/' + (S.techniques_planned || T.length) + '</span>', 'Techniques measured');
+                    tile((+sc["3"] || 0), 'Detected cleanly');
+                    tile((+sc["0"] || 0), 'Blind spots');
+
+                    // legend
+                    var legend = document.getElementById("legend");
+                    [3,2,1,0].forEach(function(s) {
+                        var e = document.createElement("span");
+                        e.className = "sw";
+                        e.innerHTML = '<span class="chip" style="background:var(--s' + s + ')"></span>' + s + ' &mdash; ' + SCORE[s].label; legend.appendChild(e);
+                    });
+                    var p = document.createElement("span");
+                    p.className = "sw";
+                    p.innerHTML = '<span class="chip" style="background:var(--planned)"></span>Planned';
+                    legend.appendChild(p);
+
+                    // board
+                    var byTac = {};
+                    T.forEach(function(t) {
+                        (byTac[t.primary_tactic] = byTac[t.primary_tactic] || []).push(t);
+                    });
+                    var tacs = Object.keys(byTac).sort(function(a, b) {
+                        var ia = TACTIC_ORDER.indexOf(a);
+                        var ib = TACTIC_ORDER.indexOf(b);
+                        return (ia<0?99:ia) - (ib<0?99:ib);
+                    });
+                    var board = document.getElementById("board");
+                    tacs.forEach(function(tac) {
+                        var col = document.createElement("div");
+                        col.className = "col";
+                        col.innerHTML = '<h3>' + tLabel(tac) + '</h3>';
+                        byTac[tac].forEach(function(t) {
+                            var cell = document.createElement("div");
+                            var has = t.coverage_score !== null && t.coverage_score !== undefined;
+                            cell.className = "cell" + (has ? " " + SCORE[t.coverage_score].cls : "");
+                            var tag = has ? '<span class="tag">' + t.coverage_score + ' &middot; ' + SCORE[t.coverage_score].label + '</span>' : '<span class="tag">planned</span>';
+                            cell.innerHTML = '<div class="tid">' + t.technique_id + '</div><div class="tname">' + t.name + '</div>' + tag;
+                            col.appendChild(cell);
+                        });
+                        board.appendChild(col);
+                    });
+
+                    // table
+                    var tb = document.querySelector("#tbl tbody");
+                    T.forEach(function(t) {
+                        var tr = document.createElement("tr");
+                        var has = t.coverage_score !== null && t.coverage_score !== undefined;
+                        var dot = has ? '<span class="scoredot" style="background:var(--s' + t.coverage_score + ')"></span>' + t.coverage_score + ' ' + SCORE[t.coverage_score].label : '<span class="scoredot" style="background:var(--planned)"></span>planned';
+                        var lat = t.mean_latency_s == null ? "&mdash;" : t.mean_latency_s.toFixed(1);
+                        tr.innerHTML = '<td><code>' + t.technique_id + '</code></td><td>' + t.name + '</td>' + '<td>' + dot + '</td>' + '<td class="num">' + (t.fp_cost_5runs || 0) + '</td>' + '<td class="num">' + lat + '</td>';
+                        tb.appendChild(tr);
+                    });
+
+                    document.getElementById("subline").textContent = "ATT&CK v" + (S.attack_version || "?");
+                })();
+            </script>
+        </body>
+    </html>
