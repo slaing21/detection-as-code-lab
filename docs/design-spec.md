@@ -1,6 +1,6 @@
 # Design Specification (Milestone 2)
 
-**Project:** Detection-as-Code - Lab for Measuring MITRE ATT&CK Detection Coverage with Sysmon, Sigma, and Atomic Red Team
+**Project:** Detection-as-Code: Lab for Measuring MITRE ATT&CK Detection Coverage with Sysmon, Sigma, and Atomic Red Team
 **Author:** Stephen Laing
 **Advisor:** Dr. Sayeed Sajal
 **Course:** CS 4200, UVU
@@ -107,13 +107,13 @@ docs/
 design/
     techniques.yml                          Machine-readable matrix (source for harness + dashboard)
 baseline/
-    Invoke-Baseline.ps1                     Scripted benign admin workload + manifest
+    Invoke-Baseline.ps1                     Scripted benign admin workload + timestamp manifest
 harness/
-    Invoke-Run.ps1                          Atomic run wrapper (timestamps, partial record)
-    aggregate.py                            runs.csv -> dashboard/data.json + data.js
+    Invoke-Run.ps1                          Atomic run wrapper (timestamps + partial record)
+    aggregate.py                            Aggregate results/runs.csv into the per-technique rollup for the dashboard.
     validate.py                             CI checks (schema, matrix, rule-id uniqueness)
 rules/
-    sigma/                                  .yml file per technique (source of truth)
+    sigma/                                  Sigma rules, .yml file per technique (source of truth)
     wazuh/                                  Converted XML (build artifact)
 results/
     schema.json                             JSON Schema for a run record

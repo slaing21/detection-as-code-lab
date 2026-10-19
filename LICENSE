@@ -1,0 +1,44 @@
+MIT License
+
+Copyright (c) 2026 Stephen Laing
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+THIRD-PARTY COMPONENTS
+
+This lab integrates and references third-party tools, each under its own license.
+They are not redistributed here except where a config file is committed for
+reproducibility (noted below). Consult each project for full terms.
+
+- Wazuh (manager/indexer/dashboard) — GPLv2 / Apache-2.0 components — https://github.com/wazuh/wazuh
+- Sysmon (Sysinternals) — Microsoft Software License Terms — https://learn.microsoft.com/sysinternals/
+- sysmon-modular config (lab/endpoint/sysmonconfig.xml, committed for reproducibility)
+  — GPL-3.0, Olaf Hartong — https://github.com/olafhartong/sysmon-modular
+- Atomic Red Team (Invoke-AtomicRedTeam, atomic tests) — MIT, Red Canary
+  — https://github.com/redcanaryco/atomic-red-team
+- Sigma (rule format + converters) — DRL-1.1 / per-tool — https://github.com/SigmaHQ/sigma
+- MITRE ATT&CK (framework, technique IDs) — ATT&CK Terms of Use, © The MITRE Corporation
+  — https://attack.mitre.org/resources/legal-and-branding/terms-of-use/
+- Palantir ADS framework (detection documentation structure)
+  — https://github.com/palantir/alerting-detection-strategy-framework
+
+Trademarks and technique identifiers are property of their respective owners.
+MITRE ATT&CK® is a registered trademark of The MITRE Corporation.
