@@ -12,7 +12,7 @@ A controlled, reproducible lab that measures **(1)** whether each technique is v
 
 ## Architecture
 
-Two VMs on an isolated host-only network. The endpoint reaches the internet temporarily to stage tooling, then is ran completely offline.
+Two VMs on an isolated host-only network. The endpoint reaches the internet temporarily to stage tooling, then runs completely offline.
 
 ```
 Windows 11 endpoint (.20)                Ubuntu Server - Wazuh 4.14 (.10)
@@ -27,7 +27,7 @@ The full diagrams (architecture, detection pipeline) are in [`docs/design-spec.m
 
 ## The Two Metrics
 
-1. **Coverage score (0–3):** 0 no telemetry, 1 telemetry but no rule, 2 detected but noisy, 3 detected cleanly. Telemetry is confirmed *before* any rule is written. A score of 0 is recorded as a blind spot.
+1. **Coverage score (0–3):** 0 no telemetry, 1 telemetry but no rule, 2 detected but noisy or inconsistent, 3 detected cleanly. Telemetry is confirmed *before* any rule is written. A score of 0 is recorded as a blind spot.
 2. **False-positive cost:** total alerts a rule raises across **5** runs of the benign baseline (`baseline/Invoke-Baseline.ps1`).
 
 The metrics are defined in [`docs/evaluation-protocol.md`](docs/evaluation-protocol.md).
@@ -67,22 +67,25 @@ python3 -I harness/aggregate.py     # build dashboard/data.json + data.js
 # then open dashboard/index.html in a browser
 ```
 
-**Run a measurement** (needs the lab): for each technique, from a clean `ep-02-baseline` snapshot, run `harness/Invoke-Run.ps1` ×3, then `baseline/Invoke-Baseline.ps1` ×5, record rows in `results/runs.csv`, and re-run `aggregate.py`. See the protocol for the exact instructions.
+**Run a measurement** (needs the lab): starting every run from a clean `ep-02-baseline` snapshot, run `harness/Invoke-Run.ps1` x3 for each technique, then run `baseline/Invoke-Baseline.ps1` x5 once per measurement pass and score every deployed rule against each baseline run. Record each run as a row in `results/runs.csv`, then re-run `aggregate.py`. See the protocol for the exact instructions.
 
 ## Scope
 
-15 techniques across 9 of the 15 ATT&CK Enterprise tactics (Execution, Persistence, Privilege Escalation, Stealth, Discovery, Lateral Movement, Command and Control, Collection, Impact), each executed 3 times from a clean snapshot.
+15 techniques across 10 of the 15 ATT&CK Enterprise tactics (Execution, Persistence, Privilege Escalation, Stealth, Defense Impairment, Discovery, Lateral Movement, Command and Control, Collection, Impact), each executed 3 times from a clean snapshot.
 
 ## Schedule
 
-| Weeks | Phase | Output |
-|---|---|---|
-| 1–3 | Build (M1, done) | Two-VM lab, telemetry flowing, snapshots |
-| 4 | Converter gate | T1059.001 end to end, converter chosen, fidelity logged |
-| 5–6 | **Design (M2)** | Matrix, protocol, templates, schema, harness, dashboard, spec |
-| 7–9 | Measure (M3) | 15 techniques × (3 malicious + 5 baseline), rules + ADS, results |
-| 10–11 | Analyze & write | Scores, Navigator layer, FP analysis, report |
-| 12 | Package | Reproduce check from clean host, final deliverables |
+| Week | Dates | Activity | Milestone |
+|---|---|---|---|
+| 2 | Sep 7-13 | Build VMs, install Sysmon and Wazuh, background research | M1 [Background Research] |
+| 3-6 | Sep 14-Oct 11 | Technique matrix, evaluation protocol, ADS template, results schema, dashboard wireframe, baseline scripts | |
+| 7 | Oct 12-18 | First set of techniques, create, convert, and validate rules | M2 [Design] |
+| 8 | Oct 19-25 | Second set of techniques, record results, tune rules | |
+| 9 | Oct 26-Nov 1 | Final set of techniques, re-run validation and baseline | M3 [Implementation] |
+| 10 | Nov 2-8 | Telemetry vs rules gap analysis, start dashboard and Navigator layer | |
+| 11 | Nov 9-15 | Finish dashboard, final measurements, reproducibility rebuild | M4 [Testing & Troubleshooting] |
+| 12-13 | Nov 16-29 | Project report, slides, and poster | M5 [Wrap-up and Write Report] |
+| 14-15 | Nov 30-Dec 6 | Oral presentation and final submission | Final |
 
 ## License
 

@@ -63,12 +63,15 @@ def coverage_score(mal_runs, fp_cost):
         return 1, "telemetry-no-rule"
     if fp_cost and fp_cost > 0:
         return 2, "detected-noisy"
+    if len(detected) < len(valid):
+        return 2, "detected-inconsistent"
     return 3, "detected-clean"
 
 def main():
     techs = load_techniques()
     runs = load_runs()
     latest = max((r["tuning_pass"] for r in runs), default=0)
+    baseline_runs = {r["run_id"] for r in runs if r["run_type"] == "baseline" and r["tuning_pass"] == latest}
 
     fp_by_rule = {}
     for r in runs:
@@ -85,6 +88,8 @@ def main():
         detected_runs = sum(1 for r in mal if r["detected"])
         valid = [r for r in mal if r.get("atomic_status") in ("success", "")]
         score, label = coverage_score(mal, fp_cost) if mal else (None, "planned")
+        if score == 3 and (len(mal) < 3 or len(baseline_runs) < 5):
+            score, label = None, "incomplete"
         precision = None
 
         if detected_runs or fp_cost:

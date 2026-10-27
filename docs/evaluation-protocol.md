@@ -11,11 +11,11 @@ This is the measurement procedure. It exists so that any run of any technique is
 | Sysmon Binary Version | record `Sysmon64.exe` version at install | research-notes |
 | Wazuh Version | 4.14 (manager, indexer, dashboard) | research-notes |
 | Windows Build | record `winver` at `ep-02-baseline` snapshot | research-notes |
-| Atomic Red Team Commit | record `git -C ... rev-parse HEAD` | research-notes |
-| Endpoint Snapshot | `ep-02-baseline` (Sysmon + agent Active + atomics stages, NAT disconnected) | snapshot list |
-| Clock Source | both VMs  synced before each session, latency measured in seconds | - |
+| Atomic Red Team Version | Invoke-AtomicRedTeam module version, plus the atomics commit (if cloned with git) or download date | research-notes |
+| Endpoint Snapshot | `ep-02-baseline` (Sysmon + agent Active + atomics staged, NAT disconnected) | snapshot list |
+| Clock Source | both VMs synced before each session, latency measured in seconds | - |
 
-**Snapshot Discipline:** Every single test run for each malicious *and* baseline run. Starting from the `ep-02-baseline` snapshot, no run will inherit state from a previous run.
+**Snapshot Discipline:** Every malicious *and* baseline run starts from the `ep-02-baseline` snapshot, so no run inherits state from a previous run.
 
 ## 2. The Two Metrics
 
@@ -25,7 +25,7 @@ A 0-3 **coverage score**, assigned per technique after its 3 malicious runs:
 
 - **0 - No telemetry.** The atomic ran but no Sysmon event attributable to it appears in Wazuh.
 - **1 - Telemetry, no rule.** The Sysmon event is present in Wazuh archives, but no rule raises an alert above the noticed threshold.
-- **2 - Detected, noisy.** A rule fires on the malicious run, *and* the same rule also fires during at least one benign baseline run (FP cost > 0).
+- **2 - Detected, noisy or inconsistent.** A rule fires on at least one malicious run, but also fires during a baseline run (FP cost > 0) or misses at least one malicious run.
 - **3 - Detected, clean.** A rule fires on all malicious runs and on zero baseline runs.
 
 ### 2.2 False-Positive Cost (per rule)
@@ -40,7 +40,7 @@ Run the benign baseline (`baseline/Invoke-Baseline.ps1`, §4) **N = 5 times**, e
 2. No `-GetPrereqs` dependency that needs the internet at *run* time (fetching prereqs once while NAT is connected is fine; the run itself must work offline).
 3. Does not require a second host, a domain controller, or paid tooling.
 4. Prefer a test whose behavior a real adversary would use over a pure "atom" that only touches an artifact (e.g. for T1053.005 prefer creating a task that launches a payload over one that only writes a registry blob).
-5. Record the chosen GUID, name, and why in `design/techniques.yml`. If no test satisfies 1–3, mark the technique `blocked` and move a stretch-list technique up.
+5. Record the chosen GUID, name, and why in `design/techniques.yml`. If no test satisfies 1–3, mark the technique `blocked` and replace it with another technique that meets the selection criteria in technique-matrix.md.
 
 ## 4. Benign Baseline Definition
 
@@ -52,9 +52,9 @@ The baseline is a fixed script of ordinary Windows administration, run on the sa
 - Enumerate local users and groups; run `systeminfo`, `ipconfig /all`, `tasklist`
 - Map and unmap an SMB share to `\\127.0.0.1\C$`
 - Download a small file from the SIEM VM's local HTTP server
-- Compress a log folder with `tar`/`Compress-Archive`
+- Compress a log folder with `Compress-Archive`
 - Install a small MSI or run a signed installer, then uninstall
-- ~5 minutes of scripted PowerShell (variable assignment, `Invoke-WebRequest` to the local server, module import)
+- A short block of scripted PowerShell (random numbers, process listing, module import)
 
 The script writes a manifest (`baseline-manifest-<runid>.json`) with the UTC start/end of each action, so an alert's timestamp can be attributed to a specific benign action when analyzing FPs. Target duration ~15 minutes per run.
 
@@ -70,7 +70,7 @@ For each technique, repeat 3× for the malicious measurement:
 6. **Record** one result row (schema §`results/`).
 7. **Cleanup:** run the atomic's cleanup, then restore snapshot anyway for the next run.
 
-Then the FP measurement: run `Invoke-Baseline.ps1` 5× (each from clean snapshot), and for every rule under test record its alert count per baseline run.
+Then the FP measurement, which is shared rather than per technique: once per measurement pass, with every rule under test deployed, run `Invoke-Baseline.ps1` 5× (each from a clean snapshot) and record each rule's alert count per baseline run.
 
 ## 6. Tuning Loop
 
@@ -95,4 +95,5 @@ A rule scoring 2 (noisy) may be tuned once:
 - **Scripted baseline ≠ real users:** FP cost is relative to *this* workload.
 - **Defender interference:** exclusions needed to run some atomics are environment changes.
 - **Converter fidelity:** rules converted from Sigma may not be semantically identical to the source.
+- **One alert per event:** Wazuh raises one alert per event, so when two rules match the same event (rule 100200 and built-in rule 92057, or two registry-based rules such as the planned T1547.001 and T1112 rules), only one of them is counted. Each run records which rule fired.
 - **Atomic realism:** atomics are single-action proofs, not full intrusions.
