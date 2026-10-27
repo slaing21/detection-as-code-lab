@@ -1,15 +1,20 @@
 title: PowerShell Encoded Command Line
 id: 8d3f1a92-6b4e-4c21-9f0a-7e2d5c1a4b00
+related:
+  - id: fb843269-508c-4b76-8b8d-88679db22ce7
+    type: derived
 status: experimental
 description: >
   Detects PowerShell launched with an encoded command line (-EncodedCommand / -enc / -e),
   a common obfuscation step layered on T1059.001. Source of truth for lab rule 100200;
-  the deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated with
-  wazuh-logtest. Modeled on SigmaHQ proc_creation_win_powershell_base64_encoded_cmdline.
+  the deployed detection is the Wazuh XML in lab/siem/local_rules.xml, to be validated with
+  wazuh-logtest before use. Derived from SigmaHQ proc_creation_win_powershell_encode.yml.
 references:
   - https://attack.mitre.org/techniques/T1059/001/
-author: Stephen Laing
+  - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_encode.yml
+author: frack113 (original SigmaHQ rule), Stephen Laing
 date: 2026-10-17
+modified: 2026-10-26
 tags:
   - attack.execution
   - attack.t1059.001
@@ -27,7 +32,7 @@ detection:
       - ' -encodedcommand'
       - ' -e '
   condition: selection_img and selection_flag
-falsepositive:
+falsepositives:
   - Legitimate software or management tooling that launches encoded PowerShell at install time
   - 'Measured against this lab''s benign baseline: see results/runs.csv (fp_cost_5runs)'
 level: high
