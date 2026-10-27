@@ -29,13 +29,12 @@
      (design-spec.md §5). Each rule is authored from its Sigma source (rules/sigma/)
      and validated with wazuh-logtest before use. See its ADS in docs/templates/. -->
 <group name="sysmon,lab,attack,">
-  <!-- T1059.001 PowerShell - encoded command line. Source: rules/sigma/T1059.001_powershell_encoded_command.yml
-       ADS: docs/templates/ads-T1059.001-example.md -->
+  <!-- Converted from rules/sigma/T1059.001_powershell_encoded_command.yml with sigma_to_wazuh (raw output in rules/wazuh/), then 3 manual fixes (see ADS). -->
   <rule id="100200" level="12">
     <if_sid>61603</if_sid>
     <field name="win.eventdata.image" type="pcre2">(?i)\\(powershell|pwsh)\.exe$</field>
-    <field name="win.eventdata.commandLine" type="pcre2">(?i)\s-e(nc|ncodedcommand)?(\s|$)</field>
-    <description>T1059.001: PowerShell launched with an encoded command - $(win.eventdata.commandLine)</description>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:\ \-enc\ |\ \-encodedcommand|\ \-e\ )</field>
+    <description>T1059.001: PowerShell launched with an encoded command - $(win.eventdata.commandLine) (Sigma rule by frack113)</description>
     <mitre>
       <id>T1059.001</id>
     </mitre>

@@ -1,4 +1,4 @@
-# Machine-readable technique matrix. Fields marked TBD will be filled in Week 8 for Milestone 3.
+# Machine-readable technique matrix. Fields marked TBD are filled in during Milestone 3.
 attack_version: "20"
 attack_domain: enterprise-attack
 runs_per_technique: 3
@@ -11,8 +11,8 @@ techniques:
     fp_risk: high
     atomic_test_guid: TBD
     atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    reference_sigma_rule: proc_creation_win_powershell_encode
+    sigma_rule_id: 8d3f1a92-6b4e-4c21-9f0a-7e2d5c1a4b00
     wazuh_rule_id: 100200
     status: planned
   - seq: 2
@@ -77,8 +77,8 @@ techniques:
     status: planned
   - seq: 7
     technique_id: T1036.003
-    name: "Rename System Utilities"
-    primary_tactic: stealth
+    name: "Rename Legitimate Utilities"
+    primary_tactic: defense-impairment
     expected_sysmon_events: [1]
     fp_risk: low
     atomic_test_guid: TBD
@@ -102,7 +102,7 @@ techniques:
   - seq: 9
     technique_id: T1112
     name: "Modify Registry"
-    primary_tactic: stealth
+    primary_tactic: defense-impairment
     expected_sysmon_events: [12, 13]
     fp_risk: high
     atomic_test_guid: TBD

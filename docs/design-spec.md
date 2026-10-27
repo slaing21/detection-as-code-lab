@@ -10,7 +10,7 @@ This document is the Milestone 2 design: the architecture, the detection pipelin
 
 ## 1. Design Goals
 1. **Reproducible.** Anyone can rebuild the entire lab and pipeline from this repo.
-2. **Measurable.** Each technique will be measure with 2 numbers: 
+2. **Measurable.** Each technique will be measured with 2 numbers: 
     1. *Coverage score (0-3)*
     2. *False-positive cost*\
     These will be defined once (`evaluation-protocol.md`) and computed from raw run records, never asserted.
@@ -21,7 +21,7 @@ This document is the Milestone 2 design: the architecture, the detection pipelin
 
 ```mermaid
 flowchart LR
-    subgraph HOST["Windows 11 host, VirtualBox 7.1, VT-x, VBS disabled"]
+    subgraph HOST["Windows 11 host, VirtualBox 7.2, VT-x, VBS disabled"]
         subgraph HO["host-only net 192.168.56.0/24 (isolated)"]
             EP["Windows 11 endpoint<br/>win11-endpoint .20<br/>Sysmon (sysmon-modular)<br/>Wazuh agent, Atomic Red Team"]
             SIEM["Ubuntu Server, Wazuh 4.14<br/>siem-01 .10<br/>manager + indexer + dashboard<br/>local HTTP file source"]
@@ -49,7 +49,7 @@ flowchart TD
     G --> H["Validate: wazuh-logtest<br/>synthetic event matches"]
     H --> I["Deploy to local_rules.xml<br/>rule_id in lab block (§5)"]
     I --> J["Re-run atomic x3<br/>detected? latency?"]
-    J --> K["Run baseline x5<br/>baseline/Invoke-Baseline.ps1<br/>-> FP cost"]
+    J --> K["Run shared baseline x5<br/>once per pass, all deployed rules<br/>-> FP cost"]
     K --> L{"Noisy?<br/>(FP cost > 0)"}
     L -- yes, once --> M["Tune rule (protocol §6)<br/>re-run 3+5"]
     L -- no --> N["Record result row <br/>results/runs.csv"]
@@ -63,14 +63,14 @@ flowchart TD
 
 Sigma is the source of truth. Converted Wazuh XML is a build artifact validated per rule. If conversion is lossy or unavailable, the rule will be authored directly in Wazuh XML and the Sigma file will document the intent.
 
-There is **no official pySigma backend for Wazuh**. Candidate tooling (to trial on the T1059.001 gate rule in Week 4/8 and record the winner in `research-notes.md`): community pySigma Wazuh backends, `sigma_to_wazuh`, `SigWaz`, `sigWah`. Known gaps that must be checked per rule, not assumed:
+There is **no official pySigma backend for Wazuh**. Candidate tooling: a community pySigma Wazuh backend, `sigma_to_wazuh` (succeeded by StoW), and `SigWaz`. So far only `sigma_to_wazuh` has been trialed, on the T1059.001 gate rule (results in `research-notes.md`). Known gaps that must be checked per rule, not assumed:
 
 - `if_sid` scoping (a converted rule must be a child of the correct Sysmon base rule, e.g. `61603` for Event 1)
 - Severity/level mapping (Sigma `level` -> Wazuh `level`)
 - Unsupported modifiers: `base64offset|contains`, `|near`, aggregation/`timeframe` correlation - these do not translate and are either reworked or noted as a fidelity gap in the rule's ADS
 - Field-name mapping (Sigma logsource fields -> Wazuh `win.eventdata.*`)
 
-**Fidelity check (every converted rule):** craft a synthetic event, run `wazuh-logtest`, confirm it matches the intended rule and level. Record the transcript. A rule that cannot be validated this way is not deployed.
+**Fidelity check (every converted rule):** craft a synthetic event, run `wazuh-logtest`, confirm it matches the intended rule and level. Record the transcript. For Windows rules, wazuh-logtest needs the same temporary rule 60000 change Wazuh's own test runner makes (`decoded_as json`, restored afterward), or the rule is validated live. A rule that cannot be validated this way is not deployed.
 
 ## 5. Rule ID Namespace
 
@@ -89,7 +89,7 @@ Each detection rule carries a `<mitre><id>` tag so Wazuh's own ATT&CK mapping ag
 Two artifacts, both generated from `results/runs.csv`:
 
 1. **HTML Dashboard** (`dashboard/index.html` + `data.js`). An ATT&CK-style board colored by coverage score, summary tiles, and a per-technique metrics table. No server required, it is a plain-language view for a non-technical reader.
-2. **ATT&CK Navigator Layer** (`dashboard/navigator-layer.json`, generated in Week 8). The same scores as a Navigator overlay for the security-literate reader. Generation script reads `data.json` and emits a v20-compatible layer, and scores map to Navigator cell scores/colors.
+2. **ATT&CK Navigator Layer** (`dashboard/navigator-layer.json`, generated in Week 10). The same scores as a Navigator overlay for the security-literate reader. Generation script reads `data.json` and emits a v20-compatible layer, and scores map to Navigator cell scores/colors.
 
 ## 7. Repository Layout
 
@@ -97,7 +97,7 @@ Two artifacts, both generated from `results/runs.csv`:
 README.md                                   Overview, Quickstart, Reproduce
 docs/
     design-spec.md                          This File
-    technique-matrix.mc                     15 techniques, Selection criteria, Tactic spread
+    technique-matrix.md                     15 techniques, Selection criteria, Tactic spread
     evaluation-protocol.md                  Metrics, Run loop, Baseline, Tuning, Validity
     research-notes.md                       Living file of decisions with sources
     lab-build.md                            M1 Build
@@ -118,12 +118,11 @@ rules/
 results/
     schema.json                             JSON Schema for a run record
     runs.csv                                One row per run (example rows for now, real data will be part of Milestone 3)
-    example-aggregate.json                  Shape of the rollup
 dashboard/
     index.html                              HTML Dashboard
     data.js                                 Data stored in js
     data.json                               Data stored in json
-    navigator-layer.json                    Navigator layer json data
+    navigator-layer.json                    Navigator layer json data (planned)
 lab/
     endpoint/
         sysmonconfig.xml                    Sysmon configuration
@@ -141,7 +140,7 @@ lab/
 
 - every `results/runs.csv` row validates against `results/schema.json`
 - every technique in `design/techniques.yml` has a unique `wazuh_rule_id` in the reserved block
-- the matrix still spans 8 tactics and holds 15 techniques
+- the matrix still spans at least 8 tactics and holds 15 techniques
 - `local_rules.xml` is well-formed XML and its rule IDs do not collide
 
 A malformed result or a duplicate rule ID fails the build, making the repo self-checking.

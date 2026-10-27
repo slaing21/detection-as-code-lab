@@ -1,0 +1,27 @@
+<group name="sigma,">
+    <!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->
+    <rule id="900001" level="13">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1059.001_powershell_encoded_command.yml</info>
+        <!--Sigma Rule Author: frack113 (original SigmaHQ rule), Stephen Laing-->
+        <!--Description: Detects PowerShell launched with an encoded command line (-EncodedCommand / -enc / -e), a common obfuscation step layered on T1059.001. Source of truth for lab rule 100200; the deployed detection is the Wazuh XML in lab/siem/local_rules.xml, to be validated with wazuh-logtest before use. Derived from SigmaHQ proc_creation_win_powershell_encode.yml.
+-->
+        <!--Date: 2026-10-17-->
+        <!--Status: experimental-->
+        <!--ID: 8d3f1a92-6b4e-4c21-9f0a-7e2d5c1a4b00-->
+        <mitre>
+            <id>attack.execution</id>
+            <id>attack.t1059.001</id>
+        </mitre>
+        <description>PowerShell Encoded Command Line</description>
+        <options>no_full_log</options>
+        <group>process_creation,windows,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.eventdata.image" negate="no" type="pcre2">(?i)\\+powershell\.exe|\\+pwsh\.exe</field>
+        <field name="win.eventdata.commandLine" negate="no" type="pcre2">(?i)(?:\ \-enc\ |\ \-encodedcommand|\ \-e\ )</field>
+    </rule>
+</group>

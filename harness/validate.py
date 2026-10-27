@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 '''
-Repo self-check for the Detection-as-Code lab. To be ran on every push.
+Repo self-check for the Detection-as-Code lab. To be run on every push.
 
 Checks:
     1. results/runs.csv: validation against results/schema.json
-    2. design/techniques.yml: 15 techniques, 8 tactics, unqiue wazuh_rule_id in the reserved block
+    2. design/techniques.yml: 15 techniques, at least 8 tactics, unqiue wazuh_rule_id in the reserved block
     3. lab/siem/local_rules.xml: unique rule ids
     4. rules/sigma/*.yml: each one has a unique Sigma id and the required keys
 

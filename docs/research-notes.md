@@ -6,7 +6,20 @@ Research notes, decisions, and sources. This is a living document so more will b
 
 - **ATT&CK Enterprise v20** (released 2026-10-13) is the pinned framework. v19 (April 2026) split the old **Defense Evasion** tactic into **Stealth (TA0005)** and **Defense Impairment (TA0112)**, so Enterprise now has **15 tactics**. TA0005 is reused for Stealth, so older references to "TA0005 = Defense Evasion" are now stale. A mapping hazard this project avoids by using v20 tactic names throughout and recording any upstream `defense-evasion` tag where it differs.
   - Source: ATT&CK release notes, https://attack.mitre.org/resources/updates/updates-april-2026/ and https://attack.mitre.org/resources/updates/
-- Many SigmaHQ rules still tag `attack.defense_evasion` so the matrix maps those techniques to Stealth or Defense Impairment per v20.
+- SigmaHQ has already migrated its rule tags to `attack.stealth` and `attack.defense-impairment` (checked October 2026), so rules adapted from SigmaHQ map directly to v20 tactics. Older rules and forks may still carry `attack.defense-evasion`.
+
+## Pinned Versions
+
+| Component | Version |
+|---|---|
+| VirtualBox | Version 7.2.14 r174565 (Qt6.8.0 on windows) |
+| Ubuntu Server (SIEM) | Ubuntu 26.04.1 LTS (GNU/Linux 7.0.0-31-generic x86_64) |
+| Wazuh (manager, indexer, dashboard) | v4.14.7 |
+| Windows 11 (endpoint) | Version 25H2, OS build 26200.9457 |
+| Sysmon | Version 15.22.0.0 |
+| sysmon-modular config | balanced (medium verbosity), Sysmon schema 4.90, committed in aa25361 (2026-09-14) |
+| Invoke-AtomicRedTeam module | 2.1.0 |
+| Atomic Red Team | 2026-09-14 |
 
 ## Sysmon Configuration
 
@@ -16,14 +29,17 @@ Research notes, decisions, and sources. This is a living document so more will b
 
 ## Sigma → Wazuh Conversion
 
-- **There is no official pySigma backend for Wazuh.** Converter candidates to trial on the T1059.001 gate rule and record the winner: community pySigma Wazuh backends, `sigma_to_wazuh`, `SigWaz`, `sigWah`.
+- **There is no official pySigma backend for Wazuh.** None is listed in the [pySigma plugin directory](https://github.com/SigmaHQ/pySigma-plugin-directory). Converter candidates: [sigma_to_wazuh](https://github.com/theflakes/sigma_to_wazuh) (Python, no longer maintained), its Go successor [StoW](https://github.com/theflakes/StoW), [SigWaz](https://sigwaz.com/), and a community pySigma Wazuh backend mentioned on the [Wazuh mailing list](https://groups.google.com/g/wazuh/c/VuRel-u0U3Y) with no published package.
 - **Decision: Sigma is the source of truth, Wazuh XML is a validated build artifact.** Where conversion is lossy or unsupported, the Wazuh rule will be authored directly and the Sigma file will be kept as the documented intent.
-- Known gaps to check per rule: `if_sid` scoping to the right Sysmon base rule, `level`/severity mapping, and unsupported modifiers (`base64offset|contains`, `|near`, `timeframe` correlation). The T1059.001 example rule hits exactly this: `base64offset|contains` cannot be reproduced in Wazuh, so rule 100200 matches the encoded-command flag, not the decoded payload (documented in its ADS).
-- **Fidelity method:** every deployed rule is checked with `wazuh-logtest` against a synthetic event, and transcript is recorded.
+- Known gaps to check per rule: `if_sid` scoping to the right Sysmon base rule, `level`/severity mapping, and unsupported modifiers (`base64offset|contains`, `|near`, `timeframe` correlation). The T1059.001 converter trial hit the first of these (`if_sid` scoping, see Converter trial 1 below). The rule avoids `base64offset|contains` by matching the encoded-command flag, not the decoded payload (documented in its ADS).
+- **Fidelity method:** every deployed rule is checked with `wazuh-logtest` (using the temporary rule 60000 change Wazuh's own test runner makes) or live on the endpoint, and the result is recorded.
+- **Converter trial 1 (2026-10-18):** sigma_to_wazuh converted the T1059.001 rule (1 of 1), but the output needed three correctness fixes: generic Windows parent rules instead of Sysmon Event 1 (61603), Sigma `endswith` converted to "contains", and Sigma tags in the `<mitre>` block instead of technique IDs. The tool reports conversion, not correctness. Its README also omits the PyYAML dependency. Details are in the T1059.001 ADS.
+- **wazuh-logtest and Windows events:** wazuh-logtest submits every test event as a plain log line, so the Windows eventchannel decoder that rule 60000 requires never runs, even with `-l`. Wazuh's own [test runner](https://github.com/wazuh/wazuh/blob/v4.14.7/ruleset/testing/runtests.py) temporarily sets rule 60000 to `decoded_as json`. This project validates Windows rules the same way, or live on the endpoint.
+- **Built-in comparison:** Wazuh 4.14 already ships [rule 92057](https://github.com/wazuh/wazuh/blob/v4.14.7/ruleset/rules/0800-sysmon_id_1.xml) for encoded PowerShell when the parent is powershell.exe. Built-in rules like this are the baseline the lab rules are compared against.
 
 ## Metric Definitions
 
-- **Coverage score 0–3** (no telemetry / telemetry-no-rule / detected-noisy / detected-clean) and **false-positive cost** (alerts a rule raises across 5 benign baseline runs). Defined in `evaluation-protocol.md`. Since DeTT&CT scores data-source coverage on paper, this project measures *observed* coverage empirically and adds the FP dimension that DeTT&CT does not.
+- **Coverage score 0–3** (no telemetry / telemetry-no-rule / detected-noisy or detected-inconsistent / detected-clean) and **false-positive cost** (alerts a rule raises across 5 benign baseline runs). Defined in `evaluation-protocol.md`. Since DeTT&CT scores data-source coverage on paper, this project measures *observed* coverage empirically and adds the FP dimension that DeTT&CT does not.
 - **Why "cost" and not "rate":** since a research lab cannot claim a production false-positive *rate*, because that depends on a real environment's event volume, this lab will use "cost" since what is measured is how many times a rule fired against a fixed, scripted benign workload.
 
 ## Related Work and The Gap
@@ -41,12 +57,40 @@ Research notes, decisions, and sources. This is a living document so more will b
 
 ## Sources
 
-- MITRE ATT&CK v20 (2026-10-13), tactic/technique definitions and release notes
-- Sigma specification and SigmaHQ rule repository
-- Atomic Red Team documentation and Windows atomics
-- Microsoft Sysmon event reference [`olafhartong/sysmon-modular`](https://github.com/olafhartong/sysmon-modular)
-- [Wazuh 4.14 ruleset and agent documentation](https://documentation.wazuh.com/current/release-notes/release-4-14-0.html)
-- Palantir Alerting and Detection Strategy framework
-- NIST SP 800-61r3
-- NIST CSF 2.0
-- DeTT&CT; "Summiting the Pyramid"
+**Framework**
+- [MITRE ATT&CK](https://attack.mitre.org/)
+- [ATT&CK v20 release notes (October 2026)](https://attack.mitre.org/resources/updates/)
+- [ATT&CK v19 release notes (April 2026), Defense Evasion split](https://attack.mitre.org/resources/updates/updates-april-2026/)
+- [ATT&CK Navigator](https://github.com/mitre-attack/attack-navigator)
+
+**Telemetry and SIEM**
+- [Microsoft Sysmon](https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon)
+- [sysmon-modular](https://github.com/olafhartong/sysmon-modular)
+- [SwiftOnSecurity sysmon-config (considered, not selected)](https://github.com/SwiftOnSecurity/sysmon-config)
+- [Wazuh 4.14 custom rules](https://documentation.wazuh.com/4.14/user-manual/ruleset/rules/custom.html)
+- [Wazuh wazuh-logtest](https://documentation.wazuh.com/current/user-manual/reference/tools/wazuh-logtest.html)
+- [Wazuh 4.14.0 release notes](https://documentation.wazuh.com/current/release-notes/release-4-14-0.html)
+- [Wazuh source and ruleset](https://github.com/wazuh/wazuh)
+
+**Detection rules and conversion**
+- [Sigma specification](https://github.com/SigmaHQ/sigma-specification)
+- [SigmaHQ rule repository](https://github.com/SigmaHQ/sigma)
+- [SigmaHQ reference rule for T1059.001](https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_powershell_encode.yml)
+- [pySigma](https://github.com/SigmaHQ/pySigma)
+- [pySigma plugin directory](https://github.com/SigmaHQ/pySigma-plugin-directory)
+- [sigma_to_wazuh](https://github.com/theflakes/sigma_to_wazuh)
+- [StoW](https://github.com/theflakes/StoW)
+- [SigWaz](https://sigwaz.com/)
+
+**Emulation**
+- [Atomic Red Team](https://github.com/redcanaryco/atomic-red-team)
+- [Invoke-AtomicRedTeam wiki](https://github.com/redcanaryco/invoke-atomicredteam/wiki)
+
+**Evaluation framing and related work**
+- [Palantir ADS framework](https://github.com/palantir/alerting-detection-strategy-framework)
+- [NIST SP 800-61 Rev. 3 (April 2025)](https://csrc.nist.gov/pubs/sp/800/61/r3/final)
+- [NIST CSF 2.0, CSWP 29 (February 2024)](https://doi.org/10.6028/NIST.CSWP.29)
+- [DeTT&CT](https://github.com/rabobank-cdc/DeTTECT)
+- [Summiting the Pyramid](https://center-for-threat-informed-defense.github.io/summiting-the-pyramid/)
+- [Splunk Attack Range](https://github.com/splunk/attack_range)
+- [Elastic detection-rules](https://github.com/elastic/detection-rules)

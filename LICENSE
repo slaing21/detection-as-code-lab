@@ -31,13 +31,13 @@ reproducibility (noted below). Consult each project for full terms.
 - Wazuh (manager/indexer/dashboard) — GPLv2 / Apache-2.0 components — https://github.com/wazuh/wazuh
 - Sysmon (Sysinternals) — Microsoft Software License Terms — https://learn.microsoft.com/sysinternals/
 - sysmon-modular config (lab/endpoint/sysmonconfig.xml, committed for reproducibility)
-  — GPL-3.0, Olaf Hartong — https://github.com/olafhartong/sysmon-modular
+  — MIT, Olaf Hartong — https://github.com/olafhartong/sysmon-modular
 - Atomic Red Team (Invoke-AtomicRedTeam, atomic tests) — MIT, Red Canary
   — https://github.com/redcanaryco/atomic-red-team
 - Sigma (rule format + converters) — DRL-1.1 / per-tool — https://github.com/SigmaHQ/sigma
 - MITRE ATT&CK (framework, technique IDs) — ATT&CK Terms of Use, © The MITRE Corporation
   — https://attack.mitre.org/resources/legal-and-branding/terms-of-use/
-- Palantir ADS framework (detection documentation structure)
+- Palantir ADS framework (detection documentation structure), MIT
   — https://github.com/palantir/alerting-detection-strategy-framework
 
 Trademarks and technique identifiers are property of their respective owners.

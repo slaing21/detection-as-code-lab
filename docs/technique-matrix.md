@@ -1,6 +1,6 @@
 # Technique Matrix (v0.1, Milestone 2)
 
-**Scope commitment:** 15 techniques spanning 9 of the 15 Enterprise tactics. Each technique is executed 3 times from a clean snapshot (see `evaluation-protocol.md`).
+**Scope commitment:** 15 techniques spanning 10 of the 15 Enterprise tactics. Each technique is executed 3 times from a clean snapshot (see `evaluation-protocol.md`).
 
 ## Selection criteria
 
@@ -25,18 +25,18 @@ A technique is in scope only if all of these hold:
 | 4 | T1546.003 | WMI Event Subscription | Persistence | 19, 20, 21 (WMI filter/consumer/binding) | Low: rare in normal admin work |
 | 5 | T1543.003 | Windows Service | Persistence | 1, 13 (service ImagePath) | High: baseline creates and removes a service |
 | 6 | T1548.002 | Bypass User Account Control | Privilege Escalation | 1, 13 | Low |
-| 7 | T1036.003 | Rename System Utilities | Stealth | 1 (OriginalFileName vs Image mismatch) | Low |
+| 7 | T1036.003 | Rename Legitimate Utilities | Defense Impairment | 1 (OriginalFileName vs Image mismatch) | Low |
 | 8 | T1218.010 | Regsvr32 | Stealth | 1, 7 (image load), 3 | Low to medium |
-| 9 | T1112 | Modify Registry | Stealth | 12, 13 | High: baseline writes registry values |
-| 10 | T1087.001 | Local Account discovery | Discovery | 1 | High: baseline lists local users |
+| 9 | T1112 | Modify Registry | Defense Impairment | 12, 13 | High: baseline writes registry values |
+| 10 | T1087.001 | Local Account | Discovery | 1 | High: baseline lists local users |
 | 11 | T1082 | System Information Discovery | Discovery | 1 | High: baseline runs systeminfo |
 | 12 | T1021.002 | SMB/Windows Admin Shares | Lateral Movement | 1, 3 | Medium: baseline maps an admin share on localhost |
 | 13 | T1105 | Ingress Tool Transfer | Command and Control | 1, 3 (network), 11 (file create), 22 (DNS) | Medium: baseline downloads a file from the SIEM VM |
-| 14 | T1560 / T1560.001 | Archive Collected Data | Collection | 1, 11 | Medium: baseline zips a log folder |
+| 14 | T1560 | Archive Collected Data | Collection | 1, 11 | Medium: baseline zips a log folder |
 | 15 | T1490 | Inhibit System Recovery | Impact | 1 | Low |
 
-**Tactic Spread:** Execution, Persistence, Privilege Escalation, Stealth, Discovery, Lateral Movement, Command and Control, Collection, Impact = **9 tactics**.
+**Tactic Spread:** Execution, Persistence, Privilege Escalation, Stealth, Defense Impairment, Discovery, Lateral Movement, Command and Control, Collection, Impact = **10 tactics**.
 
 **Telemetry Types Exercised:** process creation (1), network (3), image load (7), file create (11), registry (12/13), WMI (19–21), DNS (22).
 
-**Not Covered (by design):** Initial Access (needs Office or mail infrastructure), Exfiltration (needs an external receiver), Reconnaissance and Resource Development (pre-compromise, not endpoint-observable), Credential Access and Defense Impairment, Linux/macOS techniques.
+**Not Covered (by design):** Initial Access (needs Office or mail infrastructure), Exfiltration (needs an external receiver), Reconnaissance and Resource Development (pre-compromise, not endpoint-observable), Credential Access, Defense Impairment techniques that disable the sensors under test (such as T1685), Linux/macOS techniques.

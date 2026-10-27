@@ -1,0 +1,27 @@
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Endpoint run output
+lab-runs/
+lab-baseline/
+*.evtx
+
+# Wazuh admin credentials and secrets
+wazuh-install-files.tar
+*-passwords.txt
+*.pem
+*.key
+
+# Large binaries
+*.iso
+*.ova
+*.vdi
