@@ -21,7 +21,7 @@ A technique is in scope only if all of these hold:
 |---|---|---|---|---|---|
 | 1 | T1059.001 | PowerShell | Execution | 1 (process create) | High: admins run PowerShell constantly |
 | 2 | T1053.005 | Scheduled Task | Persistence | 1, 11 (task file), 13 | High: baseline registers a maintenance task |
-| 3 | T1547.001 | Registry Run Keys / Startup Folder | Persistence | 13 (registry value set), 11 | Medium: software installers write Run keys |
+| 3 | T1547.001 | Registry Run Keys / Startup Folder | Persistence | 13 (registry value set) | Medium: software installers write Run keys |
 | 4 | T1546.003 | WMI Event Subscription | Persistence | 19, 20, 21 (WMI filter/consumer/binding) | Low: rare in normal admin work |
 | 5 | T1543.003 | Windows Service | Persistence | 1, 13 (service ImagePath) | High: baseline creates and removes a service |
 | 6 | T1548.002 | Bypass User Account Control | Privilege Escalation | 1, 13 | Low |

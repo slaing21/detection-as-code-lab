@@ -1,0 +1,38 @@
+title: Registry Run Keys
+id: 858e1419-75fc-4928-b645-a296caaef0f7
+related:
+  - id: 20f0ee37-5942-4e45-b7d5-c5b5db9df5cd
+    type: derived
+status: experimental
+description: >
+  Detects creation or modification of a value under a CurrentVersion\Run key,
+  a common logon-persistence mechanism (T1547.001). Source of truth for lab rule
+  100220. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml,
+  validated live before use. Derived from SigmaHQ
+  registry_set_asep_reg_keys_modification_currentversion.
+references:
+  - https://attack.mitre.org/techniques/T1547/001/
+  - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_currentversion.yml
+author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin, oscd.community, Tim Shelton, frack113 (SigmaHQ), adapted by Stephen Laing
+date: 2026-11-01
+tags:
+  - attack.persistence
+  - attack.privilege-escalation
+  - attack.t1547.001
+logsource:
+  category: registry_set
+  product: windows
+detection:
+  selection:
+    TargetObject|contains:
+      - '\CurrentVersion\Run\'
+  condition: selection
+falsepositives:
+  - Legitimate software (mostly during installation) sets up autorun keys
+  - Legitimate administrators configuring startup programs
+  - 'Measured against this lab''s benign baseline: see results/runs.csv (fp_cost_5runs)'
+level: high
+# Implementation note: the Sigma selection (TargetObject contains \CurrentVersion\Run\)
+# is realized in Wazuh by chaining under built-in base rule 92300 (if_sid 92300), which
+# performs that match for any writing process. Stock rule 92302 alerts only on reg.exe
+# writers, so chaining to 92300 covers the rest. See docs/templates/ads-T1547.001.md.
