@@ -7,7 +7,7 @@ status: experimental
 description: >
   Detects creation or modification of a value under a CurrentVersion\Run key,
   a common logon-persistence mechanism (T1547.001). Source of truth for lab rule
-  100220. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml,
+  100003. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml,
   validated live before use. Derived from SigmaHQ
   registry_set_asep_reg_keys_modification_currentversion.
 references:

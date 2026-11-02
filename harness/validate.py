@@ -29,8 +29,8 @@ def check_techniques():
     check("tactic spread", len(tactics) >= 8, f"{len(tactics)} tactics")
     ids = [x.get("wazuh_rule_id") for x in t]
     check("rule_id unique", len(ids) == len(set(ids)), f"{len(set(ids))} unique of {len(ids)}")
-    inblock = all(100200 <= int(i) <= 100499 for i in ids if i)
-    check("rule_id in reserved block", inblock, "100200-100499")
+    inblock = all(100001 <= int(i) <= 100015 for i in ids if i)
+    check("rule_id in reserved block", inblock, "100001-100015")
 
 # 1. results/runs.csv
 def check_results():

@@ -3,34 +3,16 @@
 <!-- Modify it at your will. -->
 <!-- Copyright (C) 2015, Wazuh Inc. -->
 
-<!-- Example -->
-<group name="local,syslog,sshd,">
+<!-- Author: Stephen Laing -->
+<!-- Location: /var/ossec/etc/rules/local_rules.xml -->
+<!-- Wazuh Version: 4.14.7 -->
 
-  <!--
-  Dec 10 01:02:02 host sshd[1234]: Failed none for root from 1.1.1.1 port 1066 ssh2
-  -->
-  <rule id="100001" level="5">
-    <if_sid>5716</if_sid>
-    <srcip>1.1.1.1</srcip>
-    <description>sshd: authentication failed from IP 1.1.1.1.</description>
-    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,</group>
-  </rule>
-
-</group>
-
-<group name="sysmon,lab,">
-        <rule id="100100" level="3">
-                <if_sid>61603</if_sid>
-                <description>LAB scaffolding: Sysmon Event 1 process creation - $(win.eventdata.image)</description>
-        </rule>
-</group>
-
-<!-- Detection rules under test. One block of 10 rule_ids per technique, matrix order
-     (design-spec.md §5). Each rule is authored from its Sigma source (rules/sigma/)
-     and validated with wazuh-logtest before use. See its ADS in docs/templates/. -->
 <group name="sysmon,lab,attack,">
+  <!-- Rule 100001 - PowerShell Encoded Command Execution -->
+  <!-- MITRE ATT&CK: T1059.001 - Command and Scripting Interpreter: PowerShell -->
+  <!-- Sysmon Event ID 1 - Process Creation -->
   <!-- Converted from rules/sigma/T1059.001_powershell_encoded_command.yml with sigma_to_wazuh (raw output in rules/wazuh/), then 3 manual fixes (see ADS). -->
-  <rule id="100200" level="12">
+  <rule id="100001" level="12">
     <if_sid>61603</if_sid>
     <field name="win.eventdata.image" type="pcre2">(?i)\\(powershell|pwsh)\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)(?:\ \-enc\ |\ \-encodedcommand|\ \-e\ )</field>
@@ -39,7 +21,11 @@
       <id>T1059.001</id>
     </mitre>
   </rule>
-  <rule id="100220" level="10">
+
+  <!-- Rule 100003 - Registry Run key persistence -->
+  <!-- MITRE ATT&CK: T1547.001 - Boot or Logon Autostart Execution: Registry Run Keys -->
+  <!-- Sysmon Event ID 13 - Registry Value Set -->
+  <rule id="100003" level="10">
     <if_sid>92300</if_sid>
     <description>T1547.001: Registry Run key persistence - $(win.eventdata.targetObject)</description>
     <mitre>

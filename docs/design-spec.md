@@ -78,8 +78,7 @@ Wazuh custom rules must be ≥ 100000. The lab reserves blocks so IDs are stable
 
 | Range | Purpose |
 |---|---|
-| 100100-100199 | Scaffolding / verification (e.g. 100100, the M1 Sysmon-Event-1 sanity rule, **removed before baseline runs**) |
-| 100200-100499 | Detection rules under test, one block of 10 per technique in matrix order (T1059.001 -> 100200, T1053.005 -> 100210, ...). `design/techniques.yml` holds the assignments. |
+| 100001-100015 | Detection rules under test, one ID per technique in matrix order (T1059.001 -> 100001, T1053.005 -> 100002, ...). `design/techniques.yml` holds the assignments. |
 | 100900-100999 | Experimental / tuning spares |
 
 Each detection rule carries a `<mitre><id>` tag so Wazuh's own ATT&CK mapping agrees with the matrix.

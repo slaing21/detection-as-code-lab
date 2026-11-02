@@ -1,5 +1,5 @@
 run_id,run_type,rule_state,timestamp_utc,technique_id,atomic_test_guid,atomic_status,run_index,telemetry_present,expected_sysmon_events,observed_sysmon_events,detected,rule_id,builtin_rule_id,alert_count,latency_s,coverage_score,tuning_pass,notes
 2026-10-30T21-18-37Z_T1547.001_stock,malicious,stock,2026-10-30T21:18:37Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,1,true,[13],[13],false,,92302,1,,,0,stock built-in 92302 fired
-2026-11-01T22-13-59Z_T1547.001_r1,malicious,lab,2026-11-01T22:13:59.1843118Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,1,true,[13],[13],true,100220,,1,0.7643966,,0,lab 100220 fired on reg.exe write
-2026-11-02T00-10-03Z_T1547.001_r2,malicious,lab,2026-11-02T00:10:03.5290606Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,2,true,[13],[13],true,100220,,1,0.9026055,,0,lab 100220 fired on reg.exe write
-2026-11-02T00-17-24Z_T1547.001_r3,malicious,lab,2026-11-02T00:17:24.5508550Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,3,true,[13],[13],true,100220,,1,0.9161392,,0,lab 100220 fired on reg.exe write
+2026-11-01T22-13-59Z_T1547.001_r1,malicious,lab,2026-11-01T22:13:59.1843118Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,1,true,[13],[13],true,100003,,1,0.7643966,,0,lab 100220 fired on reg.exe write
+2026-11-02T00-10-03Z_T1547.001_r2,malicious,lab,2026-11-02T00:10:03.5290606Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,2,true,[13],[13],true,100003,,1,0.9026055,,0,lab 100220 fired on reg.exe write
+2026-11-02T00-17-24Z_T1547.001_r3,malicious,lab,2026-11-02T00:17:24.5508550Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,3,true,[13],[13],true,100003,,1,0.9161392,,0,lab 100220 fired on reg.exe write

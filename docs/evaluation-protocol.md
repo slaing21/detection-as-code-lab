@@ -56,7 +56,7 @@ The baseline is a fixed script of ordinary Windows administration, run on the sa
 - Install a small MSI or run a signed installer, then uninstall
 - A short block of scripted PowerShell (random numbers, process listing, module import)
 
-The script writes a manifest (`baseline-manifest-<runid>.json`) with the UTC start/end of each action, so an alert's timestamp can be attributed to a specific benign action when analyzing FPs. Target duration ~15 minutes per run.
+The script writes a manifest (`baseline-manifest-<runid>.json`) with the UTC start/end of each action, so an alert's timestamp can be attributed to a specific benign action when analyzing FPs.
 
 ## 5. Per-technique Run Procedure
 
@@ -95,5 +95,5 @@ A rule scoring 2 (noisy) may be tuned once:
 - **Scripted baseline ≠ real users:** FP cost is relative to *this* workload.
 - **Defender interference:** exclusions needed to run some atomics are environment changes.
 - **Converter fidelity:** rules converted from Sigma may not be semantically identical to the source.
-- **One alert per event:** Wazuh raises one alert per event, so when two rules match the same event (rule 100200 and built-in rule 92057, or two registry-based rules such as the planned T1547.001 and T1112 rules), only one of them is counted. Each run records which rule fired.
+- **One alert per event:** Wazuh raises one alert per event, so when two rules match the same event (rule 100001 and built-in rule 92057, or two registry-based rules such as the planned T1547.001 and T1112 rules), only one of them is counted. Each run records which rule fired.
 - **Atomic realism:** atomics are single-action proofs, not full intrusions.
