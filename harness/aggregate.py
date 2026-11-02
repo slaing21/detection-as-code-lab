@@ -81,7 +81,10 @@ def main():
     out_techs = []
     for t in techs:
         tid = t["technique_id"]
-        mal = [r for r in runs if r["run_type"] == "malicious" and r["technique_id"] == tid and r["tuning_pass"] == latest]
+        mal = [r for r in runs if r["run_type"] == "malicious" and r["technique_id"] == tid and r["tuning_pass"] == latest and r.get("rule_state") == "lab"]
+        stock = [r for r in runs if r["run_type"] == "malicious" and r["technique_id"] == tid and r.get("rule_state") == "stock"]
+        builtin_rule_id = next((r.get("builtin_rule_id") for r in stock + mal if r.get("builtin_rule_id")), None)
+        builtin_covered = builtin_rule_id is not None
         rule_id = next((r["rule_id"] for r in mal if r["rule_id"]), t.get("wazuh_rule_id"))
         fp_cost = fp_by_rule.get(str(rule_id), 0) if rule_id else 0
         lat = [r["latency_s"] for r in mal if r["latency_s"] is not None]
@@ -103,6 +106,8 @@ def main():
             "telemetry_present": any(r["telemetry_present"] for r in valid) if valid else None,
             "detected_runs": detected_runs,
             "rule_id": str(rule_id) if rule_id else None,
+            "builtin_rule_id": builtin_rule_id,
+            "builtin_covered": builtin_covered,
             "mean_latency_s": round(statistics.mean(lat), 2) if lat else None,
             "fp_cost_5runs": fp_cost,
             "precision": precision,
@@ -117,6 +122,7 @@ def main():
         "techniques_planned": len(techs),
         "techniques_measured": len(scored),
         "score_counts": {str(s): sum(1 for t in scored if t["coverage_score"] == s) for s in range(4)},
+        "builtin_covered_count": sum(1 for t in out_techs if t["builtin_covered"]),
         "tactics_covered": sorted({t["primary_tactic"] for t in out_techs})
     }
 

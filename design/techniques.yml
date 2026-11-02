@@ -31,14 +31,14 @@ techniques:
     technique_id: T1547.001
     name: "Registry Run Keys / Startup Folder"
     primary_tactic: persistence
-    expected_sysmon_events: [13, 11]
+    expected_sysmon_events: [13]
     fp_risk: medium
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: e55be3fd-3521-4610-9d1a-e210e42dcf05
+    atomic_test_name: "Reg Key Run"
+    reference_sigma_rule: registry_set_asep_reg_keys_modification_currentversion
+    sigma_rule_id: 858e1419-75fc-4928-b645-a296caaef0f7
     wazuh_rule_id: 100220
-    status: planned
+    status: run
   - seq: 4
     technique_id: T1546.003
     name: "WMI Event Subscription"
