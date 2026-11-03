@@ -18,6 +18,9 @@
 .PARAMETER GetPrereqs
     Fetch test prerequisites first while NAT adapter is connected temporarily.
 
+.PARAMETER InputArgs
+    Parameter to override the default configuration variables of an atomic test at runtime.
+
 .EXAMPLE
     .\Invoke-Run.ps1 -TechniqueId T1059.001 -TestGuid 86a43bad-12e3-4e85-b97c-4d5cf25b95c3 -RunIndex 1
 #>
@@ -27,6 +30,7 @@ param(
     [Parameter(Mandatory)][string]$TestGuid,
     [Parameter(Mandatory)][ValidateRange(1,5)][int]$RunIndex,
     [switch]$GetPrereqs,
+    [hashtable]$InputArgs = @{},
     [string]$OutDir = "$env:USERPROFILE\lab-runs"
 )
 
@@ -43,9 +47,14 @@ if (-not (Get-Module -ListAvailable -Name invoke-atomicredteam)) {
 }
 Import-Module invoke-atomicredteam -Force
 
+$atomicArgs = @{ TestGuids = $TestGuid }
+if ($InputArgs.Count -gt 0) {
+    $atomicArgs['InputArgs'] = $InputArgs
+}
+
 if ($GetPrereqs) {
     Write-Host "Fetching prereqs for $TechniqueId / $TestGuid (NAT must be connected now) ..."
-    Invoke-AtomicTest $TechniqueId -TestGuids $TestGuid -GetPrereqs
+    Invoke-AtomicTest $TechniqueId @atomicArgs -GetPrereqs
     Write-Host "Prereqs fetched. Disconnect NAT and re-snapshot before measuring."
 }
 
@@ -55,7 +64,7 @@ Write-Host "RUN $runId  t_start=$($tStart.ToString('o'))"
 
 $atomicStatus = 'success'
 try {
-    Invoke-AtomicTest $TechniqueId -TestGuids $TestGuid -ExecutionLogPath (Join-Path $OutDir "exec-$runId.csv")
+    Invoke-AtomicTest $TechniqueId @atomicArgs -ExecutionLogPath (Join-Path $OutDir "exec-$runId.csv")
 } catch {
     $atomicStatus = "execution_failed"
     Write-Warning "Atomic executor failed: $($_.Exception.Message)"
@@ -68,6 +77,7 @@ $record = [pscustomobject]@{
     timestamp_utc          = $tStart.ToString('o')
     technique_id           = $TechniqueId
     atomic_test_guid       = $TestGuid
+    input_args             = ($InputArgs.GetEnumerator() | ForEach-Object { "$($_.Key)=$($_.Value)" }) -join ';'
     atomic_status          = $atomicStatus
     run_index              = $RunIndex
     t_end_utc              = $tEnd.ToString('o')

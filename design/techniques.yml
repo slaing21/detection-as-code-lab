@@ -1,4 +1,4 @@
-# Machine-readable technique matrix. Fields marked TBD are filled in during Milestone 3.
+# Machine-readable technique matrix.
 attack_version: "20"
 attack_domain: enterprise-attack
 runs_per_technique: 3
@@ -9,12 +9,12 @@ techniques:
     primary_tactic: execution
     expected_sysmon_events: [1]
     fp_risk: high
-    atomic_test_guid: 86a43bad-12e3-4e85-b97c-4d5cf25b95c3
-    atomic_test_name: "ATHPowerShellCommandLineParameter -EncodedCommand parameter variations"
+    atomic_test_guid: a538de64-1c74-46ed-aa60-b995ed302598
+    atomic_test_name: "PowerShell Command Execution"
     reference_sigma_rule: proc_creation_win_powershell_encode
     sigma_rule_id: 8d3f1a92-6b4e-4c21-9f0a-7e2d5c1a4b00
     wazuh_rule_id: 100001
-    status: planned
+    status: run
   - seq: 2
     technique_id: T1053.005
     name: "Scheduled Task"
