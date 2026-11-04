@@ -1,0 +1,37 @@
+title: New Service Creation Using Sc.EXE
+id: e580f3b9-5c2e-454d-895b-a7801465ff19
+related:
+  - id: 85ff530b-261d-48c6-a441-facaa2e81e48
+    type: derived
+status: experimental
+description: >
+  Detects a Windows service being created with sc.exe create and a binPath (T1543.003).
+  Source of truth for lab rule 100005. The deployed detection is the Wazuh XML in
+  lab/siem/local_rules.xml, validated live with the T1543.003 atomic. Derived from SigmaHQ
+  proc_creation_win_sc_create_service.
+references:
+  - https://attack.mitre.org/techniques/T1543/003/
+  - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_create_service.yml
+author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community (original SigmaHQ rule), adapted by Stephen Laing
+date: 2026-11-03
+tags:
+  - attack.persistence
+  - attack.privilege-escalation
+  - attack.t1543.003
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith: '\sc.exe'
+    CommandLine|contains|all:
+      - 'create'
+      - 'binPath'
+  condition: selection
+falsepositives:
+  - Legitimate administrator or user creates a service for legitimate reasons
+  - Software installation
+  - 'Measured against this lab''s benign baseline: see results/runs.csv (fp_cost_5runs)'
+level: low
+# Fidelity note: upstream filter_optional_dropbox (Dropbox client parent) is not carried over.
+# The endpoint has no Dropbox install. Same treatment as the Office filter in the T1053.005 rule.

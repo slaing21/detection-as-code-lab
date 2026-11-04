@@ -47,4 +47,18 @@
       <id>T1547.001</id>
     </mitre>
   </rule>
+
+  <!-- Rule 100005 - Windows service created with sc.exe -->
+  <!-- MITRE ATT&CK: T1543.003 - Create or Modify System Process: Windows Service -->
+  <!-- Sysmon Event ID 1 - Process Creation -->
+  <!-- Converted from rules/sigma/T1543.003_sc_create_service.yml with sigma_to_wazuh (raw output in rules/wazuh/), then manual fixes (see ADS). -->
+  <rule id="100005" level="6">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\sc\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)^(?=.*create)(?=.*binpath)</field>
+    <description>T1543.003: Windows service created with sc.exe - $(win.eventdata.commandLine)</description>
+    <mitre>
+      <id>T1543.003</id>
+    </mitre>
+  </rule>
 </group>

@@ -1,7 +1,7 @@
 window.LAB_DATA = {
   "summary": {
     "attack_version": "20",
-    "generated_utc": "2026-11-04T05:17:52+00:00",
+    "generated_utc": "2026-11-04T07:17:46+00:00",
     "techniques_planned": 15,
     "techniques_measured": 0,
     "score_counts": {
@@ -10,7 +10,7 @@ window.LAB_DATA = {
       "2": 0,
       "3": 0
     },
-    "builtin_covered_count": 1,
+    "builtin_covered_count": 2,
     "tactics_covered": [
       "collection",
       "command-and-control",
@@ -113,20 +113,22 @@ window.LAB_DATA = {
       "technique_id": "T1543.003",
       "name": "Windows Service",
       "primary_tactic": "persistence",
-      "runs_malicious": 0,
-      "valid_runs": 0,
-      "telemetry_present": null,
-      "detected_runs": 0,
+      "runs_malicious": 3,
+      "valid_runs": 3,
+      "telemetry_present": true,
+      "detected_runs": 3,
       "rule_id": "100005",
-      "builtin_rule_id": null,
-      "builtin_mitre_ids": [],
-      "builtin_covered": false,
+      "builtin_rule_id": "92307",
+      "builtin_mitre_ids": [
+        "T1543.003"
+      ],
+      "builtin_covered": true,
       "tuning_pass": 0,
-      "mean_latency_s": null,
+      "mean_latency_s": 0.82,
       "fp_cost_5runs": 0,
-      "precision": null,
+      "precision": 1.0,
       "coverage_score": null,
-      "status": "planned"
+      "status": "incomplete"
     },
     {
       "technique_id": "T1548.002",

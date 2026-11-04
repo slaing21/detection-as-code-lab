@@ -1,0 +1,29 @@
+<group name="sigma,">
+    <!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->
+<rule id="900003" level="7">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1543.003_sc_create_service.yml</info>
+        <!--Sigma Rule Author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community (original SigmaHQ rule), adapted by Stephen Laing-->
+        <!--Description: Detects a Windows service being created with sc.exe create and a binPath (T1543.003). Source of truth for lab rule 100005. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1543.003 atomic. Derived from SigmaHQ proc_creation_win_sc_create_service.
+-->
+        <!--Date: 2026-11-03-->
+        <!--Status: experimental-->
+        <!--ID: e580f3b9-5c2e-454d-895b-a7801465ff19-->
+        <mitre>
+            <id>attack.persistence</id>
+            <id>attack.privilege-escalation</id>
+            <id>attack.t1543.003</id>
+        </mitre>
+        <description>New Service Creation Using Sc.EXE</description>
+        <options>no_full_log</options>
+        <group>process_creation,windows,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.eventdata.image" negate="no" type="pcre2">(?i)\\+sc\.exe</field>
+        <field name="win.eventdata.commandLine" negate="no" type="pcre2">(?i)create</field>
+        <field name="win.eventdata.commandLine" negate="no" type="pcre2">(?i)binPath</field>
+    </rule>
+</group>
