@@ -45,8 +45,11 @@ def check_results():
     schema = json.load(open(schema_path))
     jsonschema.Draft202012Validator.check_schema(schema)
     n = 0
+    half_filled = []
     for r in csv.DictReader(open(runs_path, encoding="utf-8")):
         o = dict(r)
+        if bool(o.get("builtin_rule_id")) != bool(o.get("builtin_mitre_ids")):
+            half_filled.append(o["run_id"])
         for b in ("telemetry_present", "detected"):
             o[b] = o[b].strip().lower() == "true"
         o["run_index"] = int(o["run_index"])
@@ -63,6 +66,7 @@ def check_results():
         n += 1
 
     check("results schema", True, f"{n} run row(s) valid")
+    check("builtin_rule_id and builtin_mitre_ids paired", not half_filled, ", ".join(half_filled))
 
 # 2. design/techniques.yml
 def load_tech():

@@ -21,12 +21,12 @@ techniques:
     primary_tactic: persistence
     expected_sysmon_events: [1, 11, 13]
     fp_risk: high
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 42f53695-ad4a-4546-abb6-7d837f644a71
+    atomic_test_name: "Scheduled task Local"
+    reference_sigma_rule: proc_creation_win_schtasks_creation
+    sigma_rule_id: 12def3b0-ea18-415f-8ac8-33e082a21586
     wazuh_rule_id: 100002
-    status: planned
+    status: run
   - seq: 3
     technique_id: T1547.001
     name: "Registry Run Keys / Startup Folder"

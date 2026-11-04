@@ -70,23 +70,32 @@ def coverage_score(mal_runs, fp_cost):
 def main():
     techs = load_techniques()
     runs = load_runs()
-    latest = max((r["tuning_pass"] for r in runs), default=0)
-    baseline_runs = {r["run_id"] for r in runs if r["run_type"] == "baseline" and r["tuning_pass"] == latest}
+    baseline = [r for r in runs if r["run_type"] == "baseline"]
 
-    fp_by_rule = {}
-    for r in runs:
-        if r["run_type"] == "baseline" and r["tuning_pass"] == latest and r["rule_id"]:
-            fp_by_rule[r["rule_id"]] = fp_by_rule.get(r["rule_id"], 0) + r["alert_count"]
+    baseline_runs_by_pass = {}
+    for r in baseline:
+        baseline_runs_by_pass.setdefault(r["tuning_pass"], set()).add(r["run_id"])
+
+    fp_by_rule_pass = {}
+    for r in baseline:
+        if r["rule_id"]:
+            key = (r["rule_id"], r["tuning_pass"])
+            fp_by_rule_pass[key] = fp_by_rule_pass.get(key, 0) + r["alert_count"]
 
     out_techs = []
     for t in techs:
         tid = t["technique_id"]
-        mal = [r for r in runs if r["run_type"] == "malicious" and r["technique_id"] == tid and r["tuning_pass"] == latest and r.get("rule_state") == "lab"]
+        lab_mal = [r for r in runs if r["run_type"] == "malicious" and r["technique_id"] == tid and r.get("rule_state") == "lab"]
+        t_pass = max((r["tuning_pass"] for r in lab_mal), default=0)
+        mal = [r for r in lab_mal if r["tuning_pass"] == t_pass]
         stock = [r for r in runs if r["run_type"] == "malicious" and r["technique_id"] == tid and r.get("rule_state") == "stock"]
-        builtin_rule_id = next((r.get("builtin_rule_id") for r in stock + mal if r.get("builtin_rule_id")), None)
-        builtin_covered = builtin_rule_id is not None
+        builtin_row = next((r for r in stock + mal if r.get("builtin_rule_id")), None)
+        builtin_rule_id = builtin_row["builtin_rule_id"] if builtin_row else None
+        builtin_ids = (builtin_row.get("builtin_mitre_ids") or "").split() if builtin_row else []
+        builtin_covered = tid in builtin_ids or tid.split(".")[0] in builtin_ids
         rule_id = next((r["rule_id"] for r in mal if r["rule_id"]), t.get("wazuh_rule_id"))
-        fp_cost = fp_by_rule.get(str(rule_id), 0) if rule_id else 0
+        fp_cost = fp_by_rule_pass.get((str(rule_id), t_pass), 0) if rule_id else 0
+        baseline_runs = baseline_runs_by_pass.get(t_pass, set())
         lat = [r["latency_s"] for r in mal if r["latency_s"] is not None]
         detected_runs = sum(1 for r in mal if r["detected"])
         valid = [r for r in mal if r.get("atomic_status") in ("success", "")]
@@ -107,7 +116,9 @@ def main():
             "detected_runs": detected_runs,
             "rule_id": str(rule_id) if rule_id else None,
             "builtin_rule_id": builtin_rule_id,
+            "builtin_mitre_ids": builtin_ids,
             "builtin_covered": builtin_covered,
+            "tuning_pass": t_pass,
             "mean_latency_s": round(statistics.mean(lat), 2) if lat else None,
             "fp_cost_5runs": fp_cost,
             "precision": precision,

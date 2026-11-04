@@ -47,6 +47,7 @@ Suggested alert level and a one-line analyst response.
 
 ## Lifecycle
 
-- Created: `<date>` · Author: Stephen Laing
-- Status: draft | validated | tuned | retired
-- Changes: one line per tuning pass, with the before/after coverage score and FP cost
+- **Created:** `<date>`
+- **Author:** Stephen Laing
+- **Status:** draft | validated | tuned | retired
+- **Changes:** one line per tuning pass, with the before/after coverage score and FP cost

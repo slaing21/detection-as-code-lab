@@ -72,6 +72,11 @@
             "type": ["string", "null"],
             "description": "Built-in Wazuh rule_id that fired on this technique's event, for the stock-vs-lab comparison. Recorded on the stock run. Usually null on lab runs, where your rule won the single alert, unless the built-in pre-empted the rule."
         },
+        "builtin_mitre_ids": {
+            "type": "string",
+            "pattern": "^(T[0-9]{4}(\\.[0-9]{3})?( T[0-9]{4}(\\.[0-9]{3})?)*)?$",
+            "description": "ATT&CK IDs from the built-in rule's mitre block (rule.mitre.id in the saved alert JSON), separated by spaces. Empty when no built-in fired. aggregate.py counts the technique as stock-covered only when its own ID or its parent ID is in this list."
+        },
         "alert_count": {
             "type": "integer",
             "minimum": 0,
