@@ -1,0 +1,33 @@
+   title: Suspicious Execution of Systeminfo
+   id: 62b46fea-fec3-419a-935c-466155311c63
+   related:
+     - id: 0ef56343-059e-4cb6-adc1-4c3c967c5e46
+       type: derived
+   status: experimental
+   description: >
+     Detects execution of systeminfo.exe to collect system information (T1082).
+     Source of truth for lab rule 100011. The deployed detection is the Wazuh XML in
+     lab/siem/local_rules.xml, validated live with the T1082 atomic. Derived from SigmaHQ
+     proc_creation_win_systeminfo_execution.
+   references:
+     - https://attack.mitre.org/techniques/T1082/
+     - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_systeminfo_execution.yml
+   author: frack113 (original SigmaHQ rule), adapted by Stephen Laing
+   date: 2026-11-04
+   tags:
+     - attack.discovery
+     - attack.t1082
+   logsource:
+     category: process_creation
+     product: windows
+   detection:
+     selection:
+       - Image|endswith: '\systeminfo.exe'
+       - OriginalFileName: 'sysinfo.exe'
+     condition: selection
+   falsepositives:
+     - Administrative scripts and inventory tools
+     - 'Measured against this lab''s benign baseline: see results/runs.csv (fp_cost_5runs)'
+   level: low
+   # Fidelity note: Sigma matches Image OR OriginalFileName. One Wazuh rule cannot OR two fields,
+   # so the deployed rule keys on OriginalFileName only, which also catches a renamed copy.

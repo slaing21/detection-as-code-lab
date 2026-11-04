@@ -1,7 +1,7 @@
 {
   "summary": {
     "attack_version": "20",
-    "generated_utc": "2026-11-04T07:17:46+00:00",
+    "generated_utc": "2026-11-04T08:31:37+00:00",
     "techniques_planned": 15,
     "techniques_measured": 0,
     "score_counts": {
@@ -229,20 +229,23 @@
       "technique_id": "T1082",
       "name": "System Information Discovery",
       "primary_tactic": "discovery",
-      "runs_malicious": 0,
-      "valid_runs": 0,
-      "telemetry_present": null,
-      "detected_runs": 0,
+      "runs_malicious": 3,
+      "valid_runs": 3,
+      "telemetry_present": true,
+      "detected_runs": 3,
       "rule_id": "100011",
-      "builtin_rule_id": null,
-      "builtin_mitre_ids": [],
+      "builtin_rule_id": "92032",
+      "builtin_mitre_ids": [
+        "T1087",
+        "T1059.003"
+      ],
       "builtin_covered": false,
       "tuning_pass": 0,
-      "mean_latency_s": null,
+      "mean_latency_s": 0.93,
       "fp_cost_5runs": 0,
-      "precision": null,
+      "precision": 1.0,
       "coverage_score": null,
-      "status": "planned"
+      "status": "incomplete"
     },
     {
       "technique_id": "T1021.002",

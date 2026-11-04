@@ -129,12 +129,12 @@ techniques:
     primary_tactic: discovery
     expected_sysmon_events: [1]
     fp_risk: high
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 66703791-c902-4560-8770-42b8a91f7667
+    atomic_test_name: "System Information Discovery"
+    reference_sigma_rule: proc_creation_win_systeminfo_execution
+    sigma_rule_id: 62b46fea-fec3-419a-935c-466155311c63
     wazuh_rule_id: 100011
-    status: planned
+    status: run
   - seq: 12
     technique_id: T1021.002
     name: "SMB/Windows Admin Shares"
