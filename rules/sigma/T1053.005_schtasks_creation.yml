@@ -1,0 +1,40 @@
+title: Scheduled Task Creation Via Schtasks
+id: 12def3b0-ea18-415f-8ac8-33e082a21586
+related:
+  - id: 92626ddd-662c-49e3-ac59-f6535f12d189
+    type: derived
+status: experimental
+description: >
+  Detects a scheduled task being created with schtasks.exe /create by a user account (T1053.005).
+  Source of truth for lab rule 100002. The deployed detection is the Wazuh XML in
+  lab/siem/local_rules.xml, validated with wazuh-logtest before use. Derived from SigmaHQ
+  proc_creation_win_schtasks_creation.
+references:
+  - https://attack.mitre.org/techniques/T1053/005/
+  - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_schtasks_creation.yml
+author: Florian Roth (Nextron Systems) (original SigmaHQ rule), adapted by Stephen Laing
+date: 2026-11-03
+tags:
+  - attack.execution
+  - attack.persistence
+  - attack.privilege-escalation
+  - attack.t1053.005
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    Image|endswith: '\schtasks.exe'
+    CommandLine|contains: ' /create '
+  filter_main_system_user:
+    User|contains:
+        - 'AUTHORI'
+        - 'AUTORI'
+  condition: selection and not 1 of filter_main_*
+falsepositives:
+  - Administrative activity
+  - Software installation
+  - 'Measured against this lab''s benign baseline: see results/runs.csv (fp_cost_5runs)'
+level: low
+# Fidelity note: upstream filter_optional_msoffice (Office integrator.exe parent) is not carried over.
+# The endpoint has no Office install, and a negated three-field filter has no single-rule Wazuh equivalent.

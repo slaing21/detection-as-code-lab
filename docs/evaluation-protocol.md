@@ -56,7 +56,7 @@ The baseline is a fixed script of ordinary Windows administration, run on the sa
 - Install a small MSI or run a signed installer, then uninstall
 - A short block of scripted PowerShell (random numbers, process listing, module import)
 
-The script writes a manifest (`baseline-manifest-<runid>.json`) with the UTC start/end of each action, so an alert's timestamp can be attributed to a specific benign action when analyzing FPs. Target duration ~15 minutes per run.
+The script writes a manifest (`baseline-manifest-<runid>.json`) with the UTC start/end of each action, so an alert's timestamp can be attributed to a specific benign action when analyzing FPs.
 
 ## 5. Per-technique Run Procedure
 
@@ -70,7 +70,7 @@ For each technique, repeat 3× for the malicious measurement:
 6. **Record** one result row (schema §`results/`).
 7. **Cleanup:** run the atomic's cleanup, then restore snapshot anyway for the next run.
 
-Then the FP measurement, which is shared rather than per technique: once per measurement pass, with every rule under test deployed, run `Invoke-Baseline.ps1` 5× (each from a clean snapshot) and record each rule's alert count per baseline run.
+Then the FP measurement, which is shared rather than per technique: once per measurement pass, with every rule under test deployed, run `Invoke-Baseline.ps1` 5× (each from a clean snapshot) and record each rule's alert count per baseline run. Record each baseline run per §6.1.
 
 ## 6. Tuning Loop
 
@@ -80,6 +80,18 @@ A rule scoring 2 (noisy) may be tuned once:
 2. Narrow the rule (add a parent-image or command-line condition, and tighten `field` matches).
 3. Re-run: 3 malicious + 5 baseline, from clean snapshots.
 4. Record before/after coverage score and FP cost.
+
+### 6.1 Recording Rules for `results/runs.csv`
+
+These apply to every baseline pass, not only tuning. `harness/aggregate.py` depends on them.
+
+1. **Malicious rows:** `tuning_pass` is the rule's version. 0 = untuned, 1 = tuned.
+2. **Baseline rows:** `tuning_pass` is the baseline pass. Pass 0 runs with every rule at version 0. Pass 1 runs after tuning, with the tuned rules deployed.
+3. **Matching numbers:** a tuned rule's malicious rows and the baseline pass that measured it use the same number. All noisy rules are tuned in one batch, then baseline pass 1 is run once. A rule tuned after pass 1 becomes pass 2 and needs its own 5 baseline runs.
+4. **One row per rule that fired:** each baseline run gets one row for each lab rule that fired, all sharing that run's `run_id`. A rule with no row in a run counts as 0 alerts for that run.
+5. **At least one row per run:** a baseline run with no rows does not count toward the 5. If no lab rule fired, record one row with `rule_id` blank and `alert_count` 0.
+6. **Untuned rules in pass 1:** they fire again and are still recorded. Scoring ignores them because those rules are still version 0, and the rows serve as a repeatability check.
+7. **Baseline row fields:** `technique_id` is `baseline`, `atomic_status` is `na`, and `run_id` starts with the UTC timestamp (`2026-11-06T18-00-00Z_baseline_b1`) so it passes the schema.
 
 ## 7. Milestone 3 Task Checklist
 
@@ -95,5 +107,5 @@ A rule scoring 2 (noisy) may be tuned once:
 - **Scripted baseline ≠ real users:** FP cost is relative to *this* workload.
 - **Defender interference:** exclusions needed to run some atomics are environment changes.
 - **Converter fidelity:** rules converted from Sigma may not be semantically identical to the source.
-- **One alert per event:** Wazuh raises one alert per event, so when two rules match the same event (rule 100200 and built-in rule 92057, or two registry-based rules such as the planned T1547.001 and T1112 rules), only one of them is counted. Each run records which rule fired.
+- **One alert per event:** Wazuh raises one alert per event, so when two rules match the same event (rule 100001 and built-in rule 92057, or two registry-based rules such as the planned T1547.001 and T1112 rules), only one of them is counted. Each run records which rule fired.
 - **Atomic realism:** atomics are single-action proofs, not full intrusions.

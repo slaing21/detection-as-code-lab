@@ -6,7 +6,7 @@ related:
 status: experimental
 description: >
   Detects PowerShell launched with an encoded command line (-EncodedCommand / -enc / -e),
-  a common obfuscation step layered on T1059.001. Source of truth for lab rule 100200;
+  a common obfuscation step layered on T1059.001. Source of truth for lab rule 100001;
   the deployed detection is the Wazuh XML in lab/siem/local_rules.xml, to be validated with
   wazuh-logtest before use. Derived from SigmaHQ proc_creation_win_powershell_encode.yml.
 references:

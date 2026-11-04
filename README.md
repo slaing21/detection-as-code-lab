@@ -7,7 +7,7 @@ A controlled, reproducible lab that measures **(1)** whether each technique is v
 **Course:** CS 4200 UVU\
 **Framework:** MITRE ATT&CK Enterprise **v20** (2026-10-13)
 
-> **Status:** Milestone 2 (Design) complete. The lab is built and telemetry flows (Milestone 1). The design, protocol, tooling, and GUI are in place. The result file (`results/runs.csv`) currently holds **example rows** so the pipeline can be demonstrated end to end. The result file is planned to be populated with real data in Milestone 3.
+> **Status:** Milestone 3 (Implementation) in progress. The lab is built and telemetry flows (Milestone 1), and the design, protocol, tooling, and GUI are in place (Milestone 2). 5 of 15 techniques are measured end to end (T1059.001, T1053.005, T1547.001, T1543.003, T1082) and results/runs.csv holds real run data. The shared baseline pass and the remaining 12 techniques are next.
 
 
 ## Architecture
@@ -49,7 +49,7 @@ The metrics are defined in [`docs/evaluation-protocol.md`](docs/evaluation-proto
 | `rules/sigma/` | Sigma rules, .yml file per technique (source of truth) |
 | `rules/wazuh/` | Converted XML (build artifact) |
 | `results/schema.json` | JSON Schema for a run record |
-| `results/runs.csv` | One row per run (example rows for now, real data will be part of Milestone 3) |
+| `results/runs.csv` | One row per run (real measured data from Milestone 3 onward) |
 | `dashboard/` | Static coverage dashboard |
 | `lab/endpoint/sysmonconfig.xml` | Sysmon configuration |
 | `lab/endpoint/ossec-conf-localfile-addition.conf` | Ossec local configuration |

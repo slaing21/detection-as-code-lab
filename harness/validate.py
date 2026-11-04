@@ -29,8 +29,8 @@ def check_techniques():
     check("tactic spread", len(tactics) >= 8, f"{len(tactics)} tactics")
     ids = [x.get("wazuh_rule_id") for x in t]
     check("rule_id unique", len(ids) == len(set(ids)), f"{len(set(ids))} unique of {len(ids)}")
-    inblock = all(100200 <= int(i) <= 100499 for i in ids if i)
-    check("rule_id in reserved block", inblock, "100200-100499")
+    inblock = all(100001 <= int(i) <= 100015 for i in ids if i)
+    check("rule_id in reserved block", inblock, "100001-100015")
 
 # 1. results/runs.csv
 def check_results():
@@ -45,8 +45,11 @@ def check_results():
     schema = json.load(open(schema_path))
     jsonschema.Draft202012Validator.check_schema(schema)
     n = 0
+    half_filled = []
     for r in csv.DictReader(open(runs_path, encoding="utf-8")):
         o = dict(r)
+        if bool(o.get("builtin_rule_id")) != bool(o.get("builtin_mitre_ids")):
+            half_filled.append(o["run_id"])
         for b in ("telemetry_present", "detected"):
             o[b] = o[b].strip().lower() == "true"
         o["run_index"] = int(o["run_index"])
@@ -63,6 +66,7 @@ def check_results():
         n += 1
 
     check("results schema", True, f"{n} run row(s) valid")
+    check("builtin_rule_id and builtin_mitre_ids paired", not half_filled, ", ".join(half_filled))
 
 # 2. design/techniques.yml
 def load_tech():

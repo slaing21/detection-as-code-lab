@@ -1,4 +1,4 @@
-# Machine-readable technique matrix. Fields marked TBD are filled in during Milestone 3.
+# Machine-readable technique matrix.
 attack_version: "20"
 attack_domain: enterprise-attack
 runs_per_technique: 3
@@ -9,24 +9,24 @@ techniques:
     primary_tactic: execution
     expected_sysmon_events: [1]
     fp_risk: high
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
+    atomic_test_guid: a538de64-1c74-46ed-aa60-b995ed302598
+    atomic_test_name: "PowerShell Command Execution"
     reference_sigma_rule: proc_creation_win_powershell_encode
     sigma_rule_id: 8d3f1a92-6b4e-4c21-9f0a-7e2d5c1a4b00
-    wazuh_rule_id: 100200
-    status: planned
+    wazuh_rule_id: 100001
+    status: run
   - seq: 2
     technique_id: T1053.005
     name: "Scheduled Task"
     primary_tactic: persistence
     expected_sysmon_events: [1, 11, 13]
     fp_risk: high
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
-    wazuh_rule_id: 100210
-    status: planned
+    atomic_test_guid: 42f53695-ad4a-4546-abb6-7d837f644a71
+    atomic_test_name: "Scheduled task Local"
+    reference_sigma_rule: proc_creation_win_schtasks_creation
+    sigma_rule_id: 12def3b0-ea18-415f-8ac8-33e082a21586
+    wazuh_rule_id: 100002
+    status: run
   - seq: 3
     technique_id: T1547.001
     name: "Registry Run Keys / Startup Folder"
@@ -37,7 +37,7 @@ techniques:
     atomic_test_name: "Reg Key Run"
     reference_sigma_rule: registry_set_asep_reg_keys_modification_currentversion
     sigma_rule_id: 858e1419-75fc-4928-b645-a296caaef0f7
-    wazuh_rule_id: 100220
+    wazuh_rule_id: 100003
     status: run
   - seq: 4
     technique_id: T1546.003
@@ -49,7 +49,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100230
+    wazuh_rule_id: 100004
     status: planned
   - seq: 5
     technique_id: T1543.003
@@ -61,7 +61,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100240
+    wazuh_rule_id: 100005
     status: planned
   - seq: 6
     technique_id: T1548.002
@@ -73,7 +73,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100250
+    wazuh_rule_id: 100006
     status: planned
   - seq: 7
     technique_id: T1036.003
@@ -85,7 +85,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100260
+    wazuh_rule_id: 100007
     status: planned
   - seq: 8
     technique_id: T1218.010
@@ -97,7 +97,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100270
+    wazuh_rule_id: 100008
     status: planned
   - seq: 9
     technique_id: T1112
@@ -109,7 +109,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100280
+    wazuh_rule_id: 100009
     status: planned
   - seq: 10
     technique_id: T1087.001
@@ -121,7 +121,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100290
+    wazuh_rule_id: 100010
     status: planned
   - seq: 11
     technique_id: T1082
@@ -133,7 +133,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100300
+    wazuh_rule_id: 100011
     status: planned
   - seq: 12
     technique_id: T1021.002
@@ -145,7 +145,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100310
+    wazuh_rule_id: 100012
     status: planned
   - seq: 13
     technique_id: T1105
@@ -157,7 +157,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100320
+    wazuh_rule_id: 100013
     status: planned
   - seq: 14
     technique_id: T1560
@@ -169,7 +169,7 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100330
+    wazuh_rule_id: 100014
     status: planned
   - seq: 15
     technique_id: T1490
@@ -181,5 +181,5 @@ techniques:
     atomic_test_name: TBD
     reference_sigma_rule: TBD
     sigma_rule_id: TBD
-    wazuh_rule_id: 100340
+    wazuh_rule_id: 100015
     status: planned
