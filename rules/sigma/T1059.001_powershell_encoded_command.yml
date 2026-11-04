@@ -38,4 +38,4 @@ falsepositives:
 level: high
 # Fidelity note: SigmaHQ variants that use CommandLine|base64offset|contains to match the
 # DECODED payload have no Wazuh equivalent. This rule matches on the encoded-command FLAG
-# only, and the gap is recorded in docs/templates/ads-T1059.001-example.md.
+# only, and the gap is recorded in docs/templates/ads-T1059.001.md.

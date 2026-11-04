@@ -100,9 +100,7 @@ docs/
     evaluation-protocol.md                  Metrics, Run loop, Baseline, Tuning, Validity
     research-notes.md                       Living file of decisions with sources
     lab-build.md                            M1 Build
-    templates/
-        ads-template.md                     Per-rule ADS template
-        ads-T1059.001-example.md            Worked Example
+    templates/                              ADS Templates
 design/
     techniques.yml                          Machine-readable matrix (source for harness + dashboard)
 baseline/

@@ -1,0 +1,27 @@
+<group name="sigma,">
+    <!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->
+<rule id="900004" level="7">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1082_systeminfo_execution.yml</info>
+        <!--Sigma Rule Author: frack113 (original SigmaHQ rule), adapted by Stephen Laing-->
+        <!--Description: Detects execution of systeminfo.exe to collect system information (T1082). Source of truth for lab rule 100011. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1082 atomic. Derived from SigmaHQ proc_creation_win_systeminfo_execution.
+-->
+        <!--Date: 2026-11-04-->
+        <!--Status: experimental-->
+        <!--ID: 62b46fea-fec3-419a-935c-466155311c63-->
+        <mitre>
+            <id>attack.discovery</id>
+            <id>attack.t1082</id>
+        </mitre>
+        <description>Suspicious Execution of Systeminfo</description>
+        <options>no_full_log</options>
+        <group>process_creation,windows,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.eventdata.image" negate="no" type="pcre2">(?i)\\+systeminfo\.exe</field>
+        <field name="win.eventdata.originalFileName" negate="no" type="pcre2">(?i)^sysinfo\.exe$</field>
+    </rule>
+</group>
