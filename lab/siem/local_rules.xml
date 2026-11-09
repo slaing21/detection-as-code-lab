@@ -48,6 +48,18 @@
     </mitre>
   </rule>
 
+  <!-- Rule 100004 - WMI event subscription created (filter, consumer, or binding) -->
+  <!-- MITRE ATT&CK: T1546.003 - Event Triggered Execution: Windows Management Instrumentation Event Subscription -->
+  <!-- Sysmon Event ID 19, 20, 21 - WmiEvent -->
+  <!-- Converted from rules/sigma/T1546.003 with sigma_to_wazuh (raw output in rules/wazuh/), then manual fixes (see ADS). -->
+  <rule id="100004" level="8">
+    <if_sid>61647, 61648, 61649</if_sid>
+    <description>T1546.003: WMI event subscription $(win.eventdata.eventType) $(win.eventdata.operation)</description>
+    <mitre>
+      <id>T1546.003</id>
+    </mitre>
+  </rule>
+
   <!-- Rule 100005 - Windows service created with sc.exe -->
   <!-- MITRE ATT&CK: T1543.003 - Create or Modify System Process: Windows Service -->
   <!-- Sysmon Event ID 1 - Process Creation -->

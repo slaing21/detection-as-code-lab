@@ -1,0 +1,27 @@
+<group name="sigma,">
+    <!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->
+    <rule id="900005" level="10">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1546.003_wmi_event_subscription.yml</info>
+        <!--Sigma Rule Author: Tom Ueltschi (original SigmaHQ rule), adapted by Stephen Laing-->
+        <!--Description: Detects creation of a WMI event subscription (filter, consumer or binding) used for persistence (T1546.003). Source of truth for lab rule 100004. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1546.003 atomic. Derived from SigmaHQ sysmon_wmi_event_subscription.
+-->
+        <!--Date: 2026-11-09-->
+        <!--Status: experimental-->
+        <!--ID: cd772653-0d70-4298-b9dc-f44e7e2b6429-->
+        <mitre>
+            <id>attack.privilege-escalation</id>
+            <id>attack.persistence</id>
+            <id>attack.t1546.003</id>
+        </mitre>
+        <description>WMI Event Subscription</description>
+        <options>no_full_log</options>
+        <group>windows,wmi_event,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.system.eventID" negate="no" type="pcre2">(?i)^19$|^20$|^21$</field>
+    </rule>
+</group>

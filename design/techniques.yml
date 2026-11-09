@@ -45,12 +45,12 @@ techniques:
     primary_tactic: persistence
     expected_sysmon_events: [19, 20, 21]
     fp_risk: low
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 3c64f177-28e2-49eb-a799-d767b24dd1e0
+    atomic_test_name: "Persistence via WMI Event Subscription - CommandLineEventConsumer"
+    reference_sigma_rule: sysmon_wmi_event_subscription
+    sigma_rule_id: cd772653-0d70-4298-b9dc-f44e7e2b6429
     wazuh_rule_id: 100004
-    status: planned
+    status: run
   - seq: 5
     technique_id: T1543.003
     name: "Windows Service"
