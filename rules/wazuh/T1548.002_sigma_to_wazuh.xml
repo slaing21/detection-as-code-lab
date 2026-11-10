@@ -1,0 +1,26 @@
+<group name="sigma,">
+    <!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->    
+    <rule id="900006" level="13">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1548.002_uac_bypass_fodhelper.yml</info>
+        <!--Sigma Rule Author: E.M. Anhaus, oscd.community (original SigmaHQ rule), adapted by Stephen Laing-->
+        <!--Description: Detects a child process spawned by fodhelper.exe, an auto-elevating binary abused to bypass User Account Control (T1548.002). Source of truth for lab rule 100006. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1548.002 atomic. Derived from SigmaHQ proc_creation_win_uac_bypass_fodhelper.
+-->
+        <!--Date: 2026-11-10-->
+        <!--Status: experimental-->
+        <!--ID: 73edce1a-8bcb-4b95-b786-a420ae6e17e8-->
+        <mitre>
+            <id>attack.privilege-escalation</id>
+            <id>attack.t1548.002</id>
+        </mitre>
+        <description>Bypass UAC via Fodhelper.exe</description>
+        <options>no_full_log</options>
+        <group>process_creation,windows,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.eventdata.parentImage" negate="no" type="pcre2">(?i)\\+fodhelper\.exe</field>
+    </rule>
+</group>

@@ -69,12 +69,12 @@ techniques:
     primary_tactic: privilege-escalation
     expected_sysmon_events: [1, 13]
     fp_risk: low
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 58f641ea-12e3-499a-b684-44dee46bd182
+    atomic_test_name: "Bypass UAC using Fodhelper"
+    reference_sigma_rule: proc_creation_win_uac_bypass_fodhelper
+    sigma_rule_id: 73edce1a-8bcb-4b95-b786-a420ae6e17e8
     wazuh_rule_id: 100006
-    status: planned
+    status: blocked
   - seq: 7
     technique_id: T1036.003
     name: "Rename Legitimate Utilities"
