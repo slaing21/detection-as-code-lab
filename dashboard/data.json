@@ -1,16 +1,23 @@
 {
   "summary": {
     "attack_version": "20",
-    "generated_utc": "2026-11-11T04:59:05+00:00",
+    "generated_utc": "2026-11-12T22:23:55+00:00",
     "techniques_planned": 15,
-    "techniques_measured": 0,
+    "techniques_measured": 1,
     "score_counts": {
       "0": 0,
-      "1": 0,
+      "1": 1,
       "2": 0,
       "3": 0
     },
     "builtin_covered_count": 3,
+    "techniques_tested": 7,
+    "stock_attribution_counts": {
+      "correct": 3,
+      "misattributed": 1,
+      "generic": 3,
+      "none": 0
+    },
     "tactics_covered": [
       "collection",
       "command-and-control",
@@ -40,6 +47,7 @@
         "T1059.003"
       ],
       "builtin_covered": false,
+      "stock_attribution": "generic",
       "tuning_pass": 0,
       "mean_latency_s": 0.48,
       "fp_cost_5runs": 0,
@@ -62,6 +70,7 @@
         "T1059.003"
       ],
       "builtin_covered": false,
+      "stock_attribution": "generic",
       "tuning_pass": 0,
       "mean_latency_s": 0.84,
       "fp_cost_5runs": 0,
@@ -83,6 +92,7 @@
         "T1547.001"
       ],
       "builtin_covered": true,
+      "stock_attribution": "correct",
       "tuning_pass": 0,
       "mean_latency_s": 0.86,
       "fp_cost_5runs": 0,
@@ -104,6 +114,7 @@
         "T1546.003"
       ],
       "builtin_covered": true,
+      "stock_attribution": "correct",
       "tuning_pass": 0,
       "mean_latency_s": 1.35,
       "fp_cost_5runs": 0,
@@ -125,6 +136,7 @@
         "T1543.003"
       ],
       "builtin_covered": true,
+      "stock_attribution": "correct",
       "tuning_pass": 0,
       "mean_latency_s": 0.82,
       "fp_cost_5runs": 0,
@@ -144,6 +156,7 @@
       "builtin_rule_id": null,
       "builtin_mitre_ids": [],
       "builtin_covered": false,
+      "stock_attribution": "none",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,
@@ -154,21 +167,24 @@
     {
       "technique_id": "T1036.003",
       "name": "Rename Legitimate Utilities",
-      "primary_tactic": "defense-impairment",
-      "runs_malicious": 0,
-      "valid_runs": 0,
-      "telemetry_present": null,
+      "primary_tactic": "stealth",
+      "runs_malicious": 3,
+      "valid_runs": 3,
+      "telemetry_present": true,
       "detected_runs": 0,
       "rule_id": "100007",
-      "builtin_rule_id": null,
-      "builtin_mitre_ids": [],
+      "builtin_rule_id": "61625",
+      "builtin_mitre_ids": [
+        "T1055"
+      ],
       "builtin_covered": false,
+      "stock_attribution": "misattributed",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,
       "precision": null,
-      "coverage_score": null,
-      "status": "planned"
+      "coverage_score": 1,
+      "status": "telemetry-no-rule"
     },
     {
       "technique_id": "T1218.010",
@@ -182,6 +198,7 @@
       "builtin_rule_id": null,
       "builtin_mitre_ids": [],
       "builtin_covered": false,
+      "stock_attribution": "none",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,
@@ -201,6 +218,7 @@
       "builtin_rule_id": null,
       "builtin_mitre_ids": [],
       "builtin_covered": false,
+      "stock_attribution": "none",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,
@@ -220,6 +238,7 @@
       "builtin_rule_id": null,
       "builtin_mitre_ids": [],
       "builtin_covered": false,
+      "stock_attribution": "none",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,
@@ -242,6 +261,7 @@
         "T1059.003"
       ],
       "builtin_covered": false,
+      "stock_attribution": "generic",
       "tuning_pass": 0,
       "mean_latency_s": 0.93,
       "fp_cost_5runs": 0,
@@ -261,6 +281,7 @@
       "builtin_rule_id": null,
       "builtin_mitre_ids": [],
       "builtin_covered": false,
+      "stock_attribution": "none",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,
@@ -280,6 +301,7 @@
       "builtin_rule_id": null,
       "builtin_mitre_ids": [],
       "builtin_covered": false,
+      "stock_attribution": "none",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,
@@ -299,6 +321,7 @@
       "builtin_rule_id": null,
       "builtin_mitre_ids": [],
       "builtin_covered": false,
+      "stock_attribution": "none",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,
@@ -318,6 +341,7 @@
       "builtin_rule_id": null,
       "builtin_mitre_ids": [],
       "builtin_covered": false,
+      "stock_attribution": "none",
       "tuning_pass": 0,
       "mean_latency_s": null,
       "fp_cost_5runs": 0,

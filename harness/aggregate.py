@@ -11,6 +11,7 @@ Usage: python3 harness/aggregate.py
 '''
 
 import csv, json, ast, os, statistics, sys
+from collections import Counter
 from datetime import datetime, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -93,6 +94,7 @@ def main():
         builtin_rule_id = builtin_row["builtin_rule_id"] if builtin_row else None
         builtin_ids = (builtin_row.get("builtin_mitre_ids") or "").split() if builtin_row else []
         builtin_covered = tid in builtin_ids or tid.split(".")[0] in builtin_ids
+        stock_attribution = next((r.get("stock_attribution") for r in stock if r.get("stock_attribution")), "none")
         rule_id = next((r["rule_id"] for r in mal if r["rule_id"]), t.get("wazuh_rule_id"))
         fp_cost = fp_by_rule_pass.get((str(rule_id), t_pass), 0) if rule_id else 0
         baseline_runs = baseline_runs_by_pass.get(t_pass, set())
@@ -118,6 +120,7 @@ def main():
             "builtin_rule_id": builtin_rule_id,
             "builtin_mitre_ids": builtin_ids,
             "builtin_covered": builtin_covered,
+            "stock_attribution": stock_attribution,
             "tuning_pass": t_pass,
             "mean_latency_s": round(statistics.mean(lat), 2) if lat else None,
             "fp_cost_5runs": fp_cost,
@@ -127,6 +130,8 @@ def main():
         })
 
     scored = [t for t in out_techs if t["coverage_score"] is not None]
+    tested_tids = {r["technique_id"] for r in runs if r["run_type"] == "malicious" and r.get("atomic_status") in ("success", "")}
+    attr_counts = Counter(t["stock_attribution"] for t in out_techs if t["technique_id"] in tested_tids)
     summary = {
         "attack_version": "20",
         "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
@@ -134,6 +139,8 @@ def main():
         "techniques_measured": len(scored),
         "score_counts": {str(s): sum(1 for t in scored if t["coverage_score"] == s) for s in range(4)},
         "builtin_covered_count": sum(1 for t in out_techs if t["builtin_covered"]),
+        "techniques_tested": len(tested_tids),
+        "stock_attribution_counts": {k: attr_counts.get(k, 0) for k in ("correct", "misattributed", "generic", "none")},
         "tactics_covered": sorted({t["primary_tactic"] for t in out_techs})
     }
 

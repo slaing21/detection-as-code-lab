@@ -1,0 +1,36 @@
+<group name="sigma,">
+<!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->
+    <rule id="900007" level="10">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1036.003_renamed_binary.yml</info>
+        <!--Sigma Rule Author: Matthew Green @mgreen27, Ecco, oscd.community (original SigmaHQ rule), adapted by Stephen Laing-->
+        <!--Description: Detects execution of a renamed system utility by comparing the PE OriginalFileName against the on-disk Image name (T1036.003). Source of truth for lab rule 100007. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1036.003 atomic. Derived from SigmaHQ proc_creation_win_renamed_binary.-->
+        <!--Date: 2026-11-10-->
+        <!--Status: experimental-->
+        <!--ID: 771d0854-4c17-4b16-b2c0-6d6101b54720-->
+        <mitre>
+            <id>attack.stealth</id>
+            <id>attack.t1036.003</id>
+        </mitre>
+        <description>Potential Defense Evasion Via Binary Rename</description>
+        <options>no_full_log</options>
+        <group>process_creation,windows,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.eventdata.originalFileName" negate="no" type="pcre2">(?i)^Cmd\.Exe$|^CONHOST\.EXE$|^7z\.exe$|^7za\.exe$|^7zr\.exe$|^WinRAR\.exe$|^wevtutil\.exe$|^net\.exe$|^net1\.exe$|^netsh\.exe$|^InstallUtil\.exe$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+cmd\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+conhost\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+7z\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+7za\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+7zr\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+WinRAR\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+wevtutil\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+net\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+net1\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+netsh\.exe)$</field>
+        <field name="win.eventdata.image" negate="yes" type="pcre2">(?i)(?:\\+InstallUtil\.exe)$</field>
+    </rule>
+</group>

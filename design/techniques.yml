@@ -78,15 +78,15 @@ techniques:
   - seq: 7
     technique_id: T1036.003
     name: "Rename Legitimate Utilities"
-    primary_tactic: defense-impairment
+    primary_tactic: stealth
     expected_sysmon_events: [1]
     fp_risk: low
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 5ba5a3d1-cf3c-4499-968a-a93155d1f717
+    atomic_test_name: "Masquerading: Rename Legitimate Utilities"
+    reference_sigma_rule: proc_creation_win_renamed_binary
+    sigma_rule_id: 771d0854-4c17-4b16-b2c0-6d6101b54720
     wazuh_rule_id: 100007
-    status: planned
+    status: run
   - seq: 8
     technique_id: T1218.010
     name: "Regsvr32"

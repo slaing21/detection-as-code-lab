@@ -334,6 +334,11 @@
                     tile((+sc["3"] || 0), 'Detected cleanly');
                     tile((+sc["0"] || 0), 'Blind spots');
 
+                    var sa = S.stock_attribution_counts || {correct:0, missatributed:0, generic:0, none:0};
+                    tile((+sa.correct || 0), 'Stock covered correctly');
+                    tile((+sa.misattributed || 0), 'Stock mislabeled');
+                    tile(((+sa.generic || 0) + (+sa.none || 0)), 'Stock missed');
+
                     // legend
                     var legend = document.getElementById("legend");
                     [3,2,1,0].forEach(function(s) {

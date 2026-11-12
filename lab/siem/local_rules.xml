@@ -87,6 +87,20 @@
     </mitre>
   </rule>
 
+  <!-- Rule 100007 - Renamed system utility (OriginalFileName vs Image mismatch) -->
+  <!-- MITRE ATT&CK: T1036.003 - Masquerading: Rename System Utilities -->
+  <!-- Sysmon Event ID 1 - Process Creation -->
+  <!-- Converted from rules/sigma/T1036.003_renamed_binary.yml with sigma_to_wazuh (raw output in rules/wazuh/), then manual fixes (see ADS). -->
+  <rule id="100007" level="8">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.originalFileName" type="pcre2">(?i)^(Cmd\.Exe|CONHOST\.EXE|7z\.exe|7za\.exe|7zr\.exe|WinRAR\.exe|wevtutil\.exe|net\.exe|net1\.exe|netsh\.exe|InstallUtil\.exe)$</field>
+    <field name="win.eventdata.image" type="pcre2" negate="yes">(?i)\\(cmd|conhost|7z|7za|7zr|winrar|wevtutil|net|net1|netsh|installutil)\.exe$</field>
+    <description>T1036.003: Renamed system utility - OriginalFileName $(win.eventdata.originalFileName) running as $(win.eventdata.image)</description>
+    <mitre>
+      <id>T1036.003</id>
+    </mitre>
+  </rule>
+
   <!-- Rule 100011 - System information discovery with systeminfo.exe -->
   <!-- MITRE ATT&CK: T1082 - System Information Discovery -->
   <!-- Sysmon Event ID 1 - Process Creation -->
