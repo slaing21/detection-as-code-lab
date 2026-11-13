@@ -91,14 +91,14 @@ techniques:
     technique_id: T1218.010
     name: "Regsvr32"
     primary_tactic: stealth
-    expected_sysmon_events: [1, 7, 3]
+    expected_sysmon_events: [1, 7]
     fp_risk: low-medium
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 449aa403-6aba-47ce-8a37-247d21ef0306
+    atomic_test_name: "Regsvr32 local COM scriptlet execution"
+    reference_sigma_rule: regsvr32_scrobj
+    sigma_rule_id: eb417763-b84a-4f2b-a0d9-c495fe633896
     wazuh_rule_id: 100008
-    status: planned
+    status: run
   - seq: 9
     technique_id: T1112
     name: "Modify Registry"

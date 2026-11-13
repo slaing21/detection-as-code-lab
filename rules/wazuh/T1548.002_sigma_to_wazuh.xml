@@ -8,8 +8,7 @@ All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master
     <rule id="900006" level="13">
         <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1548.002_uac_bypass_fodhelper.yml</info>
         <!--Sigma Rule Author: E.M. Anhaus, oscd.community (original SigmaHQ rule), adapted by Stephen Laing-->
-        <!--Description: Detects a child process spawned by fodhelper.exe, an auto-elevating binary abused to bypass User Account Control (T1548.002). Source of truth for lab rule 100006. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1548.002 atomic. Derived from SigmaHQ proc_creation_win_uac_bypass_fodhelper.
--->
+        <!--Description: Detects a child process spawned by fodhelper.exe, an auto-elevating binary abused to bypass User Account Control (T1548.002). Source of truth for lab rule 100006. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1548.002 atomic. Derived from SigmaHQ proc_creation_win_uac_bypass_fodhelper. -->
         <!--Date: 2026-11-10-->
         <!--Status: experimental-->
         <!--ID: 73edce1a-8bcb-4b95-b786-a420ae6e17e8-->

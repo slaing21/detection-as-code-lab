@@ -1,0 +1,27 @@
+title: Regsvr32 COM Scriptlet Execution Via scrobj.dll Load
+id: eb417763-b84a-4f2b-a0d9-c495fe633896
+status: experimental
+description: |
+    Detects regsvr32.exe loading scrobj.dll, the Script Component Runtime loaded
+    when regsvr32 executes a COM scriptlet (the Squiblydoo technique, T1218.010).
+    Benign DLL registration through regsvr32 does not load scrobj.dll, so the
+    pairing is a high-fidelity indicator of scriptlet proxy execution. Source of
+    truth for lab rule 100008.
+references:
+    - https://attack.mitre.org/techniques/T1218/010/
+author: Stephen Laing
+date: 2026-11-12
+tags:
+    - attack.stealth
+    - attack.t1218.010
+logsource:
+    category: image_load
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\regsvr32.exe'
+        ImageLoaded|endswith: '\scrobj.dll'
+    condition: selection
+falsepositives:
+    - Legacy installers or management tooling that register COM scriptlets through regsvr32 (uncommon on workstations; confirm against the benign baseline)
+level: high

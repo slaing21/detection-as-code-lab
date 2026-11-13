@@ -1,7 +1,7 @@
 {
   "summary": {
     "attack_version": "20",
-    "generated_utc": "2026-11-12T22:23:55+00:00",
+    "generated_utc": "2026-11-13T00:05:33+00:00",
     "techniques_planned": 15,
     "techniques_measured": 1,
     "score_counts": {
@@ -11,11 +11,11 @@
       "3": 0
     },
     "builtin_covered_count": 3,
-    "techniques_tested": 7,
+    "techniques_tested": 8,
     "stock_attribution_counts": {
       "correct": 3,
       "misattributed": 1,
-      "generic": 3,
+      "generic": 4,
       "none": 0
     },
     "tactics_covered": [
@@ -190,21 +190,24 @@
       "technique_id": "T1218.010",
       "name": "Regsvr32",
       "primary_tactic": "stealth",
-      "runs_malicious": 0,
-      "valid_runs": 0,
-      "telemetry_present": null,
-      "detected_runs": 0,
+      "runs_malicious": 3,
+      "valid_runs": 3,
+      "telemetry_present": true,
+      "detected_runs": 3,
       "rule_id": "100008",
-      "builtin_rule_id": null,
-      "builtin_mitre_ids": [],
+      "builtin_rule_id": "92032",
+      "builtin_mitre_ids": [
+        "T1087",
+        "T1059.003"
+      ],
       "builtin_covered": false,
-      "stock_attribution": "none",
+      "stock_attribution": "generic",
       "tuning_pass": 0,
-      "mean_latency_s": null,
+      "mean_latency_s": 0.72,
       "fp_cost_5runs": 0,
-      "precision": null,
+      "precision": 1.0,
       "coverage_score": null,
-      "status": "planned"
+      "status": "incomplete"
     },
     {
       "technique_id": "T1112",

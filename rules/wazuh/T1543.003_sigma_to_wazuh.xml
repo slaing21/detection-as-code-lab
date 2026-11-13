@@ -8,8 +8,7 @@ All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master
 <rule id="900003" level="7">
         <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1543.003_sc_create_service.yml</info>
         <!--Sigma Rule Author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community (original SigmaHQ rule), adapted by Stephen Laing-->
-        <!--Description: Detects a Windows service being created with sc.exe create and a binPath (T1543.003). Source of truth for lab rule 100005. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1543.003 atomic. Derived from SigmaHQ proc_creation_win_sc_create_service.
--->
+        <!--Description: Detects a Windows service being created with sc.exe create and a binPath (T1543.003). Source of truth for lab rule 100005. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1543.003 atomic. Derived from SigmaHQ proc_creation_win_sc_create_service. -->
         <!--Date: 2026-11-03-->
         <!--Status: experimental-->
         <!--ID: e580f3b9-5c2e-454d-895b-a7801465ff19-->
