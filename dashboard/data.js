@@ -1,7 +1,7 @@
 window.LAB_DATA = {
   "summary": {
     "attack_version": "20",
-    "generated_utc": "2026-11-14T19:03:04+00:00",
+    "generated_utc": "2026-11-14T20:02:51+00:00",
     "techniques_planned": 15,
     "techniques_measured": 1,
     "score_counts": {
@@ -10,10 +10,10 @@ window.LAB_DATA = {
       "2": 0,
       "3": 0
     },
-    "builtin_covered_count": 3,
-    "techniques_tested": 9,
+    "builtin_covered_count": 4,
+    "techniques_tested": 10,
     "stock_attribution_counts": {
-      "correct": 3,
+      "correct": 4,
       "misattributed": 1,
       "generic": 4,
       "none": 1
@@ -233,21 +233,23 @@ window.LAB_DATA = {
       "technique_id": "T1087.001",
       "name": "Local Account",
       "primary_tactic": "discovery",
-      "runs_malicious": 0,
-      "valid_runs": 0,
-      "telemetry_present": null,
-      "detected_runs": 0,
+      "runs_malicious": 3,
+      "valid_runs": 3,
+      "telemetry_present": true,
+      "detected_runs": 3,
       "rule_id": "100010",
-      "builtin_rule_id": null,
-      "builtin_mitre_ids": [],
-      "builtin_covered": false,
-      "stock_attribution": "none",
+      "builtin_rule_id": "92031",
+      "builtin_mitre_ids": [
+        "T1087"
+      ],
+      "builtin_covered": true,
+      "stock_attribution": "correct",
       "tuning_pass": 0,
-      "mean_latency_s": null,
+      "mean_latency_s": 0.66,
       "fp_cost_5runs": 0,
-      "precision": null,
+      "precision": 1.0,
       "coverage_score": null,
-      "status": "planned"
+      "status": "incomplete"
     },
     {
       "technique_id": "T1082",

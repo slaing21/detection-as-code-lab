@@ -1,0 +1,31 @@
+title: Local Account And Group Enumeration Via net.exe
+id: f68b48cb-bff8-4ab6-af2e-042042565217
+status: experimental
+description: |
+    Detects local account and group enumeration using net.exe / net1.exe
+    (net user, net localgroup) - a common Account Discovery technique
+    (T1087.001). net.exe delegates to net1.exe, so both are covered. Benign
+    administrative use is expected, which is why this rule carries a tuning pass.
+references:
+    - https://attack.mitre.org/techniques/T1087/001/
+author: Stephen Laing
+date: 2026-11-14
+tags:
+    - attack.discovery
+    - attack.t1087.001
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        Image|endswith:
+            - '\net.exe'
+            - '\net1.exe'
+    selection_cli:
+        CommandLine|contains:
+            - 'user'
+            - 'localgroup'
+    condition: all of selection_*
+falsepositives:
+    - Administrators or scripts enumerating local users and groups (noisy by nature - see the tuning pass)
+level: medium

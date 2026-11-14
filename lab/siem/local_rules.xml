@@ -129,6 +129,20 @@
     </mitre>
   </rule>
 
+  <!-- Rule 100010 - Local account/group enumeration via net.exe/net1.exe -->
+  <!-- MITRE ATT&CK: T1087.001 - Account Discovery: Local Account -->
+  <!-- Sysmon Event ID 1 - Process Creation -->
+  <!-- Hand written from rules/sigma/T1087.001_net_account_discovery.yml. sigma_to_wazuh skipped it (see ADS). -->
+  <rule id="100010" level="8">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\net1?\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(user|localgroup)</field>
+    <description>T1087.001: Local account enumeration - $(win.eventdata.image) $(win.eventdata.commandLine)</description>
+    <mitre>
+      <id>T1087.001</id>
+    </mitre>
+  </rule>
+
   <!-- Rule 100011 - System information discovery with systeminfo.exe -->
   <!-- MITRE ATT&CK: T1082 - System Information Discovery -->
   <!-- Sysmon Event ID 1 - Process Creation -->

@@ -117,12 +117,12 @@ techniques:
     primary_tactic: discovery
     expected_sysmon_events: [1]
     fp_risk: high
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 80887bec-5a9b-4efc-a81d-f83eb2eb32ab
+    atomic_test_name: "Enumerate all accounts (Local)"
+    reference_sigma_rule: net_account_discovery
+    sigma_rule_id: f68b48cb-bff8-4ab6-af2e-042042565217
     wazuh_rule_id: 100010
-    status: planned
+    status: run
   - seq: 11
     technique_id: T1082
     name: "System Information Discovery"
