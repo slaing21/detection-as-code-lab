@@ -1,0 +1,27 @@
+title: UAC Remote Restrictions Disabled Via LocalAccountTokenFilterPolicy
+id: 0a3857e0-eae1-472c-9a8f-296dabe8d9c4
+status: experimental
+description: |
+    Detects setting LocalAccountTokenFilterPolicy to 1, which disables UAC remote
+    restrictions so local accounts receive a full administrative token over the
+    network (T1112 Modify Registry; enables remote admin and lateral movement).
+    Benign changes to this value are rare, and matching the enabling value (1)
+    keeps false positives low. Source of truth for lab rule 100009.
+references:
+    - https://attack.mitre.org/techniques/T1112/
+author: Stephen Laing
+date: 2026-11-13
+tags:
+    - attack.defense_evasion
+    - attack.t1112
+logsource:
+    category: registry_set
+    product: windows
+detection:
+    selection:
+        TargetObject|endswith: 'LocalAccountTokenFilterPolicy'
+        Details|endswith: '(0x00000001)'
+    condition: selection
+falsepositives:
+    - Administrative tooling that deliberately enables remote admin with local accounts (confirm against the benign baseline)
+level: high

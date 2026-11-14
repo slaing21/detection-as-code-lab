@@ -103,14 +103,14 @@ techniques:
     technique_id: T1112
     name: "Modify Registry"
     primary_tactic: defense-impairment
-    expected_sysmon_events: [12, 13]
+    expected_sysmon_events: [13]
     fp_risk: high
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: e8c7c404-b669-4cf9-bafd-fdad89a5bbb1
+    atomic_test_name: "Modify Registry of Current User Profile - cmd"
+    reference_sigma_rule: localaccounttokenfilterpolicy
+    sigma_rule_id: 0a3857e0-eae1-472c-9a8f-296dabe8d9c4
     wazuh_rule_id: 100009
-    status: planned
+    status: run
   - seq: 10
     technique_id: T1087.001
     name: "Local Account"
