@@ -141,12 +141,12 @@ techniques:
     primary_tactic: lateral-movement
     expected_sysmon_events: [1, 3]
     fp_risk: medium
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 3386975b-367a-4fbb-9d77-4dcf3639ffd3
+    atomic_test_name: "Map admin share"
+    reference_sigma_rule: net_use_admin_share
+    sigma_rule_id: 3ec2f638-8aeb-42b0-a7d4-0d978a8b3b7b
     wazuh_rule_id: 100012
-    status: planned
+    status: run
   - seq: 13
     technique_id: T1105
     name: "Ingress Tool Transfer"

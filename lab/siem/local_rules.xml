@@ -132,7 +132,7 @@
   <!-- Rule 100010 - Local account/group enumeration via net.exe/net1.exe -->
   <!-- MITRE ATT&CK: T1087.001 - Account Discovery: Local Account -->
   <!-- Sysmon Event ID 1 - Process Creation -->
-  <!-- Hand written from rules/sigma/T1087.001_net_account_discovery.yml. sigma_to_wazuh skipped it (see ADS). -->
+  <!-- Hand written from rules/sigma/T1087.001_net_account_discovery.yml. (sigma_to_wazuh skips multi-selection conditions). -->
   <rule id="100010" level="8">
     <if_sid>61603</if_sid>
     <field name="win.eventdata.image" type="pcre2">(?i)\\net1?\.exe$</field>
@@ -153,6 +153,21 @@
     <description>T1082: System information discovery with systeminfo.exe - $(win.eventdata.commandLine)</description>
     <mitre>
       <id>T1082</id>
+    </mitre>
+  </rule>
+
+  <!-- Rule 100012 - Admin share mapping via net use (net.exe/net1.exe) -->
+  <!-- MITRE ATT&CK: T1021.002 - Remote Services: SMB/Windows Admin Shares -->
+  <!-- Sysmon Event ID 1 - Process Creation -->
+  <!-- Hand written from rules/sigma/T1021.002_net_use_admin_share.yml (sigma_to_wazuh skips multi-selection conditions). -->
+  <rule id="100012" level="8">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\net1?\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)\buse\b</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(C|ADMIN|IPC)\$</field>
+    <description>T1021.002: Admin share mapping - $(win.eventdata.commandLine)</description>
+    <mitre>
+      <id>T1021.002</id>
     </mitre>
   </rule>
 </group>
