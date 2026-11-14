@@ -1,0 +1,28 @@
+title: Certutil Download Via URLCache
+id: e665709b-e5d7-46de-97bf-416cfa4adc7f
+status: experimental
+description: |
+    Detects certutil.exe downloading a file with the -urlcache flag
+    (certutil -urlcache -f <url> <outfile>) - a living-off-the-land ingress
+    tool transfer (T1105). Matching OriginalFileName also catches a renamed
+    certutil. Legitimate certutil URL caching on a workstation is rare;
+    -urlcache fetching an arbitrary URL is the abuse.
+references:
+    - https://attack.mitre.org/techniques/T1105/
+author: Stephen Laing
+date: 2026-11-14
+tags:
+    - attack.command-and-control
+    - attack.t1105
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        OriginalFileName: 'CertUtil.exe'
+    selection_cli:
+        CommandLine|contains: 'urlcache'
+    condition: all of selection_*
+falsepositives:
+    - Rare legitimate certutil URL caching by administrators (confirm against the baseline)
+level: high

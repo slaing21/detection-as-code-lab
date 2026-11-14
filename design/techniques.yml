@@ -153,12 +153,12 @@ techniques:
     primary_tactic: command-and-control
     expected_sysmon_events: [1, 3, 11, 22]
     fp_risk: medium
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: dd3b61dd-7bbc-48cd-ab51-49ad1a776df0
+    atomic_test_name: "certutil download (urlcache)"
+    reference_sigma_rule: certutil_urlcache
+    sigma_rule_id: e665709b-e5d7-46de-97bf-416cfa4adc7f
     wazuh_rule_id: 100013
-    status: planned
+    status: run
   - seq: 14
     technique_id: T1560
     name: "Archive Collected Data"
