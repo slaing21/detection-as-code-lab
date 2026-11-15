@@ -165,12 +165,12 @@ techniques:
     primary_tactic: collection
     expected_sysmon_events: [1, 11]
     fp_risk: medium
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 41410c60-614d-4b9d-b66e-b0192dd9c597
+    atomic_test_name: "Compress Data for Exfiltration With PowerShell"
+    reference_sigma_rule: powershell_compress_archive
+    sigma_rule_id: 2968a695-fcd5-4f74-826f-c58399388f27
     wazuh_rule_id: 100014
-    status: planned
+    status: run
   - seq: 15
     technique_id: T1490
     name: "Inhibit System Recovery"

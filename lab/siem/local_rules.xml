@@ -184,4 +184,18 @@
       <id>T1105</id>
     </mitre>
   </rule>
+
+  <!-- Rule 100014 - PowerShell Compress-Archive data archiving -->
+  <!-- MITRE ATT&CK: T1560 - Archive Collected Data -->
+  <!-- Sysmon Event ID 1 - Process Creation -->
+  <!-- Hand written from rules/sigma/T1560_powershell_compress_archive.yml (sigma_to_wazuh skips multi-selection conditions). -->
+  <rule id="100014" level="8">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.originalFileName" type="pcre2">(?i)^PowerShell\.EXE$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)Compress-Archive</field>
+    <description>T1560: PowerShell data archiving - $(win.eventdata.commandLine)</description>
+    <mitre>
+      <id>T1560</id>
+    </mitre>
+  </rule>
 </group>
