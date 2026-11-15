@@ -1,0 +1,30 @@
+<group name="sigma,">
+<!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->    
+    <rule id="900011" level="13">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1490_vssadmin_delete_shadows.yml</info>
+        <!--Sigma Rule Author: Stephen Laing-->
+        <!--Description: Detects deletion of Volume Shadow Copies via vssadmin.exe (vssadmin delete
+        shadows), a common ransomware precursor to inhibit system recovery (T1490).
+        Matching OriginalFileName catches a renamed vssadmin. Bulk shadow deletion
+        is rarely legitimate on a workstation.
+        -->
+        <!--Date: 2026-11-15-->
+        <!--Status: experimental-->
+        <!--ID: a42ebd51-2a0f-4891-875d-e35235c5bfab-->
+        <mitre>
+            <id>attack.impact</id>
+            <id>attack.t1490</id>
+        </mitre>
+        <description>Volume Shadow Copy Deletion Via vssadmin</description>
+        <options>no_full_log</options>
+        <group>process_creation,windows,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.eventdata.originalFileName" negate="no" type="pcre2">(?i)^VSSADMIN\.EXE$</field>
+        <field name="win.eventdata.commandLine" negate="no" type="pcre2">(?i)delete\ shadows</field>
+    </rule>
+</group>

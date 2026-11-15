@@ -1,0 +1,26 @@
+title: Volume Shadow Copy Deletion Via vssadmin
+id: a42ebd51-2a0f-4891-875d-e35235c5bfab
+status: experimental
+description: |
+    Detects deletion of Volume Shadow Copies via vssadmin.exe (vssadmin delete
+    shadows), a common ransomware precursor to inhibit system recovery (T1490).
+    Matching OriginalFileName catches a renamed vssadmin. Bulk shadow deletion
+    is rarely legitimate on a workstation.
+references:
+    - https://attack.mitre.org/techniques/T1490/
+author: Stephen Laing
+date: 2026-11-15
+tags:
+    - attack.impact
+    - attack.t1490
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        OriginalFileName: 'VSSADMIN.EXE'
+        CommandLine|contains: 'delete shadows'
+    condition: selection
+falsepositives:
+    - Rare legitimate bulk shadow-copy maintenance by administrators (confirm against the baseline)
+level: high

@@ -177,9 +177,9 @@ techniques:
     primary_tactic: impact
     expected_sysmon_events: [1]
     fp_risk: low
-    atomic_test_guid: TBD
-    atomic_test_name: TBD
-    reference_sigma_rule: TBD
-    sigma_rule_id: TBD
+    atomic_test_guid: 43819286-91a9-4369-90ed-d31fb4da2c01
+    atomic_test_name: "Windows - Delete Volume Shadow Copies"
+    reference_sigma_rule: vssadmin_delete_shadows
+    sigma_rule_id: a42ebd51-2a0f-4891-875d-e35235c5bfab
     wazuh_rule_id: 100015
-    status: planned
+    status: run

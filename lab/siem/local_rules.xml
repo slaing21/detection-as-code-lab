@@ -198,4 +198,18 @@
       <id>T1560</id>
     </mitre>
   </rule>
+
+  <!-- Rule 100015 - Volume shadow copy deletion via vssadmin -->
+  <!-- MITRE ATT&CK: T1490 - Inhibit System Recovery -->
+  <!-- Sysmon Event ID 1 - Process Creation -->
+  <!-- Converted from rules/sigma/T1490_vssadmin_delete_shadows.yml, then manual fixes (see ADS). -->
+  <rule id="100015" level="8">
+    <if_sid>61603</if_sid>
+    <field name="win.eventdata.originalFileName" type="pcre2">(?i)^VSSADMIN\.EXE$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)delete\s+shadows</field>
+    <description>T1490: Volume shadow copy deletion - $(win.eventdata.commandLine)</description>
+    <mitre>
+      <id>T1490</id>
+    </mitre>
+  </rule>
 </group>
