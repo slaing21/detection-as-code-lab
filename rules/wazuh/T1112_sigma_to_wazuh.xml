@@ -1,0 +1,31 @@
+<group name="sigma,">
+<!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->    
+    <rule id="900009" level="13">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1112_localaccounttokenfilterpolicy.yml</info>
+        <!--Sigma Rule Author: Stephen Laing-->
+        <!--Description: Detects setting LocalAccountTokenFilterPolicy to 1, which disables UAC remote
+        restrictions so local accounts receive a full administrative token over the
+        network (T1112 Modify Registry; enables remote admin and lateral movement).
+        Benign changes to this value are rare, and matching the enabling value (1)
+        keeps false positives low. Source of truth for lab rule 100009.
+        -->
+        <!--Date: 2026-11-13-->
+        <!--Status: experimental-->
+        <!--ID: 0a3857e0-eae1-472c-9a8f-296dabe8d9c4-->
+        <mitre>
+            <id>attack.defense_evasion</id>
+            <id>attack.t1112</id>
+        </mitre>
+        <description>UAC Remote Restrictions Disabled Via LocalAccountTokenFilterPolicy</description>
+        <options>no_full_log</options>
+        <group>registry_set,windows,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.eventdata.targetObject" negate="no" type="pcre2">(?i)\\+Policies\\+System\\+LocalAccountTokenFilterPolicy</field>
+        <field name="win.eventdata.details" negate="no" type="pcre2">(?i)^DWORD\ \(0x00000001\)$</field>
+    </rule>
+</group>

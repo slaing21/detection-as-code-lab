@@ -58,7 +58,59 @@ The baseline is a fixed script of ordinary Windows administration, run on the sa
 
 The script writes a manifest (`baseline-manifest-<runid>.json`) with the UTC start/end of each action, so an alert's timestamp can be attributed to a specific benign action when analyzing FPs.
 
-## 5. Per-technique Run Procedure
+## 5. Shadowed Lab Rules
+
+A lab rule is shadowed when its logic matches the event but a higher-level
+rule in the same Wazuh evaluation tree (a stock rule, or another lab rule)
+fires instead, so the lab rule produces no alert. Wazuh emits one rule per
+event and the highest level wins, so a lab rule set below a matching stock
+rule never fires in the deployed stack.
+
+When a technique's lab rule is shadowed, record it as follows:
+- detected = false for the lab run. The lab rule produced no alert, whether
+  or not its logic matches.
+- Record the shadowing rule in builtin_rule_id and builtin_mitre_ids, and set
+  stock_attribution per section 5.1. builtin_covered is true only when the
+  shadowing stock rule maps to this technique or its parent.
+- Coverage score 1. The detection pack did not fire, so the technique scores
+  as telemetry present with no lab alert. The technique may still be caught by
+  stock, which builtin_covered records, and the dashboard separates "shadowed,
+  stock covers" from "shadowed, stock mislabels."
+- Validate the lab rule logic on its own with wazuh-logtest, by pasting the
+  captured event or by temporarily raising the lab rule above the shadowing
+  rule. Save the transcript as proof the rule matches, because the deployed
+  stack never lets it fire.
+
+Do not raise a lab rule above a shadowing stock rule only to make it fire. The
+one case where raising it is defensible is when the stock rule maps the event
+to the wrong technique and its alert carries no independent value. Suppressing
+a valid higher-severity stock alert to win attribution is usually the wrong
+trade.
+
+### 5.1 stock_attribution
+
+Records whether the stock rule in builtin_rule_id attributed the event to the
+technique under test. One value per run, placed directly after
+builtin_mitre_ids.
+
+- none: no stock rule produced an alert (builtin_rule_id empty).
+- correct: a stock rule fired and its MITRE mapping includes this technique or
+  its parent. Equivalent to builtin_covered true.
+- generic: a stock rule fired but is a broad heuristic not tied to this
+  technique, mapped to unrelated or general IDs. Example: 92032 "Suspicious
+  Windows cmd shell execution" firing on a PowerShell or discovery run.
+- misattributed: a stock rule fired and maps the event to a different specific
+  technique. Example: 61625 "Suspicious Process - lsass" tagging a T1036.003
+  rename as T1055.
+
+The split between generic and misattributed is the only judgment call. Use
+generic for a broad rule that would fire across many unrelated events, and
+misattributed for a rule that confidently names a specific but wrong technique.
+The none and correct values follow mechanically from builtin_rule_id and
+builtin_mitre_ids, and validate.py enforces them. Baseline rows, and lab rows
+with no stock rule recorded, are none.
+
+## 6. Per-technique Run Procedure
 
 For each technique, repeat 3× for the malicious measurement:
 
@@ -72,7 +124,7 @@ For each technique, repeat 3× for the malicious measurement:
 
 Then the FP measurement, which is shared rather than per technique: once per measurement pass, with every rule under test deployed, run `Invoke-Baseline.ps1` 5× (each from a clean snapshot) and record each rule's alert count per baseline run. Record each baseline run per §6.1.
 
-## 6. Tuning Loop
+## 7. Tuning Loop
 
 A rule scoring 2 (noisy) may be tuned once:
 
@@ -81,7 +133,7 @@ A rule scoring 2 (noisy) may be tuned once:
 3. Re-run: 3 malicious + 5 baseline, from clean snapshots.
 4. Record before/after coverage score and FP cost.
 
-### 6.1 Recording Rules for `results/runs.csv`
+### 7.1 Recording Rules for `results/runs.csv`
 
 These apply to every baseline pass, not only tuning. `harness/aggregate.py` depends on them.
 
@@ -93,7 +145,7 @@ These apply to every baseline pass, not only tuning. `harness/aggregate.py` depe
 6. **Untuned rules in pass 1:** they fire again and are still recorded. Scoring ignores them because those rules are still version 0, and the rows serve as a repeatability check.
 7. **Baseline row fields:** `technique_id` is `baseline`, `atomic_status` is `na`, and `run_id` starts with the UTC timestamp (`2026-11-06T18-00-00Z_baseline_b1`) so it passes the schema.
 
-## 7. Milestone 3 Task Checklist
+## 8. Milestone 3 Task Checklist
 
 - All 15 techniques have 3 malicious runs and a coverage score
 - Every rule under test has an FP cost from 5 baseline runs
@@ -101,7 +153,7 @@ These apply to every baseline pass, not only tuning. `harness/aggregate.py` depe
 - Blind spots and atomic failures are documented, not hidden
 - One clean rebuild from the README reproduces the pipeline
 
-## 8. Threats to Validity
+## 9. Threats to Validity
 
 - **Single endpoint, single config:** results are specific to this Windows build + this Sysmon config.
 - **Scripted baseline ≠ real users:** FP cost is relative to *this* workload.

@@ -46,10 +46,19 @@ def check_results():
     jsonschema.Draft202012Validator.check_schema(schema)
     n = 0
     half_filled = []
+    attr_errors = []
+    
     for r in csv.DictReader(open(runs_path, encoding="utf-8")):
         o = dict(r)
         if bool(o.get("builtin_rule_id")) != bool(o.get("builtin_mitre_ids")):
             half_filled.append(o["run_id"])
+        a = o.get("stock_attribution", "")
+        _ids = (o.get("builtin_mitre_ids") or "").split()
+        _cov = o["technique_id"] in _ids or o["technique_id"].split(".")[0] in _ids
+        _has = bool(o.get("builtin_rule_id"))
+        if not ((a == "none" and not _has) or (a == "correct" and _has and _cov) or (a in ("generic", "misattributed") and _has and not _cov)):
+            attr_errors.append(o["run_id"])
+
         for b in ("telemetry_present", "detected"):
             o[b] = o[b].strip().lower() == "true"
         o["run_index"] = int(o["run_index"])
@@ -67,6 +76,7 @@ def check_results():
 
     check("results schema", True, f"{n} run row(s) valid")
     check("builtin_rule_id and builtin_mitre_ids paired", not half_filled, ", ".join(half_filled))
+    check("stock_attribution consistent with builtin fields", not attr_errors, ", ".join(attr_errors))
 
 # 2. design/techniques.yml
 def load_tech():

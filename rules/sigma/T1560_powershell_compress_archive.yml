@@ -1,0 +1,28 @@
+title: Data Archiving Via PowerShell Compress-Archive
+id: 2968a695-fcd5-4f74-826f-c58399388f27
+status: experimental
+description: |
+    Detects the PowerShell Compress-Archive cmdlet used to archive data,
+    a common collection / exfiltration-prep technique (T1560). Matching
+    OriginalFileName also catches a renamed powershell. Fires on the command
+    regardless of whether the archive is actually written. Benign archiving
+    exists, so this carries a tuning pass.
+references:
+    - https://attack.mitre.org/techniques/T1560/
+author: Stephen Laing
+date: 2026-11-15
+tags:
+    - attack.collection
+    - attack.t1560
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        OriginalFileName: 'PowerShell.EXE'
+    selection_cli:
+        CommandLine|contains: 'Compress-Archive'
+    condition: all of selection_*
+falsepositives:
+    - Administrators or scripts archiving files with Compress-Archive (confirm against the baseline)
+level: medium

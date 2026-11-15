@@ -1,0 +1,30 @@
+title: Bypass UAC via Fodhelper.exe
+id: 73edce1a-8bcb-4b95-b786-a420ae6e17e8
+related:
+  - id: 7f741dcf-fc22-4759-87b4-9ae8376676a2
+    type: derived
+status: experimental
+description: >
+  Detects a child process spawned by fodhelper.exe, an auto-elevating binary abused to
+  bypass User Account Control (T1548.002). Source of truth for lab rule 100006. The
+  deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the
+  T1548.002 atomic. Derived from SigmaHQ proc_creation_win_uac_bypass_fodhelper.
+references:
+  - https://attack.mitre.org/techniques/T1548/002/
+  - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_uac_bypass_fodhelper.yml
+author: E.M. Anhaus, oscd.community (original SigmaHQ rule), adapted by Stephen Laing
+date: 2026-11-10
+tags:
+  - attack.privilege-escalation
+  - attack.t1548.002
+logsource:
+  category: process_creation
+  product: windows
+detection:
+  selection:
+    ParentImage|endswith: '\fodhelper.exe'
+  condition: selection
+falsepositives:
+  - Legitimate use of the Windows Features troubleshooter
+  - 'Measured against this lab''s benign baseline: see results/runs.csv (fp_cost_5runs)'
+level: high

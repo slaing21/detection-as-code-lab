@@ -1,0 +1,34 @@
+title: Admin Share Mapping Via net use
+id: 3ec2f638-8aeb-42b0-a7d4-0d978a8b3b7b
+status: experimental
+description: |
+    Detects mapping of a Windows administrative share (C$, ADMIN$, IPC$) with
+    net.exe / net1.exe (net use \\host\C$) - used for lateral movement over SMB
+    (T1021.002). Fires on the command regardless of whether the SMB connection
+    succeeds. Benign admin use of admin shares exists, so this carries a tuning pass.
+references:
+    - https://attack.mitre.org/techniques/T1021/002/
+author: Stephen Laing
+date: 2026-11-14
+tags:
+    - attack.lateral-movement
+    - attack.t1021.002
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        Image|endswith:
+            - '\net.exe'
+            - '\net1.exe'
+    selection_use:
+        CommandLine|contains: ' use '
+    selection_share:
+        CommandLine|contains:
+            - 'C$'
+            - 'ADMIN$'
+            - 'IPC$'
+    condition: all of selection_*
+falsepositives:
+    - Administrators mapping admin shares for legitimate maintenance (tuned against the baseline)
+level: high

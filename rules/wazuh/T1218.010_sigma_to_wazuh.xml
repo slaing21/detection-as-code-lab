@@ -1,0 +1,31 @@
+<group name="sigma,">
+<!--
+Author: Brian Kellogg
+Sigma: https://github.com/SigmaHQ/sigma
+Wazuh: https://wazuh.com
+All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
+-->
+    <rule id="900008" level="13">
+        <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1218.010_regsvr32_scrobj.yml</info>
+        <!--Sigma Rule Author: Stephen Laing-->
+        <!--Description: Detects regsvr32.exe loading scrobj.dll, the Script Component Runtime loaded
+        when regsvr32 executes a COM scriptlet (the Squiblydoo technique, T1218.010).
+        Benign DLL registration through regsvr32 does not load scrobj.dll, so the
+        pairing is a high-fidelity indicator of scriptlet proxy execution. Source of
+        truth for lab rule 100008.
+        -->
+        <!--Date: 2026-11-12-->
+        <!--Status: experimental-->
+        <!--ID: 428d8ab2-c067-428e-8d10-a1644a058c5c-->
+        <mitre>
+            <id>attack.stealth</id>
+            <id>attack.t1218.010</id>
+        </mitre>
+        <description>Regsvr32 COM Scriptlet Execution Via scrobj.dll Load</description>
+        <options>no_full_log</options>
+        <group>image_load,windows,</group>
+        <if_sid>18100, 60000, 60001, 60002, 60003, 60004, 60006, 60007, 60008, 60009, 60010, 60011, 60012</if_sid>
+        <field name="win.eventdata.image" negate="no" type="pcre2">(?i)\\+regsvr32\.exe</field>
+        <field name="win.eventdata.imageLoaded" negate="no" type="pcre2">(?i)\\+scrobj\.dll</field>
+    </rule>
+</group>
