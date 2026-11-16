@@ -40,9 +40,12 @@
   <!-- Rule 100003 - Registry Run key persistence -->
   <!-- MITRE ATT&CK: T1547.001 - Boot or Logon Autostart Execution: Registry Run Keys -->
   <!-- Sysmon Event ID 13 - Registry Value Set -->
+  <!-- tuning_pass 1: chained on 61615 (logtest/json path) and 92300 (production/eventchannel path), explicit Run-key match, negate value data in trusted dirs to drop benign autostart FPs (see ADS). -->
   <rule id="100003" level="10">
-    <if_sid>92300</if_sid>
-    <description>T1547.001: Registry Run key persistence - $(win.eventdata.targetObject)</description>
+    <if_sid>61615,92300</if_sid>
+    <field name="win.eventdata.targetObject" type="pcre2">(?i)\\+CurrentVersion\\+Run</field>
+    <field name="win.eventdata.details" type="pcre2" negate="yes">(?i)\\+(System32|SysWOW64|Program Files)\\+</field>
+    <description>T1547.001: Registry Run key persistence - $(win.eventdata.targetObject) -> $(win.eventdata.details)</description>
     <mitre>
       <id>T1547.001</id>
     </mitre>
@@ -63,11 +66,12 @@
   <!-- Rule 100005 - Windows service created with sc.exe -->
   <!-- MITRE ATT&CK: T1543.003 - Create or Modify System Process: Windows Service -->
   <!-- Sysmon Event ID 1 - Process Creation -->
-  <!-- Converted from rules/sigma/T1543.003_sc_create_service.yml with sigma_to_wazuh (raw output in rules/wazuh/), then manual fixes (see ADS). -->
+  <!-- tuning_pass 1: negate binPath into System32/SysWOW64/Program Files to drop benign service FPs. ["\\]* absorbs the escaped quote and doubled backslashes the eventchannel decoder emits (logtest's json decoder does not, see ADS). -->
   <rule id="100005" level="6">
     <if_sid>61603</if_sid>
     <field name="win.eventdata.image" type="pcre2">(?i)\\sc\.exe$</field>
     <field name="win.eventdata.commandLine" type="pcre2">(?i)^(?=.*create)(?=.*binpath)</field>
+    <field name="win.eventdata.commandLine" type="pcre2" negate="yes">(?i)binpath=\s*["\\]*[a-z]:\\+(Windows\\+System32|Windows\\+SysWOW64|Program Files)</field>
     <description>T1543.003: Windows service created with sc.exe - $(win.eventdata.commandLine)</description>
     <mitre>
       <id>T1543.003</id>

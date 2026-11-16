@@ -56,3 +56,69 @@ run_id,run_type,rule_state,timestamp_utc,technique_id,atomic_test_guid,atomic_st
 2026-11-15T01-47-47Z_T1490_r1,malicious,lab,2026-11-15T01:47:47.7361444Z,T1490,43819286-91a9-4369-90ed-d31fb4da2c01,success,1,true,[1],[1],true,100015,,,none,1,1.941,,0,100015 fired on Event 1 (vssadmin delete shadows) via OriginalFileName. Outranks stock 92032/92052 at L8. Keys on the vssadmin process not the cmd launcher so single fire.
 2026-11-15T01-50-18Z_T1490_r2,malicious,lab,2026-11-15T01:50:18.5048609Z,T1490,43819286-91a9-4369-90ed-d31fb4da2c01,success,2,true,[1],[1],true,100015,,,none,1,2.208,,0,100015 fired on Event 1 (vssadmin delete shadows) via OriginalFileName. Outranks stock 92032/92052 at L8. Keys on the vssadmin process not the cmd launcher so single fire.
 2026-11-15T01-52-00Z_T1490_r3,malicious,lab,2026-11-15T01:52:00.7143628Z,T1490,43819286-91a9-4369-90ed-d31fb4da2c01,success,3,true,[1],[1],true,100015,,,none,1,3.169,,0,100015 fired on Event 1 (vssadmin delete shadows) via OriginalFileName. Outranks stock 92032/92052 at L8. Keys on the vssadmin process not the cmd launcher so single fire.
+2026-11-15T20-27-20Z_baseline_b1,baseline,lab,2026-11-15T20:27:20Z,baseline,,na,1,true,,,true,100002,,,none,1,,,0,task-register (schtasks /Create)
+2026-11-15T20-27-20Z_baseline_b1,baseline,lab,2026-11-15T20:27:20Z,baseline,,na,1,true,,,true,100003,,,none,1,,,0,runkey-write (HKCU Run eid 13)
+2026-11-15T20-27-20Z_baseline_b1,baseline,lab,2026-11-15T20:27:20Z,baseline,,na,1,true,,,true,100005,,,none,1,,,0,service-create (sc create)
+2026-11-15T20-27-20Z_baseline_b1,baseline,lab,2026-11-15T20:27:20Z,baseline,,na,1,true,,,true,100010,,,none,4,,,0,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T20-27-20Z_baseline_b1,baseline,lab,2026-11-15T20:27:20Z,baseline,,na,1,true,,,true,100011,,,none,1,,,0,systeminfo
+2026-11-15T20-27-20Z_baseline_b1,baseline,lab,2026-11-15T20:27:20Z,baseline,,na,1,true,,,true,100012,,,none,2,,,0,map + unmap admin share (net use C$ and /delete)
+2026-11-15T20-27-20Z_baseline_b1,baseline,lab,2026-11-15T20:27:20Z,baseline,,na,1,true,,,true,100014,,,none,1,,,0,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T20-43-10Z_baseline_b2,baseline,lab,2026-11-15T20:43:10Z,baseline,,na,2,true,,,true,100002,,,none,1,,,0,task-register (schtasks /Create)
+2026-11-15T20-43-10Z_baseline_b2,baseline,lab,2026-11-15T20:43:10Z,baseline,,na,2,true,,,true,100003,,,none,1,,,0,runkey-write (HKCU Run eid 13)
+2026-11-15T20-43-10Z_baseline_b2,baseline,lab,2026-11-15T20:43:10Z,baseline,,na,2,true,,,true,100005,,,none,1,,,0,service-create (sc create)
+2026-11-15T20-43-10Z_baseline_b2,baseline,lab,2026-11-15T20:43:10Z,baseline,,na,2,true,,,true,100010,,,none,4,,,0,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T20-43-10Z_baseline_b2,baseline,lab,2026-11-15T20:43:10Z,baseline,,na,2,true,,,true,100011,,,none,1,,,0,systeminfo
+2026-11-15T20-43-10Z_baseline_b2,baseline,lab,2026-11-15T20:43:10Z,baseline,,na,2,true,,,true,100012,,,none,2,,,0,map + unmap admin share (net use C$ and /delete)
+2026-11-15T20-43-10Z_baseline_b2,baseline,lab,2026-11-15T20:43:10Z,baseline,,na,2,true,,,true,100014,,,none,1,,,0,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T20-47-44Z_baseline_b3,baseline,lab,2026-11-15T20:47:44Z,baseline,,na,3,true,,,true,100002,,,none,1,,,0,task-register (schtasks /Create)
+2026-11-15T20-47-44Z_baseline_b3,baseline,lab,2026-11-15T20:47:44Z,baseline,,na,3,true,,,true,100003,,,none,1,,,0,runkey-write (HKCU Run eid 13)
+2026-11-15T20-47-44Z_baseline_b3,baseline,lab,2026-11-15T20:47:44Z,baseline,,na,3,true,,,true,100005,,,none,1,,,0,service-create (sc create)
+2026-11-15T20-47-44Z_baseline_b3,baseline,lab,2026-11-15T20:47:44Z,baseline,,na,3,true,,,true,100010,,,none,4,,,0,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T20-47-44Z_baseline_b3,baseline,lab,2026-11-15T20:47:44Z,baseline,,na,3,true,,,true,100011,,,none,1,,,0,systeminfo
+2026-11-15T20-47-44Z_baseline_b3,baseline,lab,2026-11-15T20:47:44Z,baseline,,na,3,true,,,true,100012,,,none,2,,,0,map + unmap admin share (net use C$ and /delete)
+2026-11-15T20-47-44Z_baseline_b3,baseline,lab,2026-11-15T20:47:44Z,baseline,,na,3,true,,,true,100014,,,none,1,,,0,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T20-51-13Z_baseline_b4,baseline,lab,2026-11-15T20:51:13Z,baseline,,na,4,true,,,true,100002,,,none,1,,,0,task-register (schtasks /Create)
+2026-11-15T20-51-13Z_baseline_b4,baseline,lab,2026-11-15T20:51:13Z,baseline,,na,4,true,,,true,100003,,,none,1,,,0,runkey-write (HKCU Run eid 13)
+2026-11-15T20-51-13Z_baseline_b4,baseline,lab,2026-11-15T20:51:13Z,baseline,,na,4,true,,,true,100005,,,none,1,,,0,service-create (sc create)
+2026-11-15T20-51-13Z_baseline_b4,baseline,lab,2026-11-15T20:51:13Z,baseline,,na,4,true,,,true,100010,,,none,4,,,0,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T20-51-13Z_baseline_b4,baseline,lab,2026-11-15T20:51:13Z,baseline,,na,4,true,,,true,100011,,,none,1,,,0,systeminfo
+2026-11-15T20-51-13Z_baseline_b4,baseline,lab,2026-11-15T20:51:13Z,baseline,,na,4,true,,,true,100012,,,none,2,,,0,map + unmap admin share (net use C$ and /delete)
+2026-11-15T20-51-13Z_baseline_b4,baseline,lab,2026-11-15T20:51:13Z,baseline,,na,4,true,,,true,100014,,,none,1,,,0,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T20-55-40Z_baseline_b5,baseline,lab,2026-11-15T20:55:40Z,baseline,,na,5,true,,,true,100002,,,none,1,,,0,task-register (schtasks /Create)
+2026-11-15T20-55-40Z_baseline_b5,baseline,lab,2026-11-15T20:55:40Z,baseline,,na,5,true,,,true,100003,,,none,1,,,0,runkey-write (HKCU Run eid 13)
+2026-11-15T20-55-40Z_baseline_b5,baseline,lab,2026-11-15T20:55:40Z,baseline,,na,5,true,,,true,100005,,,none,1,,,0,service-create (sc create)
+2026-11-15T20-55-40Z_baseline_b5,baseline,lab,2026-11-15T20:55:40Z,baseline,,na,5,true,,,true,100010,,,none,4,,,0,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T20-55-40Z_baseline_b5,baseline,lab,2026-11-15T20:55:40Z,baseline,,na,5,true,,,true,100011,,,none,1,,,0,systeminfo
+2026-11-15T20-55-40Z_baseline_b5,baseline,lab,2026-11-15T20:55:40Z,baseline,,na,5,true,,,true,100012,,,none,2,,,0,map + unmap admin share (net use C$ and /delete)
+2026-11-15T20-55-40Z_baseline_b5,baseline,lab,2026-11-15T20:55:40Z,baseline,,na,5,true,,,true,100014,,,none,1,,,0,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T22-21-16Z_T1547.001_r1,malicious,lab,2026-11-15T22:21:16Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,1,true,[13],[13],true,100003,,,none,1,0.709,,1,tuned pass 1 (verified via logtest + production)
+2026-11-15T22-23-34Z_T1547.001_r2,malicious,lab,2026-11-15T22:23:34Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,2,true,[13],[13],true,100003,,,none,1,1.197,,1,tuned pass 1 (verified via logtest + production)
+2026-11-15T22-25-12Z_T1547.001_r3,malicious,lab,2026-11-15T22:25:12Z,T1547.001,e55be3fd-3521-4610-9d1a-e210e42dcf05,success,3,true,[13],[13],true,100003,,,none,1,0.847,,1,tuned pass 1 (verified via logtest + production)
+2026-11-15T22-27-34Z_T1543.003_r1,malicious,lab,2026-11-15T22:27:34Z,T1543.003,981e2942-e433-44e9-afc1-8c957a1496b6,success,1,true,[1 13],[1 13],true,100005,,,none,1,0.708,,1,tuned pass 1 (verified via logtest + production)
+2026-11-15T22-29-51Z_T1543.003_r2,malicious,lab,2026-11-15T22:29:51Z,T1543.003,981e2942-e433-44e9-afc1-8c957a1496b6,success,2,true,[1 13],[1 13],true,100005,,,none,1,0.674,,1,tuned pass 1 (verified via logtest + production)
+2026-11-15T22-31-27Z_T1543.003_r3,malicious,lab,2026-11-15T22:31:27Z,T1543.003,981e2942-e433-44e9-afc1-8c957a1496b6,success,3,true,[1 13],[1 13],true,100005,,,none,1,0.784,,1,tuned pass 1 (verified via logtest + production)
+2026-11-15T22-56-40Z_baseline_b6,baseline,lab,2026-11-15T22:56:40Z,baseline,,na,1,true,,,true,100002,,,none,1,,,1,task-register (schtasks /Create)
+2026-11-15T22-56-40Z_baseline_b6,baseline,lab,2026-11-15T22:56:40Z,baseline,,na,1,true,,,true,100010,,,none,4,,,1,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T22-56-40Z_baseline_b6,baseline,lab,2026-11-15T22:56:40Z,baseline,,na,1,true,,,true,100011,,,none,1,,,1,systeminfo
+2026-11-15T22-56-40Z_baseline_b6,baseline,lab,2026-11-15T22:56:40Z,baseline,,na,1,true,,,true,100012,,,none,2,,,1,map + unmap admin share (net use C$ and /delete)
+2026-11-15T22-56-40Z_baseline_b6,baseline,lab,2026-11-15T22:56:40Z,baseline,,na,1,true,,,true,100014,,,none,1,,,1,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T23-00-19Z_baseline_b7,baseline,lab,2026-11-15T23:00:19Z,baseline,,na,2,true,,,true,100002,,,none,1,,,1,task-register (schtasks /Create)
+2026-11-15T23-00-19Z_baseline_b7,baseline,lab,2026-11-15T23:00:19Z,baseline,,na,2,true,,,true,100010,,,none,4,,,1,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T23-00-19Z_baseline_b7,baseline,lab,2026-11-15T23:00:19Z,baseline,,na,2,true,,,true,100011,,,none,1,,,1,systeminfo
+2026-11-15T23-00-19Z_baseline_b7,baseline,lab,2026-11-15T23:00:19Z,baseline,,na,2,true,,,true,100012,,,none,2,,,1,map + unmap admin share (net use C$ and /delete)
+2026-11-15T23-00-19Z_baseline_b7,baseline,lab,2026-11-15T23:00:19Z,baseline,,na,2,true,,,true,100014,,,none,1,,,1,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T23-02-30Z_baseline_b8,baseline,lab,2026-11-15T23:02:30Z,baseline,,na,3,true,,,true,100002,,,none,1,,,1,task-register (schtasks /Create)
+2026-11-15T23-02-30Z_baseline_b8,baseline,lab,2026-11-15T23:02:30Z,baseline,,na,3,true,,,true,100010,,,none,4,,,1,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T23-02-30Z_baseline_b8,baseline,lab,2026-11-15T23:02:30Z,baseline,,na,3,true,,,true,100011,,,none,1,,,1,systeminfo
+2026-11-15T23-02-30Z_baseline_b8,baseline,lab,2026-11-15T23:02:30Z,baseline,,na,3,true,,,true,100012,,,none,2,,,1,map + unmap admin share (net use C$ and /delete)
+2026-11-15T23-02-30Z_baseline_b8,baseline,lab,2026-11-15T23:02:30Z,baseline,,na,3,true,,,true,100014,,,none,1,,,1,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T23-04-58Z_baseline_b9,baseline,lab,2026-11-15T23:04:58Z,baseline,,na,4,true,,,true,100002,,,none,1,,,1,task-register (schtasks /Create)
+2026-11-15T23-04-58Z_baseline_b9,baseline,lab,2026-11-15T23:04:58Z,baseline,,na,4,true,,,true,100010,,,none,4,,,1,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T23-04-58Z_baseline_b9,baseline,lab,2026-11-15T23:04:58Z,baseline,,na,4,true,,,true,100011,,,none,1,,,1,systeminfo
+2026-11-15T23-04-58Z_baseline_b9,baseline,lab,2026-11-15T23:04:58Z,baseline,,na,4,true,,,true,100012,,,none,2,,,1,map + unmap admin share (net use C$ and /delete)
+2026-11-15T23-04-58Z_baseline_b9,baseline,lab,2026-11-15T23:04:58Z,baseline,,na,4,true,,,true,100014,,,none,1,,,1,archive-logs (spawned powershell Compress-Archive)
+2026-11-15T23-07-54Z_baseline_b10,baseline,lab,2026-11-15T23:07:54Z,baseline,,na,5,true,,,true,100002,,,none,1,,,1,task-register (schtasks /Create)
+2026-11-15T23-07-54Z_baseline_b10,baseline,lab,2026-11-15T23:07:54Z,baseline,,na,5,true,,,true,100010,,,none,4,,,1,net user + net localgroup (net.exe and net1.exe each fire)
+2026-11-15T23-07-54Z_baseline_b10,baseline,lab,2026-11-15T23:07:54Z,baseline,,na,5,true,,,true,100011,,,none,1,,,1,systeminfo
+2026-11-15T23-07-54Z_baseline_b10,baseline,lab,2026-11-15T23:07:54Z,baseline,,na,5,true,,,true,100012,,,none,2,,,1,map + unmap admin share (net use C$ and /delete)
+2026-11-15T23-07-54Z_baseline_b10,baseline,lab,2026-11-15T23:07:54Z,baseline,,na,5,true,,,true,100014,,,none,1,,,1,archive-logs (spawned powershell Compress-Archive)
