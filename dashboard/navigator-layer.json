@@ -1,0 +1,152 @@
+{
+  "name": "Wazuh Lab Detection Coverage",
+  "versions": {
+    "attack": "20",
+    "navigator": "5.1.0",
+    "layer": "4.5"
+  },
+  "domain": "enterprise-attack",
+  "description": "Empirical Sysmon and Wazuh detection coverage with false-positive cost. Color is coverage score 0-3, comment is FP cost and rule id. Generated from results/runs.csv by harness/aggregate.py then make_navigator.py.",
+  "techniques": [
+    {
+      "techniqueID": "T1059.001",
+      "color": "#0ca30c",
+      "comment": "Detected, clean | rule 100001 | FP cost 0 over 5 baseline runs | stock: generic",
+      "enabled": true,
+      "score": 3
+    },
+    {
+      "techniqueID": "T1053.005",
+      "color": "#fab219",
+      "comment": "Detected, noisy or inconsistent | rule 100002 | FP cost 5 over 5 baseline runs | stock: generic",
+      "enabled": true,
+      "score": 2
+    },
+    {
+      "techniqueID": "T1547.001",
+      "color": "#0ca30c",
+      "comment": "Detected, clean | rule 100003 | FP cost 0 over 5 baseline runs | stock: correct",
+      "enabled": true,
+      "score": 3
+    },
+    {
+      "techniqueID": "T1546.003",
+      "color": "#0ca30c",
+      "comment": "Detected, clean | rule 100004 | FP cost 0 over 5 baseline runs | stock: correct",
+      "enabled": true,
+      "score": 3
+    },
+    {
+      "techniqueID": "T1543.003",
+      "color": "#0ca30c",
+      "comment": "Detected, clean | rule 100005 | FP cost 0 over 5 baseline runs | stock: correct",
+      "enabled": true,
+      "score": 3
+    },
+    {
+      "techniqueID": "T1548.002",
+      "color": "#b8b6ae",
+      "comment": "Blocked by Defender | rule 100006",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1036.003",
+      "color": "#ec835a",
+      "comment": "Telemetry, no rule | rule 100007 | FP cost 0 over 5 baseline runs | stock: misattributed",
+      "enabled": true,
+      "score": 1
+    },
+    {
+      "techniqueID": "T1218.010",
+      "color": "#0ca30c",
+      "comment": "Detected, clean | rule 100008 | FP cost 0 over 5 baseline runs | stock: generic",
+      "enabled": true,
+      "score": 3
+    },
+    {
+      "techniqueID": "T1112",
+      "color": "#0ca30c",
+      "comment": "Detected, clean | rule 100009 | FP cost 0 over 5 baseline runs",
+      "enabled": true,
+      "score": 3
+    },
+    {
+      "techniqueID": "T1087.001",
+      "color": "#fab219",
+      "comment": "Detected, noisy or inconsistent | rule 100010 | FP cost 20 over 5 baseline runs | stock: correct",
+      "enabled": true,
+      "score": 2
+    },
+    {
+      "techniqueID": "T1082",
+      "color": "#fab219",
+      "comment": "Detected, noisy or inconsistent | rule 100011 | FP cost 5 over 5 baseline runs | stock: generic",
+      "enabled": true,
+      "score": 2
+    },
+    {
+      "techniqueID": "T1021.002",
+      "color": "#fab219",
+      "comment": "Detected, noisy or inconsistent | rule 100012 | FP cost 10 over 5 baseline runs | stock: generic",
+      "enabled": true,
+      "score": 2
+    },
+    {
+      "techniqueID": "T1105",
+      "color": "#0ca30c",
+      "comment": "Detected, clean | rule 100013 | FP cost 0 over 5 baseline runs | stock: generic",
+      "enabled": true,
+      "score": 3
+    },
+    {
+      "techniqueID": "T1560",
+      "color": "#fab219",
+      "comment": "Detected, noisy or inconsistent | rule 100014 | FP cost 5 over 5 baseline runs | stock: generic",
+      "enabled": true,
+      "score": 2
+    },
+    {
+      "techniqueID": "T1490",
+      "color": "#0ca30c",
+      "comment": "Detected, clean | rule 100015 | FP cost 0 over 5 baseline runs | stock: generic",
+      "enabled": true,
+      "score": 3
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#d03b3b",
+      "#fab219",
+      "#0ca30c"
+    ],
+    "minValue": 0,
+    "maxValue": 3
+  },
+  "legendItems": [
+    {
+      "label": "0 No telemetry",
+      "color": "#d03b3b"
+    },
+    {
+      "label": "1 Telemetry, no rule (shadowed)",
+      "color": "#ec835a"
+    },
+    {
+      "label": "2 Detected, noisy",
+      "color": "#fab219"
+    },
+    {
+      "label": "3 Detected, clean",
+      "color": "#0ca30c"
+    },
+    {
+      "label": "Blocked / not measured",
+      "color": "#b8b6ae"
+    }
+  ],
+  "hideDisabled": false,
+  "showTacticRowBackground": true,
+  "tacticRowBackground": "#2c2c2a",
+  "selectTechniquesAcrossTactics": true,
+  "sorting": 0
+}
