@@ -126,8 +126,15 @@ Invoke-Action 'download-local-file' 'T1105' {
 
 # 7. Archive a log folder
 Invoke-Action 'archive-logs' 'T1560' {
+    $src = Join-Path $OutDir 'archive-src'
+    New-Item -ItemType Directory -Path $src -Force | Out-Null
+    'benign log line one' | Set-Content -Path (Join-Path $src 'a.txt') -Encoding UTF8
+    'benign log line two' | Set-Content -Path (Join-Path $src 'b.txt') -Encoding UTF8
     $zip = Join-Path $OutDir "logs-$RunId.zip"
-    Compress-Archive -Path "$env:windir\Logs\*" -DestinationPath $zip -Force -ErrorAction SilentlyContinue
+    $inner = "Compress-Archive -Path '$src' -DestinationPath '$zip' -Force"
+    Start-Process -FilePath 'powershell.exe' `
+        -ArgumentList "-NoProfile -NonInteractive -Command `"$inner`"" `
+        -Wait -WindowStyle Hidden
 }
 
 # 8. Install + uninstall a signed MSI
