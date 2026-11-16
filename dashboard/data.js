@@ -1,14 +1,14 @@
 window.LAB_DATA = {
   "summary": {
     "attack_version": "20",
-    "generated_utc": "2026-11-15T02:02:13+00:00",
+    "generated_utc": "2026-11-16T00:36:47+00:00",
     "techniques_planned": 15,
-    "techniques_measured": 1,
+    "techniques_measured": 14,
     "score_counts": {
       "0": 0,
       "1": 1,
-      "2": 0,
-      "3": 0
+      "2": 5,
+      "3": 8
     },
     "builtin_covered_count": 4,
     "techniques_tested": 14,
@@ -52,8 +52,8 @@ window.LAB_DATA = {
       "mean_latency_s": 0.48,
       "fp_cost_5runs": 0,
       "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "coverage_score": 3,
+      "status": "detected-clean"
     },
     {
       "technique_id": "T1053.005",
@@ -73,10 +73,10 @@ window.LAB_DATA = {
       "stock_attribution": "generic",
       "tuning_pass": 0,
       "mean_latency_s": 0.84,
-      "fp_cost_5runs": 0,
-      "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "fp_cost_5runs": 5,
+      "precision": 0.375,
+      "coverage_score": 2,
+      "status": "detected-noisy"
     },
     {
       "technique_id": "T1547.001",
@@ -93,12 +93,12 @@ window.LAB_DATA = {
       ],
       "builtin_covered": true,
       "stock_attribution": "correct",
-      "tuning_pass": 0,
-      "mean_latency_s": 0.86,
+      "tuning_pass": 1,
+      "mean_latency_s": 0.92,
       "fp_cost_5runs": 0,
       "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "coverage_score": 3,
+      "status": "detected-clean"
     },
     {
       "technique_id": "T1546.003",
@@ -119,8 +119,8 @@ window.LAB_DATA = {
       "mean_latency_s": 1.35,
       "fp_cost_5runs": 0,
       "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "coverage_score": 3,
+      "status": "detected-clean"
     },
     {
       "technique_id": "T1543.003",
@@ -137,12 +137,12 @@ window.LAB_DATA = {
       ],
       "builtin_covered": true,
       "stock_attribution": "correct",
-      "tuning_pass": 0,
-      "mean_latency_s": 0.82,
+      "tuning_pass": 1,
+      "mean_latency_s": 0.72,
       "fp_cost_5runs": 0,
       "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "coverage_score": 3,
+      "status": "detected-clean"
     },
     {
       "technique_id": "T1548.002",
@@ -162,7 +162,7 @@ window.LAB_DATA = {
       "fp_cost_5runs": 0,
       "precision": null,
       "coverage_score": null,
-      "status": "planned"
+      "status": "Blocked by Defender"
     },
     {
       "technique_id": "T1036.003",
@@ -206,8 +206,8 @@ window.LAB_DATA = {
       "mean_latency_s": 0.72,
       "fp_cost_5runs": 0,
       "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "coverage_score": 3,
+      "status": "detected-clean"
     },
     {
       "technique_id": "T1112",
@@ -226,8 +226,8 @@ window.LAB_DATA = {
       "mean_latency_s": 1.55,
       "fp_cost_5runs": 0,
       "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "coverage_score": 3,
+      "status": "detected-clean"
     },
     {
       "technique_id": "T1087.001",
@@ -246,10 +246,10 @@ window.LAB_DATA = {
       "stock_attribution": "correct",
       "tuning_pass": 0,
       "mean_latency_s": 0.66,
-      "fp_cost_5runs": 0,
-      "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "fp_cost_5runs": 20,
+      "precision": 0.13,
+      "coverage_score": 2,
+      "status": "detected-noisy"
     },
     {
       "technique_id": "T1082",
@@ -269,10 +269,10 @@ window.LAB_DATA = {
       "stock_attribution": "generic",
       "tuning_pass": 0,
       "mean_latency_s": 0.93,
-      "fp_cost_5runs": 0,
-      "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "fp_cost_5runs": 5,
+      "precision": 0.375,
+      "coverage_score": 2,
+      "status": "detected-noisy"
     },
     {
       "technique_id": "T1021.002",
@@ -292,10 +292,10 @@ window.LAB_DATA = {
       "stock_attribution": "generic",
       "tuning_pass": 0,
       "mean_latency_s": 0.63,
-      "fp_cost_5runs": 0,
-      "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "fp_cost_5runs": 10,
+      "precision": 0.231,
+      "coverage_score": 2,
+      "status": "detected-noisy"
     },
     {
       "technique_id": "T1105",
@@ -317,8 +317,8 @@ window.LAB_DATA = {
       "mean_latency_s": 0.8,
       "fp_cost_5runs": 0,
       "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "coverage_score": 3,
+      "status": "detected-clean"
     },
     {
       "technique_id": "T1560",
@@ -337,10 +337,10 @@ window.LAB_DATA = {
       "stock_attribution": "generic",
       "tuning_pass": 0,
       "mean_latency_s": 0.72,
-      "fp_cost_5runs": 0,
-      "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "fp_cost_5runs": 5,
+      "precision": 0.375,
+      "coverage_score": 2,
+      "status": "detected-noisy"
     },
     {
       "technique_id": "T1490",
@@ -362,8 +362,8 @@ window.LAB_DATA = {
       "mean_latency_s": 2.44,
       "fp_cost_5runs": 0,
       "precision": 1.0,
-      "coverage_score": null,
-      "status": "incomplete"
+      "coverage_score": 3,
+      "status": "detected-clean"
     }
   ]
 };
