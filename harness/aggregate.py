@@ -104,6 +104,8 @@ def main():
         score, label = coverage_score(mal, fp_cost) if mal else (None, "planned")
         if score == 3 and (len(mal) < 3 or len(baseline_runs) < 5):
             score, label = None, "incomplete"
+        if score is None and t.get("status") == "blocked":
+            label = "Blocked by Defender"
         precision = None
 
         if detected_runs or fp_cost:

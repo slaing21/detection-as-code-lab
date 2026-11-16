@@ -370,7 +370,7 @@
                             var cell = document.createElement("div");
                             var has = t.coverage_score !== null && t.coverage_score !== undefined;
                             cell.className = "cell" + (has ? " " + SCORE[t.coverage_score].cls : "");
-                            var tag = has ? '<span class="tag">' + t.coverage_score + ' &middot; ' + SCORE[t.coverage_score].label + '</span>' : '<span class="tag">planned</span>';
+                            var tag = has ? '<span class="tag">' + t.coverage_score + ' &middot; ' + SCORE[t.coverage_score].label + '</span>' : '<span class="tag">' + (t.status || 'planned') + '</span>';
                             cell.innerHTML = '<div class="tid">' + t.technique_id + '</div><div class="tname">' + t.name + '</div>' + tag;
                             col.appendChild(cell);
                         });
@@ -382,7 +382,7 @@
                     T.forEach(function(t) {
                         var tr = document.createElement("tr");
                         var has = t.coverage_score !== null && t.coverage_score !== undefined;
-                        var dot = has ? '<span class="scoredot" style="background:var(--s' + t.coverage_score + ')"></span>' + t.coverage_score + ' ' + SCORE[t.coverage_score].label : '<span class="scoredot" style="background:var(--planned)"></span>planned';
+                        var dot = has ? '<span class="scoredot" style="background:var(--s' + t.coverage_score + ')"></span>' + t.coverage_score + ' ' + SCORE[t.coverage_score].label : '<span class="scoredot" style="background:var(--planned)"></span>' + (t.status || 'planned');
                         var lat = t.mean_latency_s == null ? "&mdash;" : t.mean_latency_s.toFixed(1);
                         tr.innerHTML = '<td><code>' + t.technique_id + '</code></td><td>' + t.name + '</td>' + '<td>' + dot + '</td>' + '<td class="num">' + (t.fp_cost_5runs || 0) + '</td>' + '<td class="num">' + lat + '</td>';
                         tb.appendChild(tr);
