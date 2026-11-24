@@ -1,11 +1,11 @@
 <group name="sigma,">
-    <!--
+<!--
 Author: Brian Kellogg
 Sigma: https://github.com/SigmaHQ/sigma
 Wazuh: https://wazuh.com
 All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master/LICENSE.Detection.Rules.md
 -->
-<rule id="900003" level="7">
+    <rule id="900003" level="7">
         <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1543.003_sc_create_service.yml</info>
         <!--Sigma Rule Author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community (original SigmaHQ rule), adapted by Stephen Laing-->
         <!--Description: Detects a Windows service being created with sc.exe create and a binPath (T1543.003). Source of truth for lab rule 100005. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1543.003 atomic. Derived from SigmaHQ proc_creation_win_sc_create_service. -->
@@ -24,5 +24,6 @@ All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master
         <field name="win.eventdata.image" negate="no" type="pcre2">(?i)\\+sc\.exe</field>
         <field name="win.eventdata.commandLine" negate="no" type="pcre2">(?i)create</field>
         <field name="win.eventdata.commandLine" negate="no" type="pcre2">(?i)binPath</field>
+        <field name="full_log" negate="yes" type="pcre2">(?i)binpath=\\+s.+\["\\+\].+\[a\-z\]:\\+\+\(Windows\\+\+System32\|Windows\\+\+SysWOW64\|Program\ Files\)</field>
     </rule>
 </group>

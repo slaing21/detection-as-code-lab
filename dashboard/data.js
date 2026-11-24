@@ -1,7 +1,7 @@
 window.LAB_DATA = {
   "summary": {
     "attack_version": "20",
-    "generated_utc": "2026-11-16T00:36:47+00:00",
+    "generated_utc": "2026-11-24T05:11:05+00:00",
     "techniques_planned": 15,
     "techniques_measured": 14,
     "score_counts": {

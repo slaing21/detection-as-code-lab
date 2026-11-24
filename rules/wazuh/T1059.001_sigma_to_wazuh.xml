@@ -8,7 +8,7 @@ All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master
     <rule id="900001" level="13">
         <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1059.001_powershell_encoded_command.yml</info>
         <!--Sigma Rule Author: frack113 (original SigmaHQ rule), Stephen Laing-->
-        <!--Description: Detects PowerShell launched with an encoded command line (-EncodedCommand / -enc / -e), a common obfuscation step layered on T1059.001. Source of truth for lab rule 100200; the deployed detection is the Wazuh XML in lab/siem/local_rules.xml, to be validated with wazuh-logtest before use. Derived from SigmaHQ proc_creation_win_powershell_encode.yml. -->
+        <!--Description: Detects PowerShell launched with an encoded command line (-EncodedCommand / -enc / -e), a common obfuscation step layered on T1059.001. Source of truth for lab rule 100001; the deployed detection is the Wazuh XML in lab/siem/local_rules.xml, to be validated with wazuh-logtest before use. Derived from SigmaHQ proc_creation_win_powershell_encode.yml. -->
         <!--Date: 2026-10-17-->
         <!--Status: experimental-->
         <!--ID: 8d3f1a92-6b4e-4c21-9f0a-7e2d5c1a4b00-->

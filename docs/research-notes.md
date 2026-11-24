@@ -54,7 +54,7 @@ Research notes, decisions, and sources. This is a living document so more will b
 
 ## Standards Framing
 
-- **Palantir ADS** is the per-rule documentation structure (`docs/templates/ads-template.md`). **NIST SP 800-61r3** frames the triage/response narrative and **NIST CSF 2.0** the Detect function.
+- **Palantir ADS** is the per-rule documentation structure (`docs/ads/`). **NIST SP 800-61r3** frames the triage/response narrative and **NIST CSF 2.0** the Detect function.
 
 ## Sources
 

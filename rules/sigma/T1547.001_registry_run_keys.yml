@@ -15,6 +15,7 @@ references:
   - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_currentversion.yml
 author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin, oscd.community, Tim Shelton, frack113 (SigmaHQ), adapted by Stephen Laing
 date: 2026-11-01
+modified: 2026-11-15
 tags:
   - attack.persistence
   - attack.privilege-escalation
@@ -25,14 +26,15 @@ logsource:
 detection:
   selection:
     TargetObject|contains:
-      - '\CurrentVersion\Run\'
-  condition: selection
+      - '\CurrentVersion\Run'
+  filter_main_trusted_location:
+    Details|contains:
+      - '\System32\'
+      - '\SysWOW64\'
+      - '\Program Files\'
+  condition: selection and not filter_main_trusted_location
 falsepositives:
   - Legitimate software (mostly during installation) sets up autorun keys
   - Legitimate administrators configuring startup programs
   - 'Measured against this lab''s benign baseline: see results/runs.csv (fp_cost_5runs)'
 level: high
-# Implementation note: the Sigma selection (TargetObject contains \CurrentVersion\Run\)
-# is realized in Wazuh by chaining under built-in base rule 92300 (if_sid 92300), which
-# performs that match for any writing process. Stock rule 92302 alerts only on reg.exe
-# writers, so chaining to 92300 covers the rest. See docs/templates/ads-T1547.001.md.

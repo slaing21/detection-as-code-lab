@@ -118,9 +118,9 @@ For each technique, repeat 3× for the malicious measurement:
 2. **Mark start:** record `t_start` (UTC). Note the `run_id`.
 3. **Execute** the chosen atomic: `Invoke-AtomicTest <technique> -TestGuids <guid>` via the run wrapper (`harness/Invoke-Run.ps1`), which stamps start/end.
 4. **Confirm the atomic actually ran** (executor exit status). If it failed, record `atomic_status: execution_failed` and stop this run.
-5. **Collect** from Wazuh for the `[t_start, t_start+5min]` window: did the expected Sysmon event appear in archives (telemetry Y/N)? Did any rule alert (detection Y/N, which rule_id, alert timestamp → `latency_s = alert_time - t_start`)?
+5. **Collect** from Wazuh for the `[t_start, t_start+5min]` window: did the expected Sysmon event appear in archives (telemetry Y/N)? Did any rule alert (detection Y/N, which rule_id)? Take the alerting event's Sysmon `systemTime` -> `latency_s = systemTime - t_start`.
 6. **Record** one result row (schema §`results/`).
-7. **Cleanup:** run the atomic's cleanup, then restore snapshot anyway for the next run.
+7. **Cleanup:** Restore baseline snapshot for the next run.
 
 Then the FP measurement, which is shared rather than per technique: once per measurement pass, with every rule under test deployed, run `Invoke-Baseline.ps1` 5× (each from a clean snapshot) and record each rule's alert count per baseline run. Record each baseline run per §6.1.
 

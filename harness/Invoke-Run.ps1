@@ -102,7 +102,7 @@ Write-Host "Partial record: $recordPath"
 Write-Host "Now in Wazuh, inspect [$($tStart.ToString('HH:mm:ssZ')) .. $($tStart.AddMinutes(5).ToString('HH:mm:ssZ'))]:"
 Write-Host "  1. Discover/archives: did an expected Sysmon event appear?  -> telemetry_present"
 Write-Host "  2. Alerts: did a lab rule fire? which rule_id? timestamp?    -> detected, rule_id, latency_s"
-Write-Host "Then run cleanup and RESTORE the snapshot before the next run."
+Write-Host "Then restore the snapshot before the next run."
 if ($atomicStatus -eq 'execution_failed') {
     Write-Host "NOTE: atomic did not execute. Do NOT assign a coverage score to this run (protocol section 3)." -ForegroundColor Yellow
 }
