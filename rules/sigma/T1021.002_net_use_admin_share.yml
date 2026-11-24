@@ -5,7 +5,7 @@ description: |
     Detects mapping of a Windows administrative share (C$, ADMIN$, IPC$) with
     net.exe / net1.exe (net use \\host\C$) - used for lateral movement over SMB
     (T1021.002). Fires on the command regardless of whether the SMB connection
-    succeeds. Benign admin use of admin shares exists, so this carries a tuning pass.
+    succeeds.
 references:
     - https://attack.mitre.org/techniques/T1021/002/
 author: Stephen Laing
@@ -30,5 +30,5 @@ detection:
             - 'IPC$'
     condition: all of selection_*
 falsepositives:
-    - Administrators mapping admin shares for legitimate maintenance (tuned against the baseline)
+    - Administrators mapping admin shares for legitimate maintenance
 level: high

@@ -1,0 +1,173 @@
+**Test with 100006 at level 10**
+
+Starting wazuh-logtest v4.14.7
+Type one log per line
+
+{"win":{"system":{"providerName":"Microsoft-Windows-Sysmon","providerGuid":"{5770385f-c22a-43e0-bf4c-06f5698ffbd9}","eventID":"1","version":"5","level":"4","task":"1","opcode":"0","keywords":"0x8000000000000000","systemTime":"2026-11-09T19:31:41.9932090Z","eventRecordID":"22179","processID":"3140","threadID":"3192","channel":"Microsoft-Windows-Sysmon/Operational","computer":"win11-endpoint","severityValue":"INFORMATION","message":"\"Process Create:\r\nRuleName: technique_id=T1059.001,technique_name=PowerShell\r\nUtcTime: 2026-11-09 19:31:41.987\r\nProcessGuid: {05f7cd44-1f9d-6af2-9600-000000001200}\r\nProcessId: 5276\r\nImage: C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe\r\nFileVersion: 10.0.26100.9278 (WinBuild.160101.0800)\r\nDescription: Windows PowerShell\r\nProduct: Microsoft\u00ae Windows\u00ae Operating System\r\nCompany: Microsoft Corporation\r\nOriginalFileName: PowerShell.EXE\r\nCommandLine: powershell -NoProfile -Command \"[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)\"\r\nCurrentDirectory: C:\\Program Files (x86)\\ossec-agent\\\r\nUser: NT AUTHORITY\\SYSTEM\r\nLogonGuid: {05f7cd44-1f90-6af2-e703-000000000000}\r\nLogonId: 0x3E7\r\nTerminalSessionId: 0\r\nIntegrityLevel: System\r\nHashes: SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A\r\nParentProcessGuid: {05f7cd44-1f91-6af2-4200-000000001200}\r\nParentProcessId: 3152\r\nParentImage: C:\\Program Files (x86)\\ossec-agent\\wazuh-agent.exe\r\nParentCommandLine: \"C:\\Program Files (x86)\\ossec-agent\\wazuh-agent.exe\"\r\nParentUser: NT AUTHORITY\\SYSTEM\""},"eventdata":{"ruleName":"technique_id=T1059.001,technique_name=PowerShell","utcTime":"2026-11-09 19:31:41.987","processGuid":"{05f7cd44-1f9d-6af2-9600-000000001200}","processId":"5276","image":"C:\\Windows\\System32\\cmd.exe","fileVersion":"10.0.26100.9278 (WinBuild.160101.0800)","description":"Windows PowerShell","product":"Microsoft\u00ae Windows\u00ae Operating System","company":"Microsoft Corporation","originalFileName":"Cmd.Exe","commandLine":"powershell -NoProfile -Command \\\"[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)\\\"","currentDirectory":"C:\\\\Program Files (x86)\\\\ossec-agent\\\\","user":"NT AUTHORITY\\\\SYSTEM","logonGuid":"{05f7cd44-1f90-6af2-e703-000000000000}","logonId":"0x3e7","terminalSessionId":"0","integrityLevel":"System","hashes":"SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A","parentProcessGuid":"{05f7cd44-1f91-6af2-4200-000000001200}","parentProcessId":"3152","parentImage":"C:\\Windows\\System32\\fodhelper.exe","parentCommandLine":"fodhelper.exe","parentUser":"NT AUTHORITY\\\\SYSTEM"}}}
+
+**Phase 1: Completed pre-decoding.
+
+**Phase 2: Completed decoding.
+        name: 'json'
+        win.eventdata.commandLine: 'powershell -NoProfile -Command \"[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)\"'
+        win.eventdata.company: 'Microsoft Corporation'
+        win.eventdata.currentDirectory: 'C:\\Program Files (x86)\\ossec-agent\\'
+        win.eventdata.description: 'Windows PowerShell'
+        win.eventdata.fileVersion: '10.0.26100.9278 (WinBuild.160101.0800)'
+        win.eventdata.hashes: 'SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A'
+        win.eventdata.image: 'C:\Windows\System32\cmd.exe'
+        win.eventdata.integrityLevel: 'System'
+        win.eventdata.logonGuid: '{05f7cd44-1f90-6af2-e703-000000000000}'
+        win.eventdata.logonId: '0x3e7'
+        win.eventdata.originalFileName: 'Cmd.Exe'
+        win.eventdata.parentCommandLine: 'fodhelper.exe'
+        win.eventdata.parentImage: 'C:\Windows\System32\fodhelper.exe'
+        win.eventdata.parentProcessGuid: '{05f7cd44-1f91-6af2-4200-000000001200}'
+        win.eventdata.parentProcessId: '3152'
+        win.eventdata.parentUser: 'NT AUTHORITY\\SYSTEM'
+        win.eventdata.processGuid: '{05f7cd44-1f9d-6af2-9600-000000001200}'
+        win.eventdata.processId: '5276'
+        win.eventdata.product: 'Microsoft® Windows® Operating System'
+        win.eventdata.ruleName: 'technique_id=T1059.001,technique_name=PowerShell'
+        win.eventdata.terminalSessionId: '0'
+        win.eventdata.user: 'NT AUTHORITY\\SYSTEM'
+        win.eventdata.utcTime: '2026-11-09 19:31:41.987'
+        win.system.channel: 'Microsoft-Windows-Sysmon/Operational'
+        win.system.computer: 'win11-endpoint'
+        win.system.eventID: '1'
+        win.system.eventRecordID: '22179'
+        win.system.keywords: '0x8000000000000000'
+        win.system.level: '4'
+        win.system.message: '"Process Create:
+RuleName: technique_id=T1059.001,technique_name=PowerShell
+UtcTime: 2026-11-09 19:31:41.987
+ProcessGuid: {05f7cd44-1f9d-6af2-9600-000000001200}
+ProcessId: 5276
+Image: C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe
+FileVersion: 10.0.26100.9278 (WinBuild.160101.0800)
+Description: Windows PowerShell
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: PowerShell.EXE
+CommandLine: powershell -NoProfile -Command "[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)"
+CurrentDirectory: C:\Program Files (x86)\ossec-agent\
+User: NT AUTHORITY\SYSTEM
+LogonGuid: {05f7cd44-1f90-6af2-e703-000000000000}
+LogonId: 0x3E7
+TerminalSessionId: 0
+IntegrityLevel: System
+Hashes: SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A
+ParentProcessGuid: {05f7cd44-1f91-6af2-4200-000000001200}
+ParentProcessId: 3152
+ParentImage: C:\Program Files (x86)\ossec-agent\wazuh-agent.exe
+ParentCommandLine: "C:\Program Files (x86)\ossec-agent\wazuh-agent.exe"
+ParentUser: NT AUTHORITY\SYSTEM"'
+        win.system.opcode: '0'
+        win.system.processID: '3140'
+        win.system.providerGuid: '{5770385f-c22a-43e0-bf4c-06f5698ffbd9}'
+        win.system.providerName: 'Microsoft-Windows-Sysmon'
+        win.system.severityValue: 'INFORMATION'
+        win.system.systemTime: '2026-11-09T19:31:41.9932090Z'
+        win.system.task: '1'
+        win.system.threadID: '3192'
+        win.system.version: '5'
+
+**Phase 3: Completed filtering (rules).
+        id: '92046'
+        level: '12'
+        description: 'Possible use of fodhelper.exe used to bypass UAC and execute of malicious software'
+        groups: '['sysmon', 'sysmon_eid1_detections', 'windows']'
+        firedtimes: '1'
+        mail: 'True'
+        mitre.id: '['T1548.002']'
+        mitre.tactic: '['Privilege Escalation', 'Defense Evasion']'
+        mitre.technique: '['Bypass User Account Control']'
+**Alert to be generated.
+
+
+**Test with 100006 at level 13**
+
+Starting wazuh-logtest v4.14.7
+Type one log per line
+
+{"win":{"system":{"providerName":"Microsoft-Windows-Sysmon","providerGuid":"{5770385f-c22a-43e0-bf4c-06f5698ffbd9}","eventID":"1","version":"5","level":"4","task":"1","opcode":"0","keywords":"0x8000000000000000","systemTime":"2026-11-09T19:31:41.9932090Z","eventRecordID":"22179","processID":"3140","threadID":"3192","channel":"Microsoft-Windows-Sysmon/Operational","computer":"win11-endpoint","severityValue":"INFORMATION","message":"\"Process Create:\r\nRuleName: technique_id=T1059.001,technique_name=PowerShell\r\nUtcTime: 2026-11-09 19:31:41.987\r\nProcessGuid: {05f7cd44-1f9d-6af2-9600-000000001200}\r\nProcessId: 5276\r\nImage: C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe\r\nFileVersion: 10.0.26100.9278 (WinBuild.160101.0800)\r\nDescription: Windows PowerShell\r\nProduct: Microsoft\u00ae Windows\u00ae Operating System\r\nCompany: Microsoft Corporation\r\nOriginalFileName: PowerShell.EXE\r\nCommandLine: powershell -NoProfile -Command \"[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)\"\r\nCurrentDirectory: C:\\Program Files (x86)\\ossec-agent\\\r\nUser: NT AUTHORITY\\SYSTEM\r\nLogonGuid: {05f7cd44-1f90-6af2-e703-000000000000}\r\nLogonId: 0x3E7\r\nTerminalSessionId: 0\r\nIntegrityLevel: System\r\nHashes: SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A\r\nParentProcessGuid: {05f7cd44-1f91-6af2-4200-000000001200}\r\nParentProcessId: 3152\r\nParentImage: C:\\Program Files (x86)\\ossec-agent\\wazuh-agent.exe\r\nParentCommandLine: \"C:\\Program Files (x86)\\ossec-agent\\wazuh-agent.exe\"\r\nParentUser: NT AUTHORITY\\SYSTEM\""},"eventdata":{"ruleName":"technique_id=T1059.001,technique_name=PowerShell","utcTime":"2026-11-09 19:31:41.987","processGuid":"{05f7cd44-1f9d-6af2-9600-000000001200}","processId":"5276","image":"C:\\Windows\\System32\\cmd.exe","fileVersion":"10.0.26100.9278 (WinBuild.160101.0800)","description":"Windows PowerShell","product":"Microsoft\u00ae Windows\u00ae Operating System","company":"Microsoft Corporation","originalFileName":"Cmd.Exe","commandLine":"powershell -NoProfile -Command \\\"[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)\\\"","currentDirectory":"C:\\\\Program Files (x86)\\\\ossec-agent\\\\","user":"NT AUTHORITY\\\\SYSTEM","logonGuid":"{05f7cd44-1f90-6af2-e703-000000000000}","logonId":"0x3e7","terminalSessionId":"0","integrityLevel":"System","hashes":"SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A","parentProcessGuid":"{05f7cd44-1f91-6af2-4200-000000001200}","parentProcessId":"3152","parentImage":"C:\\Windows\\System32\\fodhelper.exe","parentCommandLine":"fodhelper.exe","parentUser":"NT AUTHORITY\\\\SYSTEM"}}}
+
+**Phase 1: Completed pre-decoding.
+        full event: '{"win":{"system":{"providerName":"Microsoft-Windows-Sysmon","providerGuid":"{5770385f-c22a-43e0-bf4c-06f5698ffbd9}","eventID":"1","version":"5","level":"4","task":"1","opcode":"0","keywords":"0x8000000000000000","systemTime":"2026-11-09T19:31:41.9932090Z","eventRecordID":"22179","processID":"3140","threadID":"3192","channel":"Microsoft-Windows-Sysmon/Operational","computer":"win11-endpoint","severityValue":"INFORMATION","message":"\"Process Create:\r\nRuleName: technique_id=T1059.001,technique_name=PowerShell\r\nUtcTime: 2026-11-09 19:31:41.987\r\nProcessGuid: {05f7cd44-1f9d-6af2-9600-000000001200}\r\nProcessId: 5276\r\nImage: C:\\Windows\\SysWOW64\\WindowsPowerShell\\v1.0\\powershell.exe\r\nFileVersion: 10.0.26100.9278 (WinBuild.160101.0800)\r\nDescription: Windows PowerShell\r\nProduct: Microsoft\u00ae Windows\u00ae Operating System\r\nCompany: Microsoft Corporation\r\nOriginalFileName: PowerShell.EXE\r\nCommandLine: powershell -NoProfile -Command \"[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)\"\r\nCurrentDirectory: C:\\Program Files (x86)\\ossec-agent\\\r\nUser: NT AUTHORITY\\SYSTEM\r\nLogonGuid: {05f7cd44-1f90-6af2-e703-000000000000}\r\nLogonId: 0x3E7\r\nTerminalSessionId: 0\r\nIntegrityLevel: System\r\nHashes: SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A\r\nParentProcessGuid: {05f7cd44-1f91-6af2-4200-000000001200}\r\nParentProcessId: 3152\r\nParentImage: C:\\Program Files (x86)\\ossec-agent\\wazuh-agent.exe\r\nParentCommandLine: \"C:\\Program Files (x86)\\ossec-agent\\wazuh-agent.exe\"\r\nParentUser: NT AUTHORITY\\SYSTEM\""},"eventdata":{"ruleName":"technique_id=T1059.001,technique_name=PowerShell","utcTime":"2026-11-09 19:31:41.987","processGuid":"{05f7cd44-1f9d-6af2-9600-000000001200}","processId":"5276","image":"C:\\Windows\\System32\\cmd.exe","fileVersion":"10.0.26100.9278 (WinBuild.160101.0800)","description":"Windows PowerShell","product":"Microsoft\u00ae Windows\u00ae Operating System","company":"Microsoft Corporation","originalFileName":"Cmd.Exe","commandLine":"powershell -NoProfile -Command \\\"[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)\\\"","currentDirectory":"C:\\\\Program Files (x86)\\\\ossec-agent\\\\","user":"NT AUTHORITY\\\\SYSTEM","logonGuid":"{05f7cd44-1f90-6af2-e703-000000000000}","logonId":"0x3e7","terminalSessionId":"0","integrityLevel":"System","hashes":"SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A","parentProcessGuid":"{05f7cd44-1f91-6af2-4200-000000001200}","parentProcessId":"3152","parentImage":"C:\\Windows\\System32\\fodhelper.exe","parentCommandLine":"fodhelper.exe","parentUser":"NT AUTHORITY\\\\SYSTEM"}}}'
+
+**Phase 2: Completed decoding.
+        name: 'json'
+        win.eventdata.commandLine: 'powershell -NoProfile -Command \"[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)\"'
+        win.eventdata.company: 'Microsoft Corporation'
+        win.eventdata.currentDirectory: 'C:\\Program Files (x86)\\ossec-agent\\'
+        win.eventdata.description: 'Windows PowerShell'
+        win.eventdata.fileVersion: '10.0.26100.9278 (WinBuild.160101.0800)'
+        win.eventdata.hashes: 'SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A'
+        win.eventdata.image: 'C:\Windows\System32\cmd.exe'
+        win.eventdata.integrityLevel: 'System'
+        win.eventdata.logonGuid: '{05f7cd44-1f90-6af2-e703-000000000000}'
+        win.eventdata.logonId: '0x3e7'
+        win.eventdata.originalFileName: 'Cmd.Exe'
+        win.eventdata.parentCommandLine: 'fodhelper.exe'
+        win.eventdata.parentImage: 'C:\Windows\System32\fodhelper.exe'
+        win.eventdata.parentProcessGuid: '{05f7cd44-1f91-6af2-4200-000000001200}'
+        win.eventdata.parentProcessId: '3152'
+        win.eventdata.parentUser: 'NT AUTHORITY\\SYSTEM'
+        win.eventdata.processGuid: '{05f7cd44-1f9d-6af2-9600-000000001200}'
+        win.eventdata.processId: '5276'
+        win.eventdata.product: 'Microsoft® Windows® Operating System'
+        win.eventdata.ruleName: 'technique_id=T1059.001,technique_name=PowerShell'
+        win.eventdata.terminalSessionId: '0'
+        win.eventdata.user: 'NT AUTHORITY\\SYSTEM'
+        win.eventdata.utcTime: '2026-11-09 19:31:41.987'
+        win.system.channel: 'Microsoft-Windows-Sysmon/Operational'
+        win.system.computer: 'win11-endpoint'
+        win.system.eventID: '1'
+        win.system.eventRecordID: '22179'
+        win.system.keywords: '0x8000000000000000'
+        win.system.level: '4'
+        win.system.message: '"Process Create:
+RuleName: technique_id=T1059.001,technique_name=PowerShell
+UtcTime: 2026-11-09 19:31:41.987
+ProcessGuid: {05f7cd44-1f9d-6af2-9600-000000001200}
+ProcessId: 5276
+Image: C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe
+FileVersion: 10.0.26100.9278 (WinBuild.160101.0800)
+Description: Windows PowerShell
+Product: Microsoft® Windows® Operating System
+Company: Microsoft Corporation
+OriginalFileName: PowerShell.EXE
+CommandLine: powershell -NoProfile -Command "[bool](Get-CimInstance -Query 'SELECT * FROM Win32_UserAccount WHERE LocalAccount = TRUE AND SID LIKE ''S-1-5-21-%%-501''' | Where-Object -Property Disabled)"
+CurrentDirectory: C:\Program Files (x86)\ossec-agent\
+User: NT AUTHORITY\SYSTEM
+LogonGuid: {05f7cd44-1f90-6af2-e703-000000000000}
+LogonId: 0x3E7
+TerminalSessionId: 0
+IntegrityLevel: System
+Hashes: SHA1=BB805EFB90AD02850A58CA0D5FE5EF6050B20FC5,MD5=33685BE6386D6B72DD0982DDC619CB19,SHA256=68B9B6BA72C89599DA0B7395363E941988BE1328F239EB123F45B523770D47B5,IMPHASH=458763996175C8641394628AE642AF7A
+ParentProcessGuid: {05f7cd44-1f91-6af2-4200-000000001200}
+ParentProcessId: 3152
+ParentImage: C:\Program Files (x86)\ossec-agent\wazuh-agent.exe
+ParentCommandLine: "C:\Program Files (x86)\ossec-agent\wazuh-agent.exe"
+ParentUser: NT AUTHORITY\SYSTEM"'
+        win.system.opcode: '0'
+        win.system.processID: '3140'
+        win.system.providerGuid: '{5770385f-c22a-43e0-bf4c-06f5698ffbd9}'
+        win.system.providerName: 'Microsoft-Windows-Sysmon'
+        win.system.severityValue: 'INFORMATION'
+        win.system.systemTime: '2026-11-09T19:31:41.9932090Z'
+        win.system.task: '1'
+        win.system.threadID: '3192'
+        win.system.version: '5'
+
+**Phase 3: Completed filtering (rules).
+        id: '100006'
+        level: '13'
+        description: 'T1548.002: Child process spawned by fodhelper.exe (possible UAC bypass) - C:\Windows\System32\cmd.exe'
+        groups: '['sysmon', 'lab', 'attack']'
+        firedtimes: '1'
+        mail: 'True'
+        mitre.id: '['T1548.002']'
+        mitre.tactic: '['Privilege Escalation', 'Defense Evasion']'
+        mitre.technique: '['Bypass User Account Control']'
+**Alert to be generated.

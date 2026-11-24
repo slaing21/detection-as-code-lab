@@ -12,7 +12,8 @@ references:
 author: Stephen Laing
 date: 2026-11-13
 tags:
-    - attack.defense_evasion
+    - attack.defense-impairment
+    - attack.persistence
     - attack.t1112
 logsource:
     category: registry_set

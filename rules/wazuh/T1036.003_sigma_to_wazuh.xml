@@ -8,7 +8,7 @@ All Sigma rules licensed under DRL: https://github.com/SigmaHQ/sigma/blob/master
     <rule id="900007" level="10">
         <info type="link">https://github.com/SigmaHQ/sigma/tree/master/rules/repo/rules/sigma/T1036.003_renamed_binary.yml</info>
         <!--Sigma Rule Author: Matthew Green @mgreen27, Ecco, oscd.community (original SigmaHQ rule), adapted by Stephen Laing-->
-        <!--Description: Detects execution of a renamed system utility by comparing the PE OriginalFileName against the on-disk Image name (T1036.003). Source of truth for lab rule 100007. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1036.003 atomic. Derived from SigmaHQ proc_creation_win_renamed_binary.-->
+        <!--Description: Detects execution of a renamed system utility by comparing the PE OriginalFileName against the on-disk Image name (T1036.003). Source of truth for lab rule 100007. The deployed detection is the Wazuh XML in lab/siem/local_rules.xml, validated live with the T1036.003 atomic. Derived from SigmaHQ proc_creation_win_renamed_binary. -->
         <!--Date: 2026-11-10-->
         <!--Status: experimental-->
         <!--ID: 771d0854-4c17-4b16-b2c0-6d6101b54720-->

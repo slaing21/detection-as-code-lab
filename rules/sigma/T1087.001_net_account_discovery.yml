@@ -4,8 +4,7 @@ status: experimental
 description: |
     Detects local account and group enumeration using net.exe / net1.exe
     (net user, net localgroup) - a common Account Discovery technique
-    (T1087.001). net.exe delegates to net1.exe, so both are covered. Benign
-    administrative use is expected, which is why this rule carries a tuning pass.
+    (T1087.001). net.exe delegates to net1.exe, so both are covered.
 references:
     - https://attack.mitre.org/techniques/T1087/001/
 author: Stephen Laing
@@ -27,5 +26,5 @@ detection:
             - 'localgroup'
     condition: all of selection_*
 falsepositives:
-    - Administrators or scripts enumerating local users and groups (noisy by nature - see the tuning pass)
+    - Administrators or scripts enumerating local users and groups (noisy by nature)
 level: medium

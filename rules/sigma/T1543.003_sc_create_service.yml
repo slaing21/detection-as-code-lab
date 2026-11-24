@@ -14,6 +14,7 @@ references:
   - https://github.com/SigmaHQ/sigma/blob/master/rules/windows/process_creation/proc_creation_win_sc_create_service.yml
 author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community (original SigmaHQ rule), adapted by Stephen Laing
 date: 2026-11-03
+modified: 2026-11-15
 tags:
   - attack.persistence
   - attack.privilege-escalation
@@ -27,7 +28,9 @@ detection:
     CommandLine|contains|all:
       - 'create'
       - 'binPath'
-  condition: selection
+  filter_main_trusted_location:
+    CommandLine|re|i: 'binpath=\s*["\\]*[a-z]:\\+(Windows\\+System32|Windows\\+SysWOW64|Program Files)'
+  condition: selection and not filter_main_trusted_location
 falsepositives:
   - Legitimate administrator or user creates a service for legitimate reasons
   - Software installation

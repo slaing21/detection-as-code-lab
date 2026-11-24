@@ -82,7 +82,7 @@ techniques:
     expected_sysmon_events: [1]
     fp_risk: low
     atomic_test_guid: 5ba5a3d1-cf3c-4499-968a-a93155d1f717
-    atomic_test_name: "Masquerading: Rename Legitimate Utilities"
+    atomic_test_name: "Masquerading as Windows LSASS process"
     reference_sigma_rule: proc_creation_win_renamed_binary
     sigma_rule_id: 771d0854-4c17-4b16-b2c0-6d6101b54720
     wazuh_rule_id: 100007
@@ -106,7 +106,7 @@ techniques:
     expected_sysmon_events: [13]
     fp_risk: high
     atomic_test_guid: e8c7c404-b669-4cf9-bafd-fdad89a5bbb1
-    atomic_test_name: "Modify Registry of Current User Profile - cmd"
+    atomic_test_name: "Disable UAC remote restrictions via LocalAccountTokenFilterPolicy"
     reference_sigma_rule: localaccounttokenfilterpolicy
     sigma_rule_id: 0a3857e0-eae1-472c-9a8f-296dabe8d9c4
     wazuh_rule_id: 100009
